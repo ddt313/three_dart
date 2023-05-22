@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_gl/flutter_gl.dart';
+import 'package:flutter_gl/native-array/NativeArray.app.dart';
 import 'package:image/image.dart';
 import 'package:three_dart/extra/blob.dart';
 import 'package:three_dart/three3d/loaders/index.dart';
@@ -44,12 +45,12 @@ class TextureLoader extends Loader {
       if (kIsWeb && image is! Image) {
         imageElement = ImageElement(
             url: url is Blob ? "" : url, data: image, width: image.width!.toDouble(), height: image.height!.toDouble());
-      } else {
-        var pixels = image.getBytes(order: ChannelOrder.rgba);
+      } else{
+        var pixels = image.getBytes(order: ChannelOrder.rgb);
 
         // print(" _pixels : ${_pixels.length} ");
         // print(" ------------------------------------------- ");
-        imageElement = ImageElement(url: url, data: Uint8Array.from(pixels), width: image.width, height: image.height);
+        imageElement = ImageElement(url: url, data: NativeInt8Array.from(pixels.toList()), width: image.width, height: image.height);
       }
 
       // print(" image.width: ${image.width} image.height: ${image.height} isJPEG: ${isJPEG} ");
