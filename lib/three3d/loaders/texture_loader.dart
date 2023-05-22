@@ -45,12 +45,12 @@ class TextureLoader extends Loader {
       if (kIsWeb && image is! Image) {
         imageElement = ImageElement(
             url: url is Blob ? "" : url, data: image, width: image.width!.toDouble(), height: image.height!.toDouble());
-      } else{
-        var pixels = image.getBytes(order: ChannelOrder.rgb);
+      } else {
+        var pixels = image.getBytes(order: ChannelOrder.rgba);
 
         // print(" _pixels : ${_pixels.length} ");
         // print(" ------------------------------------------- ");
-        imageElement = ImageElement(url: url, data: NativeInt8Array.from(pixels.toList()), width: image.width, height: image.height);
+        imageElement = ImageElement(url: url, data: NativeInt8Array.from(pixels.toList()), width: image.width, height: image.height);//Uint8Array.from(pixels)
       }
 
       // print(" image.width: ${image.width} image.height: ${image.height} isJPEG: ${isJPEG} ");
