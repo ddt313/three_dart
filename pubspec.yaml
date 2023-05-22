@@ -13,8 +13,11 @@ dependencies:
   universal_html: ^2.0.8
   ffi: ^2.0.1
   image: ^4.0.02
-  flutter_gl: ^0.0.20
+  flutter_gl: ^0.0.21
   crypto: ^3.0.1
+  three_dart_jsm:
+    git:
+      url: https://github.com/Knightro63/three_dart_jsm.git
   meta:
   
   # opentype:
@@ -29,10 +32,10 @@ dependencies:
   #   path: ../flutter_webgpu
 
 dependency_overrides:
-  three_dart_jsm:
-    path: ../three_dart_jsm
-  flutter_gl:
-    path: ../flutter_gl/flutter_gl
+  # three_dart_jsm:
+  #   path: ../three_dart_jsm
+  # flutter_gl:
+  #   path: ../flutter_gl/flutter_gl
 
 dev_dependencies:
   flutter_test:
