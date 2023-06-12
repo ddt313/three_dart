@@ -1,18 +1,25 @@
-library animation;
+library three_animation;
 
-export 'tracks/number_keyframe_track.dart';
-export 'tracks/vector_keyframe_track.dart';
-export 'tracks/quaternion_keyframe_track.dart';
-export 'tracks/color_keyframe_track.dart';
-export 'tracks/boolean_keyframe_track.dart';
-export 'tracks/string_keyframe_track.dart';
+import 'package:flutter_gl/native-array/index.dart';
+import 'package:three_dart/three3d/core/index.dart';
+import 'package:three_dart/three3d/math/index.dart';
+import 'package:three_dart/three3d/objects/index.dart';
+import 'package:three_dart/three3d/dart_helpers.dart';
+import '../constants.dart';
 
-export 'animation_action.dart';
-export 'animation_mixer.dart';
-export 'animation_clip.dart';
-export 'animation_utils.dart';
-export 'keyframe_track.dart';
-export 'property_mixer.dart';
-export 'property_binding.dart';
-export 'animation_object_group.dart';
-export 'sprite_animator.dart';
+part './tracks/NumberKeyframeTrack.dart';
+part './tracks/VectorKeyframeTrack.dart';
+part './tracks/QuaternionKeyframeTrack.dart';
+part './tracks/ColorKeyframeTrack.dart';
+part './tracks/BooleanKeyframeTrack.dart';
+part './tracks/StringKeyframeTrack.dart';
+
+part './AnimationAction.dart';
+part './AnimationMixer.dart';
+part './AnimationClip.dart';
+part './AnimationUtils.dart';
+part './KeyframeTrack.dart';
+part './PropertyMixer.dart';
+part './PropertyBinding.dart';
+part './AnimationObjectGroup.dart';
+part './SpriteAnimator.dart';

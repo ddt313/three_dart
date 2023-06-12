@@ -5,8 +5,8 @@
 
 // import 'package:flutter_gl/flutter_gl.dart';
 // import 'package:three_dart/three3d/objects/index.dart';
-// import 'package:three_dart/three_dart.dart' as three;
-// import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
+// import 'package:three_dart/three_dart.dart' as THREE;
+// import 'package:three_dart_jsm/three_dart_jsm.dart' as THREE_JSM;
 
 // class webxr_vr_dragging extends StatefulWidget {
 //   String fileName;
@@ -18,7 +18,7 @@
 
 // class _MyAppState extends State<webxr_vr_dragging> {
 //   late FlutterGlPlugin three3dRender;
-//   three.WebGLRenderer? renderer;
+//   THREE.WebGLRenderer? renderer;
 
 //   int? fboId;
 //   late double width;
@@ -26,39 +26,39 @@
 
 //   Size? screenSize;
 
-//   late three.Scene scene;
-//   late three.Camera camera;
-//   late three.Mesh mesh;
+//   late THREE.Scene scene;
+//   late THREE.Camera camera;
+//   late THREE.Mesh mesh;
 
 //   double dpr = 1.0;
 
-//   var amount = 4;
+//   var AMOUNT = 4;
 
 //   bool verbose = true;
 //   bool disposed = false;
 
-//   late three.Object3D object;
+//   late THREE.Object3D object;
 
-//   late three.Texture texture;
+//   late THREE.Texture texture;
 
-//   late three.WebGLRenderTarget renderTarget;
+//   late THREE.WebGLRenderTarget renderTarget;
 
-//   dynamic sourceTexture;
+//   dynamic? sourceTexture;
 
-//   final GlobalKey<three_jsm.DomLikeListenableState> _globalKey =
-//       GlobalKey<three_jsm.DomLikeListenableState>();
+//   final GlobalKey<THREE_JSM.DomLikeListenableState> _globalKey =
+//       GlobalKey<THREE_JSM.DomLikeListenableState>();
 
-//   late three_jsm.OrbitControls controls;
+//   late THREE_JSM.OrbitControls controls;
 
 //   dynamic controller1;
 //   dynamic controller2;
 //   dynamic controllerGrip1;
 //   dynamic controllerGrip2;
 
-//   late three.Raycaster raycaster;
+//   late THREE.Raycaster raycaster;
 
 //   var intersected = [];
-//   var tempMatrix = new three.Matrix4();
+//   var tempMatrix = new THREE.Matrix4();
 
 // 	dynamic group;
 
@@ -86,7 +86,7 @@
 
 //     setState(() {});
 
-//     // Wait for web
+//     // TODO web wait dom ok!!!
 //     Future.delayed(const Duration(milliseconds: 100), () async {
 //       await three3dRender.prepareContext();
 
@@ -134,7 +134,7 @@
 //         Container(
 //           child: Stack(
 //             children: [
-//               three_jsm.DomLikeListenable(
+//               THREE_JSM.DomLikeListenable(
 //                   key: _globalKey,
 //                   builder: (BuildContext context) {
 //                     return Container(
@@ -195,16 +195,16 @@
 //       "antialias": true,
 //       "canvas": three3dRender.element
 //     };
-//     renderer = three.WebGLRenderer(_options);
+//     renderer = THREE.WebGLRenderer(_options);
 //     renderer!.setPixelRatio(dpr);
 //     renderer!.setSize(width, height, false);
 //     renderer!.shadowMap.enabled = true;
 //     renderer!.xr.enabled = true;
 
 //     if (!kIsWeb) {
-//       var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
+//       var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
 //       renderTarget =
-//           three.WebGLRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+//           THREE.WebGLRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
 //       renderTarget.samples = 4;
 //       renderer!.setRenderTarget(renderTarget);
 //       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -217,30 +217,30 @@
 //   }
 
 //   initPage() async {
-//     scene = new three.Scene();
-//     scene.background = new three.Color( 0x808080 );
+//     scene = new THREE.Scene();
+//     scene.background = new THREE.Color( 0x808080 );
 
-//     camera = new three.PerspectiveCamera( 50, width / height, 0.1, 10 );
+//     camera = new THREE.PerspectiveCamera( 50, width / height, 0.1, 10 );
 //     camera.position.set( 0, 1.6, 3 );
 
-//     controls = new three_jsm.OrbitControls( camera, _globalKey );
+//     controls = new THREE_JSM.OrbitControls( camera, _globalKey );
 //     controls.target.set( 0, 1.6, 0 );
 //     controls.update();
 
-//     var floorGeometry = new three.PlaneGeometry( 4, 4 );
-//     var floorMaterial = new three.MeshStandardMaterial( {
+//     var floorGeometry = new THREE.PlaneGeometry( 4, 4 );
+//     var floorMaterial = new THREE.MeshStandardMaterial( {
 //       "color": 0xeeeeee,
 //       "roughness": 1.0,
 //       "metalness": 0.0
 //     } );
-//     var floor = new three.Mesh( floorGeometry, floorMaterial );
-//     floor.rotation.x = - three.Math.PI / 2;
+//     var floor = new THREE.Mesh( floorGeometry, floorMaterial );
+//     floor.rotation.x = - THREE.Math.PI / 2;
 //     floor.receiveShadow = true;
 //     scene.add( floor );
 
-//     scene.add( new three.HemisphereLight( 0x808080, 0x606060 ) );
+//     scene.add( new THREE.HemisphereLight( 0x808080, 0x606060 ) );
 
-//     var light = new three.DirectionalLight( 0xffffff );
+//     var light = new THREE.DirectionalLight( 0xffffff );
 //     light.position.set( 0, 6, 0 );
 //     light.castShadow = true;
 //     light.shadow!.camera!.top = 2;
@@ -250,37 +250,37 @@
 //     light.shadow!.mapSize.set( 4096, 4096 );
 //     scene.add( light );
 
-//     group = new three.Group();
+//     group = new THREE.Group();
 //     scene.add( group );
 
 //     var geometries = [
-//       new three.BoxGeometry( 0.2, 0.2, 0.2 ),
-//       new three.ConeGeometry( 0.2, 0.2, 64 ),
-//       new three.CylinderGeometry( 0.2, 0.2, 0.2, 64 ),
-//       new three.IcosahedronGeometry( 0.2, 8 ),
-//       new three.TorusGeometry( 0.2, 0.04, 64, 32 )
+//       new THREE.BoxGeometry( 0.2, 0.2, 0.2 ),
+//       new THREE.ConeGeometry( 0.2, 0.2, 64 ),
+//       new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 64 ),
+//       new THREE.IcosahedronGeometry( 0.2, 8 ),
+//       new THREE.TorusGeometry( 0.2, 0.04, 64, 32 )
 //     ];
 
 //     for ( var i = 0; i < 50; i ++ ) {
 
-//       var geometry = geometries[ three.Math.floor( three.Math.random() * geometries.length ) ];
-//       var material = new three.MeshStandardMaterial( {
-//         "color": three.Math.random() * 0xffffff,
+//       var geometry = geometries[ THREE.Math.floor( THREE.Math.random() * geometries.length ) ];
+//       var material = new THREE.MeshStandardMaterial( {
+//         "color": THREE.Math.random() * 0xffffff,
 //         "roughness": 0.7,
 //         "metalness": 0.0
 //       } );
 
-//       var object = new three.Mesh( geometry, material );
+//       var object = new THREE.Mesh( geometry, material );
 
-//       object.position.x = three.Math.random() * 4 - 2;
-//       object.position.y = three.Math.random() * 2;
-//       object.position.z = three.Math.random() * 4 - 2;
+//       object.position.x = THREE.Math.random() * 4 - 2;
+//       object.position.y = THREE.Math.random() * 2;
+//       object.position.z = THREE.Math.random() * 4 - 2;
 
-//       object.rotation.x = three.Math.random() * 2 * three.Math.PI;
-//       object.rotation.y = three.Math.random() * 2 * three.Math.PI;
-//       object.rotation.z = three.Math.random() * 2 * three.Math.PI;
+//       object.rotation.x = THREE.Math.random() * 2 * THREE.Math.PI;
+//       object.rotation.y = THREE.Math.random() * 2 * THREE.Math.PI;
+//       object.rotation.z = THREE.Math.random() * 2 * THREE.Math.PI;
 
-//       object.scale.setScalar( three.Math.random() + 0.5 );
+//       object.scale.setScalar( THREE.Math.random() + 0.5 );
 
 //       object.castShadow = true;
 //       object.receiveShadow = true;
@@ -314,16 +314,16 @@
 
 //     //
 
-//     var geometry = new three.BufferGeometry().setFromPoints( [ new three.Vector3( 0, 0, 0 ), new three.Vector3( 0, 0, - 1 ) ] );
+//     var geometry = new THREE.BufferGeometry().setFromPoints( [ new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, - 1 ) ] );
 
-//     var line = new three.Line( geometry, null );
+//     var line = new THREE.Line( geometry, null );
 //     line.name = 'line';
 //     line.scale.z = 5;
 
 //     controller1.add( line.clone() );
 //     controller2.add( line.clone() );
 
-//     raycaster = new three.Raycaster();
+//     raycaster = new THREE.Raycaster();
 
 
 //     animate();

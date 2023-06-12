@@ -1,14 +1,24 @@
 library three_textures;
 
-export 'compressed_texture.dart';
-export 'cube_texture.dart';
-export 'data_texture.dart';
-export 'data_array_texture.dart';
-export 'data_3d_texture.dart';
-export 'depth_texture.dart';
-export 'image_element.dart';
-export 'texture.dart';
-export 'video_texture.dart';
-export 'open_gl_texture.dart';
-export 'framebuffer_texture.dart';
-export 'source.dart';
+import 'dart:typed_data';
+import 'dart:convert';
+import 'package:flutter_gl/native-array/index.dart';
+import 'package:three_dart/three3d/constants.dart';
+import 'package:three_dart/three3d/core/index.dart';
+import 'package:three_dart/three3d/extras/index.dart';
+import 'package:three_dart/three3d/math/index.dart';
+
+part './CanvasTexture.dart';
+part './CompressedTexture.dart';
+part './CubeTexture.dart';
+part './DataTexture.dart';
+part 'DataArrayTexture.dart';
+part 'Data3DTexture.dart';
+part './DepthTexture.dart';
+part './ImageElement.dart';
+part './Texture.dart';
+part './VideoTexture.dart';
+part './OpenGLTexture.dart';
+part './FramebufferTexture.dart';
+part './Source.dart';
+

@@ -1,10 +1,7 @@
-import 'package:flutter_gl/flutter_gl.dart';
-import 'package:three_dart/three3d/constants.dart';
-import 'package:three_dart/three3d/math/index.dart';
-import 'package:three_dart/three3d/objects/bone.dart';
-import 'package:three_dart/three3d/textures/data_texture.dart';
+part of three_objects;
 
 var _offsetMatrix = Matrix4();
+var _identityMatrix = Matrix4();
 
 class Skeleton {
   String uuid = MathUtils.generateUUID();
@@ -15,8 +12,8 @@ class Skeleton {
   late int boneTextureSize;
   num frame = -1;
 
-  Skeleton([List<Bone> bones = const [], List<Matrix4>? boneInverses]) {
-    this.bones = bones.sublist(0);
+  Skeleton([List<Bone>? bones, List<Matrix4>? boneInverses]) {
+    this.bones = bones!.sublist(0);
     this.boneInverses = boneInverses ?? [];
 
     init();
@@ -33,11 +30,11 @@ class Skeleton {
     //       32x32 pixel texture max  256 bones * 4 pixels = (32 * 32)
     //       64x64 pixel texture max 1024 bones * 4 pixels = (64 * 64)
 
-    double s = Math.sqrt(bones.length * 4); // 4 pixels needed for 1 matrix
-    s = MathUtils.ceilPowerOfTwo(s).toDouble();
-    s = Math.max(s, 4);
+    double _size = Math.sqrt(bones.length * 4); // 4 pixels needed for 1 matrix
+    _size = MathUtils.ceilPowerOfTwo(_size).toDouble();
+    _size = Math.max(_size, 4);
 
-    int size = s.toInt();
+    int size = _size.toInt();
 
     boneTextureSize = size;
 
@@ -51,7 +48,8 @@ class Skeleton {
       // handle special case
 
       if (bones.length != boneInverses.length) {
-        print('three.Skeleton: Number of inverse bone matrices does not match amount of bones.');
+        print(
+            'THREE.Skeleton: Number of inverse bone matrices does not match amount of bones.');
 
         this.boneInverses = [];
 
@@ -110,7 +108,7 @@ class Skeleton {
     for (var i = 0; i < il; i++) {
       // compute the offset between the current and the original transform
 
-      var matrix = bones[i].matrixWorld;
+      var matrix = bones[i] != null ? bones[i].matrixWorld : _identityMatrix;
 
       _offsetMatrix.multiplyMatrices(matrix, boneInverses[i]);
       _offsetMatrix.toArray(boneMatrices, i * 16);
@@ -126,11 +124,13 @@ class Skeleton {
   }
 
   Skeleton computeBoneTexture() {
-    boneTexture = DataTexture(boneMatrices, boneTextureSize, boneTextureSize, RGBAFormat, FloatType);
+
+    boneTexture = DataTexture(boneMatrices, boneTextureSize, boneTextureSize,
+        RGBAFormat, FloatType);
 
     boneTexture!.name = "DataTexture from Skeleton.computeBoneTexture";
     boneTexture!.needsUpdate = true;
-
+    
     // Android Float Texture need NearestFilter
     boneTexture!.magFilter = NearestFilter;
     boneTexture!.minFilter = NearestFilter;
@@ -166,7 +166,7 @@ class Skeleton {
       var bone = bones[uuid];
 
       if (bone == null) {
-        print('three.Skeleton: No bone found with UUID: $uuid');
+        print('THREE.Skeleton: No bone found with UUID: $uuid');
         bone = Bone();
       }
 
@@ -181,7 +181,11 @@ class Skeleton {
 
   Map<String, dynamic> toJSON() {
     Map<String, dynamic> data = {
-      "metadata": {"version": 4.5, "type": 'Skeleton', "generator": 'Skeleton.toJSON'},
+      "metadata": {
+        "version": 4.5,
+        "type": 'Skeleton',
+        "generator": 'Skeleton.toJSON'
+      },
       "bones": [],
       "boneInverses": []
     };
@@ -203,10 +207,10 @@ class Skeleton {
   }
 
   getValue(String name) {
-    if (name == "boneMatrices") {
+    if(name == "boneMatrices") {
       return boneMatrices;
     } else {
-      throw ("Skeleton getValue name: $name is not support  ");
+      throw("Skeleton getValue name: $name is not support  ");
     }
   }
 }

@@ -1,24 +1,27 @@
 import 'dart:async';
 
+
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
 
-import 'package:three_dart/three_dart.dart' as three;
-import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
+import 'package:three_dart/three_dart.dart' as THREE;
+import 'package:three_dart_jsm/three_dart_jsm.dart' as THREE_JSM;
 
-class WebGlShadowContact extends StatefulWidget {
-  final String fileName;
-  const WebGlShadowContact({Key? key, required this.fileName}) : super(key: key);
+
+class webgl_shadow_contact extends StatefulWidget {
+  String fileName;
+  webgl_shadow_contact({Key? key, required this.fileName}) : super(key: key);
 
   @override
-  State<WebGlShadowContact> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<WebGlShadowContact> {
+class _MyAppState extends State<webgl_shadow_contact> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -26,46 +29,46 @@ class _MyAppState extends State<WebGlShadowContact> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
-  late three.Group shadowGroup;
-  late three.Mesh plane;
-  late three.Mesh blurPlane;
-  late three.Mesh fillPlane;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
+  late THREE.Group shadowGroup;
+  late THREE.Mesh plane;
+  late THREE.Mesh blurPlane;
+  late THREE.Mesh fillPlane;
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
-  late three.Object3D object;
+  late THREE.Object3D object;
 
-  late three.Texture texture;
+  late THREE.Texture texture;
 
-  three.WebGLRenderTarget? renderTarget;
+  THREE.WebGLRenderTarget? renderTarget;
 
-  late three.WebGLRenderTarget renderTarget2;
-  late three.WebGLRenderTarget renderTargetBlur;
+  late THREE.WebGLRenderTarget renderTarget2;
+  late THREE.WebGLRenderTarget renderTargetBlur;
 
   var meshes = [];
 
-  var planeWidth = 2.5;
-  var planeHeight = 2.5;
-  var cameraHeight = 0.3;
+  var PLANE_WIDTH = 2.5;
+  var PLANE_HEIGHT = 2.5;
+  var CAMERA_HEIGHT = 0.3;
 
   bool inited = false;
 
-  late three.Camera shadowCamera;
-  late three.CameraHelper cameraHelper;
+  late THREE.Camera shadowCamera;
+  late THREE.CameraHelper cameraHelper;
 
-  late three.Material depthMaterial;
-  late three.Material horizontalBlurMaterial;
-  late three.Material verticalBlurMaterial;
+  late THREE.Material depthMaterial;
+  late THREE.Material horizontalBlurMaterial;
+  late THREE.Material verticalBlurMaterial;
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
   Map<String, dynamic> state = {
     "shadow": {
@@ -92,7 +95,7 @@ class _MyAppState extends State<WebGlShadowContact> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": true,
       "width": width.toInt(),
@@ -100,11 +103,11 @@ class _MyAppState extends State<WebGlShadowContact> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
-    // Wait for web
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -149,31 +152,36 @@ class _MyAppState extends State<WebGlShadowContact> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-                width: width,
-                height: height,
-                color: Colors.black,
-                child: Builder(builder: (BuildContext context) {
-                  if (kIsWeb) {
-                    return three3dRender.isInitialized
-                        ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                        : Container();
-                  } else {
-                    return three3dRender.isInitialized ? Texture(textureId: three3dRender.textureId!) : Container();
-                  }
-                })),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              Container(
+                  width: width,
+                  height: height,
+                  color: Colors.black,
+                  child: Builder(builder: (BuildContext context) {
+                    if (kIsWeb) {
+                      return three3dRender.isInitialized
+                          ? HtmlElementView(
+                              viewType: three3dRender.textureId!.toString())
+                          : Container();
+                    } else {
+                      return three3dRender.isInitialized
+                          ? Texture(textureId: three3dRender.textureId!)
+                          : Container();
+                    }
+                  })),
+            ],
+          ),
         ),
       ],
     );
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int _t = DateTime.now().millisecondsSinceEpoch;
 
-    final gl = three3dRender.gl;
+    final _gl = three3dRender.gl;
 
     if (!inited) {
       return;
@@ -214,17 +222,17 @@ class _MyAppState extends State<WebGlShadowContact> {
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
     // _gl.finish();
-    gl.flush();
+    _gl.flush();
 
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
@@ -257,7 +265,7 @@ class _MyAppState extends State<WebGlShadowContact> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
@@ -265,14 +273,15 @@ class _MyAppState extends State<WebGlShadowContact> {
       "canvas": three3dRender.element,
       "alpha": true // 设置透明
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = true;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
-      renderTarget = three.WebGLRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
+      renderTarget = THREE.WebGLRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget!.samples = 4;
       renderer!.setRenderTarget(renderTarget!);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget!);
@@ -287,59 +296,60 @@ class _MyAppState extends State<WebGlShadowContact> {
   }
 
   initPage() async {
-    camera = three.PerspectiveCamera(50, width / height, 0.1, 100);
+    camera = THREE.PerspectiveCamera(50, width / height, 0.1, 100);
     camera.position.set(0.5, 1, 2);
 
-    scene = three.Scene();
-    scene.background = three.Color.fromHex(0xffffff);
+    scene = THREE.Scene();
+    scene.background = THREE.Color.fromHex(0xffffff);
 
     camera.lookAt(scene.position);
 
     // add the example meshes
 
     var geometries = [
-      three.BoxGeometry(0.4, 0.4, 0.4),
-      three.IcosahedronGeometry(0.3),
-      three.TorusKnotGeometry(0.4, 0.05, 256, 24, 1, 3)
+      THREE.BoxGeometry(0.4, 0.4, 0.4),
+      THREE.IcosahedronGeometry(0.3),
+      THREE.TorusKnotGeometry(0.4, 0.05, 256, 24, 1, 3)
     ];
 
-    var material = three.MeshNormalMaterial();
+    var material = THREE.MeshNormalMaterial();
 
     for (var i = 0, l = geometries.length; i < l; i++) {
-      var angle = (i / l) * three.Math.pi * 2;
+      var angle = (i / l) * THREE.Math.PI * 2;
 
       var geometry = geometries[i];
-      var mesh = three.Mesh(geometry, material);
+      var mesh = THREE.Mesh(geometry, material);
       mesh.position.y = 0.1;
-      mesh.position.x = three.Math.cos(angle) / 2.0;
-      mesh.position.z = three.Math.sin(angle) / 2.0;
+      mesh.position.x = THREE.Math.cos(angle) / 2.0;
+      mesh.position.z = THREE.Math.sin(angle) / 2.0;
       scene.add(mesh);
       meshes.add(mesh);
     }
 
     // the container, if you need to move the plane just move this
-    shadowGroup = three.Group();
+    shadowGroup = THREE.Group();
     shadowGroup.position.y = -0.3;
     scene.add(shadowGroup);
 
-    var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
+    var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
     // the render target that will show the shadows in the plane texture
-    renderTarget2 = three.WebGLRenderTarget(512, 512, pars);
+    renderTarget2 = THREE.WebGLRenderTarget(512, 512, pars);
     renderTarget2.texture.generateMipmaps = false;
 
     // the render target that we will use to blur the first render target
-    renderTargetBlur = three.WebGLRenderTarget(512, 512, pars);
+    renderTargetBlur = THREE.WebGLRenderTarget(512, 512, pars);
     renderTargetBlur.texture.generateMipmaps = false;
 
     // make a plane and make it face up
-    var planeGeometry = three.PlaneGeometry(planeWidth, planeHeight).rotateX(three.Math.pi / 2);
-    var planeMaterial = three.MeshBasicMaterial({
+    var planeGeometry = THREE.PlaneGeometry(PLANE_WIDTH, PLANE_HEIGHT)
+        .rotateX(THREE.Math.PI / 2);
+    var planeMaterial = THREE.MeshBasicMaterial({
       "map": renderTarget2.texture,
       "opacity": state["shadow"]!["opacity"]!,
       "transparent": true,
       "depthWrite": false,
     });
-    plane = three.Mesh(planeGeometry, planeMaterial);
+    plane = THREE.Mesh(planeGeometry, planeMaterial);
     // make sure it's rendered after the fillPlane
     plane.renderOrder = 1;
     shadowGroup.add(plane);
@@ -348,31 +358,31 @@ class _MyAppState extends State<WebGlShadowContact> {
     plane.scale.y = -1;
 
     // the plane onto which to blur the texture
-    blurPlane = three.Mesh(planeGeometry, null);
+    blurPlane = THREE.Mesh(planeGeometry, null);
     blurPlane.visible = false;
     shadowGroup.add(blurPlane);
 
     // the plane with the color of the ground
-    var fillPlaneMaterial = three.MeshBasicMaterial({
+    var fillPlaneMaterial = THREE.MeshBasicMaterial({
       "color": state["plane"]["color"],
       "opacity": state["plane"]["opacity"],
       "transparent": true,
       "depthWrite": false,
     });
-    fillPlane = three.Mesh(planeGeometry, fillPlaneMaterial);
-    fillPlane.rotateX(three.Math.pi);
+    fillPlane = THREE.Mesh(planeGeometry, fillPlaneMaterial);
+    fillPlane.rotateX(THREE.Math.PI);
     shadowGroup.add(fillPlane);
 
     // the camera to render the depth material from
-    shadowCamera =
-        three.OrthographicCamera(-planeWidth / 2, planeWidth / 2, planeHeight / 2, -planeHeight / 2, 0, cameraHeight);
-    shadowCamera.rotation.x = three.Math.pi / 2; // get the camera to look up
+    shadowCamera = THREE.OrthographicCamera(-PLANE_WIDTH / 2,
+        PLANE_WIDTH / 2, PLANE_HEIGHT / 2, -PLANE_HEIGHT / 2, 0, CAMERA_HEIGHT);
+    shadowCamera.rotation.x = THREE.Math.PI / 2; // get the camera to look up
     shadowGroup.add(shadowCamera);
 
-    cameraHelper = three.CameraHelper(shadowCamera);
+    cameraHelper = THREE.CameraHelper(shadowCamera);
 
     // like MeshDepthMaterial, but goes from black to transparent
-    depthMaterial = three.MeshDepthMaterial();
+    depthMaterial = THREE.MeshDepthMaterial();
     depthMaterial.userData["darkness"] = {"value": state["shadow"]["darkness"]};
     depthMaterial.onBeforeCompile = (shader, renderer) {
       shader.uniforms["darkness"] = depthMaterial.userData["darkness"];
@@ -385,10 +395,10 @@ class _MyAppState extends State<WebGlShadowContact> {
     depthMaterial.depthTest = false;
     depthMaterial.depthWrite = false;
 
-    horizontalBlurMaterial = three.ShaderMaterial(three_jsm.horizontalBlurShader);
+    horizontalBlurMaterial = THREE.ShaderMaterial(THREE_JSM.HorizontalBlurShader);
     horizontalBlurMaterial.depthTest = false;
 
-    verticalBlurMaterial = three.ShaderMaterial(three_jsm.verticalBlurShader);
+    verticalBlurMaterial = THREE.ShaderMaterial(THREE_JSM.VerticalBlurShader);
     verticalBlurMaterial.depthTest = false;
 
     inited = true;

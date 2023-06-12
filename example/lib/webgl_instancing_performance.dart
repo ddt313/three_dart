@@ -1,25 +1,26 @@
 import 'dart:async';
 
+
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
 
-import 'package:three_dart/three_dart.dart' as three;
+import 'package:three_dart/three_dart.dart' as THREE;
 
-@immutable
-class WebglInstancingPerformance extends StatefulWidget {
-  final String fileName;
-
-  const WebglInstancingPerformance({Key? key, required this.fileName}) : super(key: key);
+class webgl_instancing_performance extends StatefulWidget {
+  String fileName;
+  webgl_instancing_performance({Key? key, required this.fileName})
+      : super(key: key);
 
   @override
-  State<WebglInstancingPerformance> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<WebglInstancingPerformance> {
+class _MyAppState extends State<webgl_instancing_performance> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -27,24 +28,24 @@ class _MyAppState extends State<WebglInstancingPerformance> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
 
-  late three.Material material;
+  late THREE.Material material;
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
   int count = 1000;
 
-  late three.WebGLRenderTarget renderTarget;
+  late THREE.WebGLRenderTarget renderTarget;
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
   @override
   void initState() {
@@ -58,7 +59,7 @@ class _MyAppState extends State<WebglInstancingPerformance> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": false,
       "width": width.toInt(),
@@ -66,11 +67,11 @@ class _MyAppState extends State<WebglInstancingPerformance> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
-    // Wait for web
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -115,44 +116,49 @@ class _MyAppState extends State<WebglInstancingPerformance> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-                width: width,
-                height: height,
-                color: Colors.black,
-                child: Builder(builder: (BuildContext context) {
-                  if (kIsWeb) {
-                    return three3dRender.isInitialized
-                        ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                        : Container();
-                  } else {
-                    return three3dRender.isInitialized ? Texture(textureId: three3dRender.textureId!) : Container();
-                  }
-                })),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              Container(
+                  width: width,
+                  height: height,
+                  color: Colors.black,
+                  child: Builder(builder: (BuildContext context) {
+                    if (kIsWeb) {
+                      return three3dRender.isInitialized
+                          ? HtmlElementView(
+                              viewType: three3dRender.textureId!.toString())
+                          : Container();
+                    } else {
+                      return three3dRender.isInitialized
+                          ? Texture(textureId: three3dRender.textureId!)
+                          : Container();
+                    }
+                  })),
+            ],
+          ),
         ),
       ],
     );
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int _t = DateTime.now().millisecondsSinceEpoch;
 
-    final gl = three3dRender.gl;
+    final _gl = three3dRender.gl;
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
-    gl.flush();
+    _gl.flush();
 
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
@@ -162,22 +168,26 @@ class _MyAppState extends State<WebglInstancingPerformance> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
       "canvas": three3dRender.element
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = false;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions(
-          {"minFilter": three.LinearFilter, "magFilter": three.LinearFilter, "format": three.RGBAFormat});
-      renderTarget = three.WebGLMultisampleRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({
+        "minFilter": THREE.LinearFilter,
+        "magFilter": THREE.LinearFilter,
+        "format": THREE.RGBAFormat
+      });
+      renderTarget = THREE.WebGLMultisampleRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
     }
@@ -189,19 +199,19 @@ class _MyAppState extends State<WebglInstancingPerformance> {
   }
 
   initPage() async {
-    camera = three.PerspectiveCamera(70, width / height, 1, 100);
+    camera = THREE.PerspectiveCamera(70, width / height, 1, 100);
     camera.position.z = 30;
 
-    scene = three.Scene();
-    scene.background = three.Color.fromHex(0xffffff);
+    scene = THREE.Scene();
+    scene.background = THREE.Color.fromHex(0xffffff);
 
-    // var loader = three.BufferGeometryLoader(null);
-    material = three.MeshNormalMaterial();
+    var _loader = THREE.BufferGeometryLoader(null);
+    material = THREE.MeshNormalMaterial();
 
-    // var geometry = await loader.loadAsync("assets/models/json/suzanne_buffergeometry.json", null);
+    // var geometry = await _loader.loadAsync("assets/models/json/suzanne_buffergeometry.json", null);
     // geometry.computeVertexNormals();
 
-    var geometry = three.BoxGeometry(5, 5, 5);
+    var geometry = THREE.BoxGeometry(5, 5, 5);
 
     // makeInstanced( geometry );
 
@@ -213,8 +223,8 @@ class _MyAppState extends State<WebglInstancingPerformance> {
   }
 
   makeInstanced(geometry) {
-    var matrix = three.Matrix4();
-    var mesh = three.InstancedMesh(geometry, material, count);
+    var matrix = THREE.Matrix4();
+    var mesh = THREE.InstancedMesh(geometry, material, count);
 
     for (var i = 0; i < count; i++) {
       randomizeMatrix(matrix);
@@ -236,33 +246,33 @@ class _MyAppState extends State<WebglInstancingPerformance> {
   }
 
   makeNaive(geometry) {
-    var matrix = three.Matrix4();
+    var matrix = THREE.Matrix4();
 
     for (var i = 0; i < count; i++) {
-      var mesh = three.Mesh(geometry, material);
+      var mesh = THREE.Mesh(geometry, material);
       randomizeMatrix(matrix);
       mesh.applyMatrix4(matrix);
       scene.add(mesh);
     }
   }
 
-  var position = three.Vector3();
-  var rotation = three.Euler(0, 0, 0);
-  var quaternion = three.Quaternion();
-  var scale = three.Vector3();
+  var position = THREE.Vector3();
+  var rotation = THREE.Euler(0, 0, 0);
+  var quaternion = THREE.Quaternion();
+  var scale = THREE.Vector3();
 
   randomizeMatrix(matrix) {
-    position.x = three.Math.random() * 40 - 20;
-    position.y = three.Math.random() * 40 - 20;
-    position.z = three.Math.random() * 40 - 20;
+    position.x = THREE.Math.random() * 40 - 20;
+    position.y = THREE.Math.random() * 40 - 20;
+    position.z = THREE.Math.random() * 40 - 20;
 
-    rotation.x = three.Math.random() * 2 * three.Math.pi;
-    rotation.y = three.Math.random() * 2 * three.Math.pi;
-    rotation.z = three.Math.random() * 2 * three.Math.pi;
+    rotation.x = THREE.Math.random() * 2 * THREE.Math.PI;
+    rotation.y = THREE.Math.random() * 2 * THREE.Math.PI;
+    rotation.z = THREE.Math.random() * 2 * THREE.Math.PI;
 
     quaternion.setFromEuler(rotation, false);
 
-    scale.x = scale.y = scale.z = three.Math.random() * 1;
+    scale.x = scale.y = scale.z = THREE.Math.random() * 1;
 
     matrix.compose(position, quaternion, scale);
   }

@@ -1,7 +1,4 @@
-import 'package:three_dart/three3d/constants.dart';
-import 'package:three_dart/three3d/core/index.dart';
-import 'package:three_dart/three3d/dart_helpers.dart';
-import 'package:three_dart/three3d/math/index.dart';
+part of three_math;
 
 const Map<String, int> _colorKeywords = {
   'aliceblue': 0xF0F8FF,
@@ -154,17 +151,9 @@ const Map<String, int> _colorKeywords = {
   'yellowgreen': 0x9ACD32
 };
 
-class HslData {
-  double h = 0, s = 0, l = 0;
-}
-
-class _RgbData {
-  double r = 0, g = 0, b = 0;
-}
-
-_RgbData _rgb = _RgbData();
-HslData _hslA = HslData();
-HslData _hslB = HslData();
+Map<String, double> _rgb = { "r": 0, "g": 0, "b": 0 };
+Map<String, double> _hslA = {"h": 0, "s": 0, "l": 0};
+Map<String, double> _hslB = {"h": 0, "s": 0, "l": 0};
 
 double hue2rgb(double p, double q, double t) {
   if (t < 0) t += 1;
@@ -175,12 +164,14 @@ double hue2rgb(double p, double q, double t) {
   return p;
 }
 
-toComponents(source, target) {
-  target.r = source.r;
-  target.g = source.g;
-  target.b = source.b;
+toComponents( source, target ) {
 
-  return target;
+	target["r"] = source.r;
+	target["g"] = source.g;
+	target["b"] = source.b;
+
+	return target;
+
 }
 
 class Color {
@@ -198,17 +189,17 @@ class Color {
   double g = 1.0;
   double b = 1.0;
 
-  static const Map<String, int> names = _colorKeywords;
+  static const Map<String, int> NAMES = _colorKeywords;
 
   /// Color class.
   /// r g b value range (0.0 ~ 1.0)
   /// var color = Color(0xff00ff);
   /// var color = Color(1.0, 0.0, 1.0);
   /// var color = Color("#ff00ee");
-  /// r is three.Color, hex or string
+  /// r is THREE.Color, hex or string
   Color([r, double? g, double? b]) {
     if (g == null && b == null) {
-      // r is three.Color, hex or string
+      // r is THREE.Color, hex or string
       set(r);
     } else {
       setRGB(r.toDouble(), g, b);
@@ -236,22 +227,22 @@ class Color {
 
   //
   factory Color.setRGB255(int r, int g, int b) {
-    var color = Color(r / 255.0, g / 255.0, b / 255.0);
+    var _color = Color(r / 255.0, g / 255.0, b / 255.0);
 
-    return color;
+    return _color;
   }
 
   factory Color.setRGBArray(List<double> cl) {
-    var color = Color(cl[0], cl[1], cl[2]);
+    var _color = Color(cl[0], cl[1], cl[2]);
 
-    return color;
+    return _color;
   }
 
   // 0 ~ 255
   factory Color.fromArray(List<int> list) {
-    var color = Color.setRGB255(list[0], list[1], list[2]);
+    var _color = Color.setRGB255(list[0], list[1], list[2]);
 
-    return color;
+    return _color;
   }
 
   static Color fromHex(int hex) {
@@ -277,27 +268,22 @@ class Color {
     g = (hex >> 8 & 255) / 255;
     b = (hex & 255) / 255;
 
-    ColorManagement.toWorkingColorSpace(this, colorSpace);
+    ColorManagement.toWorkingColorSpace( this, colorSpace );
 
     return this;
   }
 
-  Color setRGB(
-      [double? r,
-      double? g,
-      double? b,
-      String colorSpace = LinearSRGBColorSpace]) {
+  Color setRGB([double? r, double? g, double? b, String colorSpace = LinearSRGBColorSpace]) {
     this.r = r ?? 1.0;
     this.g = g ?? 1.0;
     this.b = b ?? 1.0;
 
-    ColorManagement.toWorkingColorSpace(this, colorSpace);
+    ColorManagement.toWorkingColorSpace( this, colorSpace );
 
     return this;
   }
 
-  Color setHSL(double h, double s, double l,
-      [String colorSpace = LinearSRGBColorSpace]) {
+  Color setHSL(double h, double s, double l, [String colorSpace = LinearSRGBColorSpace]) {
     // h,s,l ranges are in 0.0 - 1.0
     h = MathUtils.euclideanModulo(h, 1).toDouble();
     s = MathUtils.clamp(s, 0, 1);
@@ -314,7 +300,7 @@ class Color {
       b = hue2rgb(q, p, h - 1 / 3);
     }
 
-    ColorManagement.toWorkingColorSpace(this, colorSpace);
+    ColorManagement.toWorkingColorSpace( this, colorSpace );
 
     return this;
   }
@@ -323,14 +309,14 @@ class Color {
     void handleAlpha(String? string) {
       if (string == null) return;
       if (double.parse(string) < 1) {
-        print('three.Color: Alpha component of $style will be ignored.');
+        print('THREE.Color: Alpha component of $style will be ignored.');
       }
     }
 
-    var reg1 = RegExp(r"^\#([A-Fa-f\d]+)$");
+    var _reg1 = RegExp(r"^\#([A-Fa-f\d]+)$");
 
-    if (reg1.hasMatch(style)) {
-      var match = reg1.firstMatch(style);
+    if (_reg1.hasMatch(style)) {
+      var match = _reg1.firstMatch(style);
       var hex = match!.group(1)!;
       var size = hex.length;
 
@@ -350,10 +336,10 @@ class Color {
         return this;
       }
     } else {
-      var reg2 = RegExp(r"^((?:rgb|hsl)a?)\(\s*([^\)]*)\)");
+      var _reg2 = RegExp(r"^((?:rgb|hsl)a?)\(\s*([^\)]*)\)");
 
-      if (reg2.hasMatch(style)) {
-        var match = reg2.firstMatch(style)!;
+      if (_reg2.hasMatch(style)) {
+        var match = _reg2.firstMatch(style)!;
 
         // print(" match.groupCount: ${match.groupCount} 1: ${match.group(1)} 2: ${match.group(2)} ");
 
@@ -363,10 +349,10 @@ class Color {
         switch (name) {
           case 'rgb':
           case 'rgba':
-            var colorReg1 = RegExp(
+            var _colorReg1 = RegExp(
                 r"^(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d*\.?\d+)\s*)?$");
-            if (colorReg1.hasMatch(components)) {
-              var match1 = colorReg1.firstMatch(components)!;
+            if (_colorReg1.hasMatch(components)) {
+              var match1 = _colorReg1.firstMatch(components)!;
 
               var c1 = match1.group(1)!;
               var c2 = match1.group(2)!;
@@ -377,16 +363,16 @@ class Color {
               g = Math.min(255, int.parse(c2, radix: 10)) / 255;
               b = Math.min(255, int.parse(c3, radix: 10)) / 255;
 
-              ColorManagement.toWorkingColorSpace(this, colorSpace);
+              ColorManagement.toWorkingColorSpace( this, colorSpace );
 
               handleAlpha(c4);
 
               return this;
             } else {
-              var colorReg2 = RegExp(
+              var _colorReg2 = RegExp(
                   r"^(\d+)\%\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$");
-              if (colorReg2.hasMatch(components)) {
-                var match2 = colorReg2.firstMatch(components)!;
+              if (_colorReg2.hasMatch(components)) {
+                var match2 = _colorReg2.firstMatch(components)!;
 
                 var c1 = match2.group(1)!;
                 var c2 = match2.group(2)!;
@@ -398,7 +384,7 @@ class Color {
                 g = Math.min(100, int.parse(c2, radix: 10)) / 100;
                 b = Math.min(100, int.parse(c3, radix: 10)) / 100;
 
-                ColorManagement.toWorkingColorSpace(this, colorSpace);
+                ColorManagement.toWorkingColorSpace( this, colorSpace );
 
                 handleAlpha(c4);
 
@@ -410,10 +396,10 @@ class Color {
 
           case 'hsl':
           case 'hsla':
-            var colorReg3 = RegExp(
+            var _colorReg3 = RegExp(
                 r"^(\d*\.?\d+)\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$");
-            if (colorReg3.hasMatch(components)) {
-              var match3 = colorReg3.firstMatch(components)!;
+            if (_colorReg3.hasMatch(components)) {
+              var match3 = _colorReg3.firstMatch(components)!;
 
               var c1 = match3.group(1)!;
               var c2 = match3.group(2)!;
@@ -459,7 +445,7 @@ class Color {
       setHex(hex, colorSpace);
     } else {
       // unknown color
-      print('three.Color: Unknown color $style');
+      print('THREE.Color: Unknown color ' + style);
     }
 
     return this;
@@ -516,17 +502,17 @@ class Color {
   }
 
   Color copySRGBToLinear(Color color) {
-    r = sRGBToLinear(color.r);
-    g = sRGBToLinear(color.g);
-    b = sRGBToLinear(color.b);
+    r = SRGBToLinear(color.r);
+    g = SRGBToLinear(color.g);
+    b = SRGBToLinear(color.b);
 
     return this;
   }
 
   Color copyLinearToSRGB(Color color) {
-    r = linearToSRGB(color.r);
-    g = linearToSRGB(color.g);
-    b = linearToSRGB(color.b);
+    r = LinearToSRGB(color.r);
+    g = LinearToSRGB(color.g);
+    b = LinearToSRGB(color.b);
 
     return this;
   }
@@ -544,36 +530,37 @@ class Color {
   }
 
   int getHex([String colorSpace = SRGBColorSpace]) {
-    ColorManagement.fromWorkingColorSpace(toComponents(this, _rgb), colorSpace);
+
+    ColorManagement.fromWorkingColorSpace( toComponents( this, _rgb ), colorSpace );
 
     return (r * 255).toInt() << 16 ^
         (g * 255).toInt() << 8 ^
         (b * 255).toInt() << 0;
   }
 
-  String getHexString([String colorSpace = SRGBColorSpace]) {
-    String str = '000000${getHex().toRadixString(16)}';
-    return str.substring(str.length - 6);
+  String getHexString([ String colorSpace = SRGBColorSpace ]) {
+    String _str = ('000000' + getHex().toRadixString(16));
+    return _str.substring(_str.length - 6);
   }
 
   // target map target = { "h": 0, "s": 0, "l": 0 };
-  HslData getHSL(HslData target, [String colorSpace = LinearSRGBColorSpace]) {
+  Map<String, dynamic> getHSL(Map<String, dynamic> target, [String colorSpace = LinearSRGBColorSpace]) {
     // h,s,l ranges are in 0.0 - 1.0
-    ColorManagement.fromWorkingColorSpace(toComponents(this, _rgb), colorSpace);
+    ColorManagement.fromWorkingColorSpace( toComponents( this, _rgb ), colorSpace );
 
-    double r = _rgb.r, g = _rgb.g, b = _rgb.b;
+		var r = _rgb["r"], g = _rgb["g"], b = _rgb["b"];
 
-    double max = Math.max3(r, g, b).toDouble();
-    double min = Math.min3(r, g, b).toDouble();
+    var max = Math.max3(r!, g!, b!);
+    var min = Math.min3(r, g, b);
 
-    double hue, saturation;
-    double lightness = (min + max) / 2.0;
+    var hue, saturation;
+    var lightness = (min + max) / 2.0;
 
     if (min == max) {
       hue = 0;
       saturation = 0;
     } else {
-      double delta = max - min;
+      var delta = max - min;
 
       saturation =
           lightness <= 0.5 ? delta / (max + min) : delta / (2 - max - min);
@@ -582,50 +569,54 @@ class Color {
         hue = (g - b) / delta + (g < b ? 6 : 0);
       } else if (max == g) {
         hue = (b - r) / delta + 2;
-        //} else if (max == b) {
-      } else {
+      } else if (max == b) {
         hue = (r - g) / delta + 4;
       }
 
       hue /= 6;
     }
 
-    target.h = hue;
-    target.s = saturation;
-    target.l = lightness;
+    target["h"] = hue;
+    target["s"] = saturation;
+    target["l"] = lightness;
 
     return target;
   }
 
-  getRGB(target, [String colorSpace = LinearSRGBColorSpace]) {
-    ColorManagement.fromWorkingColorSpace(toComponents(this, _rgb), colorSpace);
+  getRGB( target, [String colorSpace = LinearSRGBColorSpace] ) {
 
-    target.r = _rgb.r;
-    target.g = _rgb.g;
-    target.b = _rgb.b;
+		ColorManagement.fromWorkingColorSpace( toComponents( this, _rgb ), colorSpace );
 
-    return target;
-  }
+		target.r = _rgb["r"];
+		target.g = _rgb["g"];
+		target.b = _rgb["b"];
 
-  getStyle([String colorSpace = SRGBColorSpace]) {
-    ColorManagement.fromWorkingColorSpace(toComponents(this, _rgb), colorSpace);
+		return target;
 
-    if (colorSpace != SRGBColorSpace) {
-      // Requires CSS Color Module Level 4 (https://www.w3.org/TR/css-color-4/).
-      return "color($colorSpace  ${_rgb.r} ${_rgb.g} ${_rgb.b})";
-    }
+	}
 
-    return "rgb(${(_rgb.r * 255)},${(_rgb.g * 255)},${(_rgb.b * 255)})";
+	getStyle( [String colorSpace = SRGBColorSpace] ) {
+
+		ColorManagement.fromWorkingColorSpace( toComponents( this, _rgb ), colorSpace );
+
+		if ( colorSpace != SRGBColorSpace ) {
+
+			// Requires CSS Color Module Level 4 (https://www.w3.org/TR/css-color-4/).
+			return "color($colorSpace  ${ _rgb["r"] } ${ _rgb["g"] } ${ _rgb["b"] })";
+
+		}
+
+		return "rgb(${( _rgb["r"]! * 255 )},${( _rgb["g"]! * 255 )},${( _rgb["b"]! * 255 )})";
   }
 
   Color offsetHSL(double h, double s, double l) {
     getHSL(_hslA);
 
-    _hslA.h = _hslA.h + h;
-    _hslA.s = _hslA.s + s;
-    _hslA.l = _hslA.l + l;
+    _hslA["h"] = _hslA["h"]! + h;
+    _hslA["s"] = _hslA["s"]! + s;
+    _hslA["l"] = _hslA["l"]! + l;
 
-    setHSL(_hslA.h, _hslA.s, _hslA.l);
+    setHSL(_hslA["h"]!, _hslA["s"]!, _hslA["l"]!);
 
     return this;
   }
@@ -698,9 +689,9 @@ class Color {
     getHSL(_hslA);
     color.getHSL(_hslB);
 
-    var h = MathUtils.lerp(_hslA.h, _hslB.h, alpha).toDouble();
-    var s = MathUtils.lerp(_hslA.s, _hslB.s, alpha).toDouble();
-    var l = MathUtils.lerp(_hslA.l, _hslB.l, alpha).toDouble();
+    var h = MathUtils.lerp(_hslA["h"]!, _hslB["h"]!, alpha).toDouble();
+    var s = MathUtils.lerp(_hslA["s"]!, _hslB["s"]!, alpha).toDouble();
+    var l = MathUtils.lerp(_hslA["l"]!, _hslB["l"]!, alpha).toDouble();
 
     setHSL(h, s, l);
 
@@ -723,12 +714,11 @@ class Color {
     return this;
   }
 
-  // The argument of array can be any kind of array,
-  // such as List<double>, Float32Array etc...
-  // Create a new List<double> when no array is specified.
+  /// dart array can not expand default
+  /// so have to set array length enough first.
+  // It's working, but ugly. consider to adds a new function: 
+  // toBufferAttribute(BufferAttribute attribute, int index) ???
   toArray([array, int offset = 0]) {
-    /// dart array can not expand default
-    /// so have to set array length enough first.
     array ??= List<double>.filled(3, 0.0);
 
     array[offset] = r;

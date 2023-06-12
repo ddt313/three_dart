@@ -17,9 +17,11 @@
 /// 		http://www.oodesign.com/template-method-pattern.html
 ///
 
+part of three_math;
+
 class Interpolant {
   late dynamic parameterPositions;
-  int cachedIndex = 0;
+  int _cachedIndex = 0;
   late dynamic resultBuffer;
   late dynamic sampleValues;
   late dynamic valueSize;
@@ -27,13 +29,14 @@ class Interpolant {
 
   // --- Protected interface
 
-  dynamic defaultSettings = {};
+  dynamic DefaultSettings = {};
 
-  Interpolant(this.parameterPositions, this.sampleValues, this.valueSize, this.resultBuffer);
+  Interpolant(this.parameterPositions, this.sampleValues, this.valueSize,
+      this.resultBuffer);
 
   evaluate(double t) {
     var pp = parameterPositions;
-    int i1 = cachedIndex;
+    int i1 = _cachedIndex;
 
     num? t1;
     num? t0;
@@ -66,18 +69,18 @@ class Interpolant {
                 // after end
 
                 i1 = pp.length;
-                cachedIndex = i1;
-                return copySampleValue_(i1 - 1);
+                _cachedIndex = i1;
+                return afterEnd(i1 - 1, t, t0);
               }
 
               if (i1 == giveUpAt) break; // this loop
 
               t0 = t1;
 
-              int idx = ++i1;
+              int _idx = ++i1;
 
-              if (idx < pp.length) {
-                t1 = pp[idx];
+              if (_idx < pp.length) {
+                t1 = pp[_idx];
               } else {
                 t1 = null;
               }
@@ -111,8 +114,8 @@ class Interpolant {
               if (t0 == null) {
                 // before start
 
-                cachedIndex = 0;
-                return copySampleValue_(0);
+                _cachedIndex = 0;
+                return beforeStart(0, t, t1);
               }
 
               if (i1 == giveUpAt) break; // this loop
@@ -170,18 +173,18 @@ class Interpolant {
         // check boundary cases, again
 
         if (t0 == null) {
-          cachedIndex = 0;
-          return copySampleValue_(0);
+          _cachedIndex = 0;
+          return beforeStart(0, t, t1);
         }
 
         if (t1 == null) {
           i1 = pp.length;
-          cachedIndex = i1;
-          return copySampleValue_(i1 - 1);
+          _cachedIndex = i1;
+          return afterEnd(i1 - 1, t0, t);
         }
       } // seek
 
-      cachedIndex = i1;
+      _cachedIndex = i1;
 
       intervalChanged(i1, t0, t1);
     } // validate_interval
@@ -190,13 +193,16 @@ class Interpolant {
   }
 
   getSettings() {
-    return settings ?? defaultSettings;
+    return settings ?? DefaultSettings;
   }
 
-  copySampleValue_(num index) {
+  copySampleValue(num index) {
     // copies a sample value to the result buffer
 
-    var result = resultBuffer, values = sampleValues, stride = valueSize, offset = index * stride;
+    var result = resultBuffer,
+        values = sampleValues,
+        stride = valueSize,
+        offset = index * stride;
 
     for (var i = 0; i != stride; ++i) {
       result[i] = values[offset + i];
@@ -214,5 +220,16 @@ class Interpolant {
 
   intervalChanged(v1, v2, v3) {
     // empty
+  }
+
+  beforeStart(v1, v2, v3) {
+    // return copySampleValue_(v1, v2, v3);
+  }
+
+  //( N-1, tN-1, t ), returns this.resultBuffer
+  // afterEnd_: Interpolant.prototype.copySampleValue_,
+
+  afterEnd(v1, v2, v3) {
+    // return copySampleValue_(v1, v2, v3);
   }
 }

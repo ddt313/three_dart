@@ -1,7 +1,4 @@
-import 'package:three_dart/three3d/core/object_3d.dart';
-import 'package:three_dart/three3d/lights/light_shadow.dart';
-import 'package:three_dart/three3d/math/color.dart';
-import 'package:three_dart/three3d/math/spherical_harmonics3.dart';
+part of three_lights;
 
 class Light extends Object3D {
   late double intensity;
@@ -25,9 +22,10 @@ class Light extends Object3D {
 
   Color? groundColor;
 
-  Light(color, [double? intensity]) : super() {
-    type = "Light";
+  @override
+  String type = "Light";
 
+  Light(color, [double? intensity]) : super() {
     if (color is Color) {
       this.color = color;
     } else if (color is int) {
@@ -39,7 +37,8 @@ class Light extends Object3D {
     this.intensity = intensity ?? 1.0;
   }
 
-  Light.fromJSON(Map<String, dynamic> json, Map<String, dynamic> rootJSON) : super.fromJSON(json, rootJSON) {
+  Light.fromJSON(Map<String, dynamic> json, Map<String, dynamic> rootJSON)
+      : super.fromJSON(json, rootJSON) {
     if (json["color"] != null) {
       color = Color(0, 0, 0).setHex(json["color"]);
     }
@@ -106,11 +105,13 @@ class Light extends Object3D {
   }
 
   @override
-  void setProperty(String propertyName, value) {
+  setProperty(String propertyName, value) {
     if (propertyName == "intensity") {
       intensity = value;
     } else {
       super.setProperty(propertyName, value);
     }
+
+    return this;
   }
 }

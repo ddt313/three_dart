@@ -10,7 +10,6 @@ class MOUSE {
   static const int DOLLY = 1;
   static const int PAN = 2;
 }
-
 class TOUCH {
   static const int ROTATE = 0;
   static const int PAN = 1;

@@ -1,10 +1,4 @@
-import 'package:three_dart/three3d/core/buffer_attribute.dart';
-import 'package:three_dart/three3d/math/euler.dart';
-import 'package:three_dart/three3d/math/math.dart';
-import 'package:three_dart/three3d/math/math_utils.dart';
-import 'package:three_dart/three3d/math/matrix3.dart';
-import 'package:three_dart/three3d/math/matrix4.dart';
-import 'package:three_dart/three3d/math/quaternion.dart';
+part of three_math;
 
 var _vector3 = Vector3(0, 0, 0);
 
@@ -160,7 +154,8 @@ class Vector3 {
 
   Vector3 sub(v, {Vector3? w}) {
     if (w != null) {
-      print('three.Vector3: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.');
+      print(
+          'THREE.Vector3: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.');
       return subVectors(v as Vector3, w);
     }
 
@@ -214,7 +209,8 @@ class Vector3 {
 
   Vector3 applyEuler(Euler? euler) {
     if (!(euler != null && euler.type == "Euler")) {
-      print('three.Vector3: .applyEuler() now expects an Euler rotation rather than a Vector3 and order.');
+      print(
+          'THREE.Vector3: .applyEuler() now expects an Euler rotation rather than a Vector3 and order.');
     }
 
     return applyQuaternion(_quaternion.setFromEuler(euler!, false));
@@ -278,15 +274,17 @@ class Vector3 {
   }
 
   Vector3 project(camera) {
-    return applyMatrix4(camera.matrixWorldInverse).applyMatrix4(camera.projectionMatrix);
+    return applyMatrix4(camera.matrixWorldInverse)
+        .applyMatrix4(camera.projectionMatrix);
   }
 
   Vector3 unproject(camera) {
-    return applyMatrix4(camera.projectionMatrixInverse).applyMatrix4(camera.matrixWorld);
+    return applyMatrix4(camera.projectionMatrixInverse)
+        .applyMatrix4(camera.matrixWorld);
   }
 
   Vector3 transformDirection(Matrix4 m) {
-    // input: three.Matrix4 affine matrix
+    // input: THREE.Matrix4 affine matrix
     // vector interpreted as a direction
 
     var x = this.x, y = this.y, z = this.z;
@@ -348,7 +346,8 @@ class Vector3 {
   Vector3 clampLength<T extends num>(T min, T max) {
     var length = this.length();
 
-    return divideScalar(length).multiplyScalar(Math.max(min, Math.min(max, length)));
+    return divideScalar(length)
+        .multiplyScalar(Math.max(min, Math.min(max, length)));
   }
 
   Vector3 floor() {
@@ -433,7 +432,8 @@ class Vector3 {
 
   Vector3 cross(Vector3 v, {Vector3? w}) {
     if (w != null) {
-      print('three.Vector3: .cross() now only accepts one argument. Use .crossVectors( a, b ) instead.');
+      print(
+          'THREE.Vector3: .cross() now only accepts one argument. Use .crossVectors( a, b ) instead.');
       return crossVectors(v, w);
     }
 
@@ -477,7 +477,7 @@ class Vector3 {
   double angleTo(v) {
     var denominator = Math.sqrt(lengthSq() * v.lengthSq());
 
-    if (denominator == 0) return Math.pi / 2;
+    if (denominator == 0) return Math.PI / 2;
 
     var theta = dot(v) / denominator;
 
@@ -557,9 +557,9 @@ class Vector3 {
   }
 
   Vector3 setFromEuler(Euler e) {
-    x = e.x;
-    y = e.y;
-    z = e.z;
+    x = e._x;
+    y = e._y;
+    z = e._z;
 
     return this;
   }
@@ -613,7 +613,7 @@ class Vector3 {
     // Derived from https://mathworld.wolfram.com/SpherePointPicking.html
 
     var u = (Math.random() - 0.5) * 2;
-    var t = Math.random() * Math.pi * 2;
+    var t = Math.random() * Math.PI * 2;
     var f = Math.sqrt(1 - u * u);
 
     x = f * Math.cos(t);

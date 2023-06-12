@@ -1,12 +1,15 @@
-import 'package:three_dart/three3d/math/math.dart';
-import 'package:three_dart/three3d/math/math_utils.dart';
-import 'package:three_dart/three3d/math/matrix4.dart';
-import 'package:three_dart/three3d/math/quaternion.dart';
-import 'package:three_dart/three3d/math/vector3.dart';
+part of three_math;
 
 class Euler {
-  static const String defaultOrder = 'XYZ';
-  static const List<String> rotationOrders = ['XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX'];
+  static const String DefaultOrder = 'XYZ';
+  static const List<String> RotationOrders = [
+    'XYZ',
+    'YZX',
+    'ZXY',
+    'XZY',
+    'YXZ',
+    'ZYX'
+  ];
 
   String type = "Euler";
 
@@ -21,7 +24,7 @@ class Euler {
     _x = x ?? 0;
     _y = y ?? 0;
     _z = z ?? 0;
-    _order = order ?? defaultOrder;
+    _order = order ?? DefaultOrder;
   }
 
   double get x => _x;
@@ -166,7 +169,9 @@ class Euler {
         break;
 
       default:
-        print('three.Euler: .setFromRotationMatrix() encountered an unknown order: $order');
+        print(
+            'THREE.Euler: .setFromRotationMatrix() encountered an unknown order: ' +
+                order);
     }
 
     _order = order;
@@ -195,14 +200,17 @@ class Euler {
   }
 
   bool equals(Euler euler) {
-    return (euler._x == _x) && (euler._y == _y) && (euler._z == _z) && (euler._order == _order);
+    return (euler._x == _x) &&
+        (euler._y == _y) &&
+        (euler._z == _z) &&
+        (euler._order == _order);
   }
 
   Euler fromArray(List<double> array) {
     _x = array[0];
     _y = array[1];
     _z = array[2];
-    if (array.length > 3) _order = rotationOrders[array[3].toInt()];
+    if (array.length > 3) _order = RotationOrders[array[3].toInt()];
 
     onChangeCallback();
 
@@ -210,23 +218,25 @@ class Euler {
   }
 
   List<num> toJSON() {
-    int orderNo = rotationOrders.indexOf(_order);
+    int orderNo = RotationOrders.indexOf(_order);
     return [_x, _y, _z, orderNo];
   }
 
   List<num> toArray([List<num>? array, int offset = 0]) {
+
     array ??= List<num>.filled(offset + 4, 0);
 
     array[offset] = _x;
     array[offset + 1] = _y;
     array[offset + 2] = _z;
-    array[offset + 3] = rotationOrders.indexOf(_order);
+    array[offset + 3] = RotationOrders.indexOf(_order);
 
     return array;
   }
 
   Vector3 toVector3([Vector3? optionalResult]) {
-    print(" three.Euler: .toVector3() has been removed. Use Vector3.setFromEuler() instead ");
+    print(
+        " THREE.Euler: .toVector3() has been removed. Use Vector3.setFromEuler() instead ");
     if (optionalResult != null) {
       return optionalResult.set(_x, _y, _z);
     } else {

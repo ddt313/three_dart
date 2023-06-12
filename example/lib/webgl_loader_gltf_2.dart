@@ -4,20 +4,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
-import 'package:three_dart/three_dart.dart' as three;
-import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
+import 'package:three_dart/three_dart.dart' as THREE;
+import 'package:three_dart_jsm/three_dart_jsm.dart' as THREE_JSM;
 
-class WebGlLoaderGltf2 extends StatefulWidget {
-  final String fileName;
-  const WebGlLoaderGltf2({Key? key, required this.fileName}) : super(key: key);
+class webgl_loader_gltf_2 extends StatefulWidget {
+  String fileName;
+  webgl_loader_gltf_2({Key? key, required this.fileName}) : super(key: key);
 
   @override
-  State<WebGlLoaderGltf2> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<WebGlLoaderGltf2> {
+class _MyAppState extends State<webgl_loader_gltf_2> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -25,29 +25,29 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
   bool loaded = false;
 
-  late three.Object3D object;
+  late THREE.Object3D object;
 
-  late three.Texture texture;
+  late THREE.Texture texture;
 
-  late three.WebGLMultisampleRenderTarget renderTarget;
+  late THREE.WebGLMultisampleRenderTarget renderTarget;
 
-  three.AnimationMixer? mixer;
-  three.Clock clock = three.Clock();
+  THREE.AnimationMixer? mixer;
+  THREE.Clock clock = THREE.Clock();
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": false,
       "width": width.toInt(),
@@ -69,11 +69,11 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
-    // Wait for web
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -118,22 +118,27 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-                width: width,
-                height: height,
-                color: Colors.black,
-                child: Builder(builder: (BuildContext context) {
-                  if (kIsWeb) {
-                    return three3dRender.isInitialized
-                        ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                        : Container();
-                  } else {
-                    return three3dRender.isInitialized ? Texture(textureId: three3dRender.textureId!) : Container();
-                  }
-                })),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              Container(
+                  width: width,
+                  height: height,
+                  color: Colors.black,
+                  child: Builder(builder: (BuildContext context) {
+                    if (kIsWeb) {
+                      return three3dRender.isInitialized
+                          ? HtmlElementView(
+                              viewType: three3dRender.textureId!.toString())
+                          : Container();
+                    } else {
+                      return three3dRender.isInitialized
+                          ? Texture(textureId: three3dRender.textureId!)
+                          : Container();
+                    }
+                  })),
+            ],
+          ),
         ),
       ],
     );
@@ -145,22 +150,22 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int _t = DateTime.now().millisecondsSinceEpoch;
 
-    final gl = three3dRender.gl;
+    final _gl = three3dRender.gl;
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
-    gl.flush();
+    _gl.flush();
 
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
@@ -170,21 +175,22 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
       "canvas": three3dRender.element
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = false;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
-      renderTarget = three.WebGLMultisampleRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
+      renderTarget = THREE.WebGLMultisampleRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget.samples = 4;
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -197,17 +203,17 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
   }
 
   initPage() async {
-    camera = three.PerspectiveCamera(45, width / height, 1, 2200);
+    camera = THREE.PerspectiveCamera(45, width / height, 1, 2200);
     camera.position.set(3, 6, -10);
 
     // scene
 
-    scene = three.Scene();
+    scene = THREE.Scene();
 
-    var ambientLight = three.AmbientLight(0xffffff, 0.9);
+    var ambientLight = THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
-    var pointLight = three.PointLight(0xffffff, 0.8);
+    var pointLight = THREE.PointLight(0xffffff, 0.8);
 
     pointLight.position.set(0, 0, -20);
 
@@ -216,10 +222,10 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
 
     camera.lookAt(scene.position);
 
-    var loader = three_jsm.GLTFLoader(null).setPath('assets/models/gltf/');
+    var loader = THREE_JSM.GLTFLoader(null).setPath('assets/models/gltf/');
 
     // var result = await loader.loadAsync( 'Parrot.gltf', null);
-    var result = await loader.loadAsync('Soldier.gltf', null);
+    var result = await loader.loadAsync('Soldier.gltf');
 
     print(" gltf load sucess result: $result  ");
 
@@ -233,18 +239,18 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
     //   }
     // } );
 
-    // var skeleton = new three.SkeletonHelper( object );
+    // var skeleton = new THREE.SkeletonHelper( object );
     // skeleton.visible = true;
     // scene.add( skeleton );
 
     object.scale.set(2, 2, 2);
-    object.rotation.set(0, 180 * three.Math.pi / 180.0, 0);
+    object.rotation.set(0, 180 * THREE.Math.PI / 180.0, 0);
 
     // var clonedMesh = object.getObjectByName( "vanguard_Mesh" );
 
-    // mixer = new three.AnimationMixer(clonedMesh );
+    // mixer = new THREE.AnimationMixer(clonedMesh );
 
-    // var clip = three.AnimationClip.findByName( List<three.AnimationClip>.from(result["animations"]), "Walk" );
+    // var clip = THREE.AnimationClip.findByName( List<THREE.AnimationClip>.from(result["animations"]), "Walk" );
     // if ( clip != null ) {
 
     //   var action = mixer.clipAction( clip );
@@ -254,7 +260,7 @@ class _MyAppState extends State<WebGlLoaderGltf2> {
 
     scene.add(object);
 
-    // scene.overrideMaterial = new three.MeshBasicMaterial();
+    // scene.overrideMaterial = new THREE.MeshBasicMaterial();
 
     loaded = true;
 

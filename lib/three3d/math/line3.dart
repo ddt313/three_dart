@@ -1,6 +1,4 @@
-import 'package:three_dart/three3d/math/math_utils.dart';
-import 'package:three_dart/three3d/math/matrix4.dart';
-import 'package:three_dart/three3d/math/vector3.dart';
+part of three_math;
 
 final _startP = /*@__PURE__*/ Vector3.init();
 final _startEnd = /*@__PURE__*/ Vector3.init();

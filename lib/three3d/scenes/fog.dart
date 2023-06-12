@@ -1,4 +1,4 @@
-import 'package:three_dart/three3d/math/index.dart';
+part of three_scenes;
 
 class FogBase {
   String name = "";
@@ -8,16 +8,20 @@ class FogBase {
   bool isFogExp2 = false;
 
   toJSON() {
-    throw (" need implement .... ");
+    throw(" need implement .... ");
   }
+
 }
 
 class Fog extends FogBase {
+
+  @override
+  bool isFog = true;
+
   late num near;
   late num far;
 
   Fog(color, num? near, num? far) {
-    isFog = true;
     name = '';
 
     if (color is int) {
@@ -38,6 +42,11 @@ class Fog extends FogBase {
 
   @override
   toJSON(/* meta */) {
-    return {"type": 'Fog', "color": color.getHex(), "near": near, "far": far};
+    return {
+      "type": 'Fog',
+      "color": color.getHex(),
+      "near": near,
+      "far": far
+    };
   }
 }

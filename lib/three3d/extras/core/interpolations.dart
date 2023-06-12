@@ -1,8 +1,9 @@
+part of three_extra;
 
 /// Bezier Curves formulas obtained from
 /// http://en.wikipedia.org/wiki/Bézier_curve
 
-num catmullRom(t, p0, p1, p2, p3) {
+CatmullRom(t, p0, p1, p2, p3) {
   var v0 = (p2 - p0) * 0.5;
   var v1 = (p3 - p1) * 0.5;
   var t2 = t * t;
@@ -15,48 +16,48 @@ num catmullRom(t, p0, p1, p2, p3) {
 
 //
 
-double quadraticBezierP0(double t, double p) {
+QuadraticBezierP0(t, p) {
   var k = 1 - t;
   return k * k * p;
 }
 
-quadraticBezierP1(t, p) {
+QuadraticBezierP1(t, p) {
   return 2 * (1 - t) * t * p;
 }
 
-quadraticBezierP2(t, p) {
+QuadraticBezierP2(t, p) {
   return t * t * p;
 }
 
-quadraticBezier(t, p0, p1, p2) {
-  return quadraticBezierP0(t, p0) +
-      quadraticBezierP1(t, p1) +
-      quadraticBezierP2(t, p2);
+QuadraticBezier(t, p0, p1, p2) {
+  return QuadraticBezierP0(t, p0) +
+      QuadraticBezierP1(t, p1) +
+      QuadraticBezierP2(t, p2);
 }
 
 //
 
-cubicBezierP0(t, p) {
+CubicBezierP0(t, p) {
   var k = 1 - t;
   return k * k * k * p;
 }
 
-cubicBezierP1(t, p) {
+CubicBezierP1(t, p) {
   var k = 1 - t;
   return 3 * k * k * t * p;
 }
 
-cubicBezierP2(t, p) {
+CubicBezierP2(t, p) {
   return 3 * (1 - t) * t * t * p;
 }
 
-cubicBezierP3(t, p) {
+CubicBezierP3(t, p) {
   return t * t * t * p;
 }
 
-cubicBezier(t, p0, p1, p2, p3) {
-  return cubicBezierP0(t, p0) +
-      cubicBezierP1(t, p1) +
-      cubicBezierP2(t, p2) +
-      cubicBezierP3(t, p3);
+CubicBezier(t, p0, p1, p2, p3) {
+  return CubicBezierP0(t, p0) +
+      CubicBezierP1(t, p1) +
+      CubicBezierP2(t, p2) +
+      CubicBezierP3(t, p3);
 }

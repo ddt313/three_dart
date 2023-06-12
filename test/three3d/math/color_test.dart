@@ -23,7 +23,7 @@ void main() {
 
       // EXPOSED CONSTANTS
       test("Exposed Color.NAMES", () {
-        expect(Color.names["aliceblue"], 0xF0F8FF);
+        expect(Color.NAMES["aliceblue"], 0xF0F8FF);
       });
 
       // PUBLIC STUFF
@@ -89,13 +89,13 @@ void main() {
 
       test("setHSL", () {
         var c = Color();
-        HslData hsl = HslData();
+        Map<String, dynamic> hsl = {"h": 0, "s": 0, "l": 0};
         c.setHSL(0.75, 1.0, 0.25);
         c.getHSL(hsl);
 
-        expect(hsl.h, 0.75);
-        expect(hsl.s, 1.00);
-        expect(hsl.l, 0.25);
+        expect(hsl["h"], 0.75);
+        expect(hsl["s"], 1.00);
+        expect(hsl["l"], 0.25);
       });
 
       test("setStyle", () {
@@ -109,19 +109,19 @@ void main() {
         a.setStyle("rgba(8,25,178,200)");
         expect(a.equals(b), true);
 
-        HslData hsl = HslData();
+        Map<String, dynamic> hsl = {"h": 0, "s": 0, "l": 0};
         a.setStyle("hsl(270,50%,75%)");
         a.getHSL(hsl);
-        expect(hsl.h, 0.75);
-        expect(hsl.s, 0.5);
-        expect(hsl.l, 0.75);
+        expect(hsl["h"], 0.75);
+        expect(hsl["s"], 0.5);
+        expect(hsl["l"], 0.75);
 
-        hsl = HslData();
+        hsl = {"h": 0, "s": 0, "l": 0};
         a.setStyle("hsl(270,50%,75%)");
         a.getHSL(hsl);
-        expect(hsl.h, 0.75);
-        expect(hsl.s, 0.5);
-        expect(hsl.l, 0.75);
+        expect(hsl["h"], 0.75);
+        expect(hsl["s"], 0.5);
+        expect(hsl["l"], 0.75);
 
         a.setStyle("#F8A");
         expect(a.r, 0xFF / 255);
@@ -214,12 +214,12 @@ void main() {
 
       test("getHSL", () {
         var c = Color(0x80ffff);
-        HslData hsl = HslData();
+        Map<String, dynamic> hsl = {"h": 0, "s": 0, "l": 0};
         c.getHSL(hsl);
 
-        expect(hsl.h, 0.5);
-        expect(hsl.s, 1.0);
-        expect((Math.round(hsl.l * 100) / 100), 0.75);
+        expect(hsl["h"], 0.5);
+        expect(hsl["s"], 1.0);
+        expect((Math.round(hsl["l"] * 100) / 100), 0.75);
       });
 
       test("getStyle", () {

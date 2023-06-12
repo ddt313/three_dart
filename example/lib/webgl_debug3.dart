@@ -4,23 +4,24 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
-import 'package:three_dart/three_dart.dart' as three;
-import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
+import 'package:three_dart/three_dart.dart' as THREE;
+import 'package:three_dart_jsm/three_dart_jsm.dart' as THREE_JSM;
 
-final webGlAnimationKeyframesGlobalKey = GlobalKey<_WebGlDebug3State>();
+GlobalKey<webgl_animation_keyframesState> webgl_animation_keyframesGlobalKey =
+    GlobalKey<webgl_animation_keyframesState>();
 
-class WebGlDebug3 extends StatefulWidget {
-  final String fileName;
+class webgl_debug3 extends StatefulWidget {
+  String fileName;
 
-  const WebGlDebug3({Key? key, required this.fileName}) : super(key: key);
+  webgl_debug3({Key? key, required this.fileName}) : super(key: key);
 
   @override
-  State<WebGlDebug3> createState() => _WebGlDebug3State();
+  createState() => webgl_animation_keyframesState();
 }
 
-class _WebGlDebug3State extends State<WebGlDebug3> {
+class webgl_animation_keyframesState extends State<webgl_debug3> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -28,37 +29,40 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
 
-  late three.AnimationMixer mixer;
-  three.Clock clock = three.Clock();
-  three_jsm.OrbitControls? controls;
+  late THREE.AnimationMixer mixer;
+  THREE.Clock clock = THREE.Clock();
+  THREE_JSM.OrbitControls? controls;
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
-  late three.Object3D object;
+  late THREE.Object3D object;
 
-  late three.Texture texture;
+  late THREE.Texture texture;
 
-  late three.WebGLMultisampleRenderTarget renderTarget;
+  late THREE.WebGLMultisampleRenderTarget renderTarget;
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
   bool loaded = false;
 
-  late three.Object3D model;
+  late THREE.Object3D model;
+
+  final Map<String, List<Function>> _listeners = {};
 
   @override
   void initState() {
     super.initState();
   }
+
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
@@ -67,7 +71,7 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": false,
       "width": width.toInt(),
@@ -75,11 +79,11 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
-    // Wait for web
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -124,44 +128,51 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-                width: width,
-                height: height,
-                color: Colors.black,
-                child: Builder(builder: (BuildContext context) {
-                  if (kIsWeb) {
-                    return three3dRender.isInitialized
-                        ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                        : Container();
-                  } else {
-                    return three3dRender.isInitialized ? Texture(textureId: three3dRender.textureId!) : Container();
-                  }
-                })),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              Container(
+                  
+                  child: Container(
+                      width: width,
+                      height: height,
+                      color: Colors.black,
+                      child: Builder(builder: (BuildContext context) {
+                        if (kIsWeb) {
+                          return three3dRender.isInitialized
+                              ? HtmlElementView(
+                                  viewType: three3dRender.textureId!.toString())
+                              : Container();
+                        } else {
+                          return three3dRender.isInitialized
+                              ? Texture(textureId: three3dRender.textureId!)
+                              : Container();
+                        }
+                      }))),
+            ],
+          ),
         ),
       ],
     );
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int _t = DateTime.now().millisecondsSinceEpoch;
 
-    final gl = three3dRender.gl;
+    final _gl = three3dRender.gl;
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
-    gl.flush();
+    _gl.flush();
 
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
@@ -171,21 +182,22 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
       "canvas": three3dRender.element
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = false;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
-      renderTarget = three.WebGLMultisampleRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
+      renderTarget = THREE.WebGLMultisampleRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget.samples = 4;
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -198,36 +210,37 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
   }
 
   initPage() async {
-    camera = three.PerspectiveCamera(45, width / height, 1, 100);
+    camera = THREE.PerspectiveCamera(45, width / height, 1, 100);
     camera.position.set(0, 0, 100);
 
     // scene
 
-    scene = three.Scene();
+    scene = THREE.Scene();
 
-    var ambientLight = three.AmbientLight(0xcccccc, 0.4);
+    var ambientLight = THREE.AmbientLight(0xcccccc, 0.4);
     scene.add(ambientLight);
     scene.add(camera);
 
     camera.lookAt(scene.position);
 
-    var loader = three.TextureLoader(null);
-    var clothTexture = await loader.loadAsync('assets/textures/patterns/circuit_pattern.png', null);
+    var loader = THREE.TextureLoader(null);
+    var clothTexture = await loader.loadAsync(
+        'assets/textures/patterns/circuit_pattern.png', null);
     clothTexture.anisotropy = 16;
 
-    var clothMaterial =
-        three.MeshLambertMaterial({"alphaMap": clothTexture, "side": three.DoubleSide, "alphaTest": 0.5});
+    var clothMaterial = THREE.MeshLambertMaterial(
+        {"alphaMap": clothTexture, "side": THREE.DoubleSide, "alphaTest": 0.5});
 
-    var plane = three.PlaneGeometry(50, 50);
+    var plane = THREE.PlaneGeometry(50, 50);
 
-    var mesh = three.Mesh(plane, clothMaterial);
-    scene.add(mesh);
+    var _mesh = THREE.Mesh(plane, clothMaterial);
+    scene.add(_mesh);
 
     loaded = true;
 
     animate();
 
-    // scene.overrideMaterial = new three.MeshBasicMaterial();
+    // scene.overrideMaterial = new THREE.MeshBasicMaterial();
   }
 
   clickRender() {
@@ -243,6 +256,8 @@ class _WebGlDebug3State extends State<WebGlDebug3> {
     if (!loaded) {
       return;
     }
+
+    var delta = clock.getDelta();
 
     render();
 

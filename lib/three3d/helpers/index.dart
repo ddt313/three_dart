@@ -1,15 +1,26 @@
-library helpers;
+library three_helpers;
 
-export 'arrow_helper.dart';
-export 'axes_helper.dart';
-export 'box_helper.dart';
-export 'camera_helper.dart';
-export 'grid_helper.dart';
-export 'plane_helper.dart';
-export 'skeleton_helper.dart';
-export 'spot_light_helper.dart';
-export 'point_light_helper.dart';
-export 'directional_light_helper.dart';
-export 'hemisphere_light_helper.dart';
-export 'box3_helper.dart';
-export 'polar_grid_helper.dart';
+
+import 'package:flutter_gl/flutter_gl.dart';
+import 'package:three_dart/three3d/cameras/index.dart';
+import 'package:three_dart/three3d/constants.dart';
+import 'package:three_dart/three3d/core/index.dart';
+import 'package:three_dart/three3d/geometries/index.dart';
+import 'package:three_dart/three3d/lights/index.dart';
+import 'package:three_dart/three3d/materials/index.dart';
+import 'package:three_dart/three3d/math/index.dart';
+import 'package:three_dart/three3d/objects/index.dart';
+
+part './ArrowHelper.dart';
+part './AxesHelper.dart';
+part './BoxHelper.dart';
+part './CameraHelper.dart';
+part './GridHelper.dart';
+part './PlaneHelper.dart';
+part './SkeletonHelper.dart';
+part './SpotLightHelper.dart';
+part './PointLightHelper.dart';
+part './DirectionalLightHelper.dart';
+part './HemisphereLightHelper.dart';
+part './Box3Helper.dart';
+part './PolarGridHelper.dart';

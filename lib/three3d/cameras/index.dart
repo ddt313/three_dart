@@ -1,8 +1,15 @@
-library cameras;
+library three_camera;
 
-export 'array_camera.dart';
-export 'camera.dart';
-export 'cube_camera.dart';
-export 'orthographic_camera.dart';
-export 'perspective_camera.dart';
-export 'stereo_camera.dart';
+import 'dart:convert';
+
+import 'package:three_dart/three3d/constants.dart';
+import 'package:three_dart/three3d/core/index.dart';
+import 'package:three_dart/three3d/math/index.dart';
+import 'package:three_dart/three3d/renderers/index.dart';
+
+part './ArrayCamera.dart';
+part './Camera.dart';
+part './CubeCamera.dart';
+part './OrthographicCamera.dart';
+part './PerspectiveCamera.dart';
+part './StereoCamera.dart';

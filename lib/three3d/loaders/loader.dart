@@ -1,4 +1,4 @@
-import 'package:three_dart/three3d/loaders/loading_manager.dart';
+part of three_loaders;
 
 abstract class Loader {
   late LoadingManager manager;
@@ -14,7 +14,7 @@ abstract class Loader {
   bool flipY = false;
 
   Loader([manager]) {
-    this.manager = (manager != null) ? manager : defaultLoadingManager;
+    this.manager = (manager != null) ? manager : DefaultLoadingManager;
 
     crossOrigin = 'anonymous';
     withCredentials = false;

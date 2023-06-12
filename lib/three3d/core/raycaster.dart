@@ -1,16 +1,12 @@
-import 'package:three_dart/three3d/cameras/index.dart';
-import 'package:three_dart/three3d/core/layers.dart';
-import 'package:three_dart/three3d/core/object_3d.dart';
-import 'package:three_dart/three3d/math/index.dart';
+part of three_core;
 
 class Raycaster {
   late Ray ray;
   late num near;
   late num far;
+  late Camera camera;
   late Layers layers;
   late Map<String, dynamic> params;
-
-  Camera? camera;
 
   Raycaster([Vector3? origin, Vector3? direction, num? near, num? far]) {
     ray = Ray(origin, direction);
@@ -33,7 +29,8 @@ class Raycaster {
     return a.distance - b.distance >= 0 ? 1 : -1;
   }
 
-  void intersectObject4(Object3D object, Raycaster raycaster, List<Intersection> intersects, bool recursive) {
+  void intersectObject4(Object3D object, Raycaster raycaster,
+      List<Intersection> intersects, bool recursive) {
     if (object.layers.test(raycaster.layers)) {
       object.raycast(raycaster, intersects);
     }
@@ -56,30 +53,39 @@ class Raycaster {
   void setFromCamera(Vector2 coords, Camera camera) {
     if (camera is PerspectiveCamera) {
       ray.origin.setFromMatrixPosition(camera.matrixWorld);
-      ray.direction.set(coords.x, coords.y, 0.5).unproject(camera).sub(ray.origin).normalize();
+      ray
+          .direction
+          .set(coords.x, coords.y, 0.5)
+          .unproject(camera)
+          .sub(ray.origin)
+          .normalize();
       this.camera = camera;
     } else if (camera is OrthographicCamera) {
-      ray.origin
-          .set(coords.x, coords.y, (camera.near + camera.far) / (camera.near - camera.far))
+      ray
+          .origin
+          .set(coords.x, coords.y,
+              (camera.near + camera.far) / (camera.near - camera.far))
           .unproject(camera); // set origin in plane of camera
       ray.direction.set(0, 0, -1).transformDirection(camera.matrixWorld);
       this.camera = camera;
     } else {
-      print('three.Raycaster: Unsupported camera type: ${camera.type}');
+      print('THREE.Raycaster: Unsupported camera type: ' + camera.type);
     }
   }
 
-  List<Intersection> intersectObject(Object3D object, bool recursive, [List<Intersection>? intersects]) {
-    List<Intersection> intersections = intersects ?? [];
+  List<Intersection> intersectObject(Object3D object, bool recursive,
+      [List<Intersection>? intersects]) {
+    List<Intersection> _intersects = intersects ?? [];
 
-    intersectObject4(object, this, intersections, recursive);
+    intersectObject4(object, this, _intersects, recursive);
 
-    intersections.sort(ascSort);
+    _intersects.sort(ascSort);
 
-    return intersections;
+    return _intersects;
   }
 
-  List<Intersection> intersectObjects(List<Object3D> objects, bool recursive, [List<Intersection>? intersects]) {
+  List<Intersection> intersectObjects(List<Object3D> objects, bool recursive,
+      [List<Intersection>? intersects]) {
     intersects = intersects ?? List<Intersection>.from([]);
 
     for (var i = 0, l = objects.length; i < l; i++) {

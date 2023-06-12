@@ -5,21 +5,22 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
 import 'package:three_dart/three3d/objects/index.dart';
-import 'package:three_dart/three_dart.dart' as three;
-import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
+import 'package:three_dart/three_dart.dart' as THREE;
+import 'package:three_dart_jsm/three_dart_jsm.dart' as THREE_JSM;
 
-class WebglAnimationSkinningAdditiveBlending extends StatefulWidget {
-  final String fileName;
+class webgl_animation_skinning_additive_blending extends StatefulWidget {
+  String fileName;
 
-  const WebglAnimationSkinningAdditiveBlending({Key? key, required this.fileName}) : super(key: key);
+  webgl_animation_skinning_additive_blending({Key? key, required this.fileName})
+      : super(key: key);
 
   @override
-  State<WebglAnimationSkinningAdditiveBlending> createState() => _State();
+  createState() => _State();
 }
 
-class _State extends State<WebglAnimationSkinningAdditiveBlending> {
+class _State extends State<webgl_animation_skinning_additive_blending> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -27,32 +28,32 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
 
-  late three.AnimationMixer mixer;
-  late three.Clock clock;
-  three_jsm.OrbitControls? controls;
+  late THREE.AnimationMixer mixer;
+  late THREE.Clock clock;
+  THREE_JSM.OrbitControls? controls;
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
-  late three.Object3D object;
+  late THREE.Object3D object;
 
-  late three.Texture texture;
+  late THREE.Texture texture;
 
-  late three.WebGLMultisampleRenderTarget renderTarget;
+  late THREE.WebGLMultisampleRenderTarget renderTarget;
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
   bool loaded = false;
 
-  late three.Object3D model;
+  late THREE.Object3D model;
 
   @override
   void initState() {
@@ -66,7 +67,7 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": false,
       "width": width.toInt(),
@@ -74,10 +75,11 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -122,44 +124,50 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-                width: width,
-                height: height,
-                color: Colors.black,
-                child: Builder(builder: (BuildContext context) {
-                  if (kIsWeb) {
-                    return three3dRender.isInitialized
-                        ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                        : Container();
-                  } else {
-                    return three3dRender.isInitialized ? Texture(textureId: three3dRender.textureId!) : Container();
-                  }
-                })),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              Container(
+                  child: Container(
+                      width: width,
+                      height: height,
+                      color: Colors.black,
+                      child: Builder(builder: (BuildContext context) {
+                        if (kIsWeb) {
+                          return three3dRender.isInitialized
+                              ? HtmlElementView(
+                                  viewType: three3dRender.textureId!.toString())
+                              : Container();
+                        } else {
+                          return three3dRender.isInitialized
+                              ? Texture(textureId: three3dRender.textureId!)
+                              : Container();
+                        }
+                      }))),
+            ],
+          ),
         ),
       ],
     );
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int _t = DateTime.now().millisecondsSinceEpoch;
 
-    final gl = three3dRender.gl;
+    final _gl = three3dRender.gl;
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
-    gl.flush();
+    _gl.flush();
 
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
@@ -169,22 +177,23 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
       "canvas": three3dRender.element
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = true;
-    renderer!.outputEncoding = three.sRGBEncoding;
+    renderer!.outputEncoding = THREE.sRGBEncoding;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
-      renderTarget = three.WebGLMultisampleRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
+      renderTarget = THREE.WebGLMultisampleRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget.samples = 4;
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -197,21 +206,21 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
   }
 
   initPage() async {
-    camera = three.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera = THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     camera.position.set(-1, 2, 3);
-    camera.lookAt(three.Vector3(0, 1, 0));
+    camera.lookAt(THREE.Vector3(0, 1, 0));
 
-    clock = three.Clock();
+    clock = THREE.Clock();
 
-    scene = three.Scene();
-    scene.background = three.Color.fromHex(0xa0a0a0);
-    // scene.fog = three.Fog(0xa0a0a0, 10, 50);
+    scene = THREE.Scene();
+    scene.background = THREE.Color.fromHex(0xa0a0a0);
+    // scene.fog = THREE.Fog(0xa0a0a0, 10, 50);
 
-    // var hemiLight = three.HemisphereLight(0xffffff, 0x444444);
+    // var hemiLight = THREE.HemisphereLight(0xffffff, 0x444444);
     // hemiLight.position.set(0, 20, 0);
     // scene.add(hemiLight);
 
-    // var dirLight = three.DirectionalLight(0xffffff);
+    // var dirLight = THREE.DirectionalLight(0xffffff);
     // dirLight.position.set(3, 10, 10);
     // dirLight.castShadow = true;
     // dirLight.shadow!.camera!.top = 2;
@@ -222,13 +231,13 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
     // dirLight.shadow!.camera!.far = 40;
     // scene.add(dirLight);
 
-    // var mesh = three.Mesh(three.PlaneGeometry(100, 100),
-    //     three.MeshPhongMaterial({"color": 0x999999, "depthWrite": false}));
-    // mesh.rotation.x = -three.Math.PI / 2;
+    // var mesh = THREE.Mesh(THREE.PlaneGeometry(100, 100),
+    //     THREE.MeshPhongMaterial({"color": 0x999999, "depthWrite": false}));
+    // mesh.rotation.x = -THREE.Math.PI / 2;
     // mesh.receiveShadow = true;
     // scene.add(mesh);
 
-    var loader = three_jsm.GLTFLoader(null);
+    var loader = THREE_JSM.GLTFLoader(null);
     var gltf = await loader.loadAsync('assets/models/gltf/Xbot.gltf');
 
     model = gltf["scene"];
@@ -240,15 +249,20 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
       }
     });
 
-    // var skeleton = three.SkeletonHelper(model);
+
+
+    // var skeleton = THREE.SkeletonHelper(model);
     // skeleton.visible = true;
     // scene.add(skeleton);
 
+
     var animations = gltf["animations"];
 
-    mixer = three.AnimationMixer(model);
+    mixer = THREE.AnimationMixer(model);
 
+    var idleAction = mixer.clipAction(animations[0]);
     var walkAction = mixer.clipAction(animations[3]);
+    var runAction = mixer.clipAction(animations[1]);
 
     // var actions = [ idleAction, walkAction, runAction ];
     walkAction!.play();
@@ -258,7 +272,7 @@ class _State extends State<WebglAnimationSkinningAdditiveBlending> {
 
     animate();
 
-    // scene.overrideMaterial = new three.MeshBasicMaterial();
+    // scene.overrideMaterial = new THREE.MeshBasicMaterial();
   }
 
   clickRender() {

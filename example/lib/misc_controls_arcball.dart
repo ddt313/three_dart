@@ -1,25 +1,26 @@
 import 'dart:async';
 
+
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
 
-import 'package:three_dart/three_dart.dart' as three;
-import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
+import 'package:three_dart/three_dart.dart' as THREE;
+import 'package:three_dart_jsm/three_dart_jsm.dart' as THREE_JSM;
 
-class MiscControlsArcball extends StatefulWidget {
-  final String fileName;
-
-  const MiscControlsArcball({Key? key, required this.fileName}) : super(key: key);
+class misc_controls_arcball extends StatefulWidget {
+  String fileName;
+  misc_controls_arcball({Key? key, required this.fileName}) : super(key: key);
 
   @override
-  State<MiscControlsArcball> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MiscControlsArcball> {
+class _MyAppState extends State<misc_controls_arcball> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -27,24 +28,25 @@ class _MyAppState extends State<MiscControlsArcball> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
-  late three.WebGLRenderTarget renderTarget;
+  late THREE.WebGLRenderTarget renderTarget;
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
-  final GlobalKey<three_jsm.DomLikeListenableState> _globalKey = GlobalKey<three_jsm.DomLikeListenableState>();
+  final GlobalKey<THREE_JSM.DomLikeListenableState> _globalKey =
+      GlobalKey<THREE_JSM.DomLikeListenableState>();
 
-  late three_jsm.ArcballControls controls;
+  late THREE_JSM.ArcballControls controls;
 
   @override
   void initState() {
@@ -58,7 +60,7 @@ class _MyAppState extends State<MiscControlsArcball> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": false,
       "width": width.toInt(),
@@ -66,10 +68,11 @@ class _MyAppState extends State<MiscControlsArcball> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -114,51 +117,55 @@ class _MyAppState extends State<MiscControlsArcball> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            three_jsm.DomLikeListenable(
-                key: _globalKey,
-                builder: (BuildContext context) {
-                  return Container(
-                      width: width,
-                      height: height,
-                      color: Colors.black,
-                      child: Builder(builder: (BuildContext context) {
-                        if (kIsWeb) {
-                          return three3dRender.isInitialized
-                              ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                              : Container();
-                        } else {
-                          return three3dRender.isInitialized
-                              ? Texture(textureId: three3dRender.textureId!)
-                              : Container();
-                        }
-                      }));
-                }),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              THREE_JSM.DomLikeListenable(
+                  key: _globalKey,
+                  builder: (BuildContext context) {
+                    return Container(
+                        width: width,
+                        height: height,
+                        color: Colors.black,
+                        child: Builder(builder: (BuildContext context) {
+                          if (kIsWeb) {
+                            return three3dRender.isInitialized
+                                ? HtmlElementView(
+                                    viewType:
+                                        three3dRender.textureId!.toString())
+                                : Container();
+                          } else {
+                            return three3dRender.isInitialized
+                                ? Texture(textureId: three3dRender.textureId!)
+                                : Container();
+                          }
+                        }));
+                  }),
+            ],
+          ),
         ),
       ],
     );
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
-    final gl = three3dRender.gl;
+    int _t = DateTime.now().millisecondsSinceEpoch;
+    final _gl = three3dRender.gl;
 
     controls.update();
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
-    gl.flush();
+    _gl.flush();
 
     // var pixels = _gl.readCurrentPixels(0, 0, 10, 10);
     // print(" --------------pixels............. ");
@@ -172,22 +179,26 @@ class _MyAppState extends State<MiscControlsArcball> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
       "canvas": three3dRender.element
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = false;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions(
-          {"minFilter": three.LinearFilter, "magFilter": three.LinearFilter, "format": three.RGBAFormat});
-      renderTarget = three.WebGLRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({
+        "minFilter": THREE.LinearFilter,
+        "magFilter": THREE.LinearFilter,
+        "format": THREE.RGBAFormat
+      });
+      renderTarget = THREE.WebGLRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget.samples = 4;
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -200,41 +211,47 @@ class _MyAppState extends State<MiscControlsArcball> {
   }
 
   initPage() {
-    scene = three.Scene();
-    scene.background = three.Color(0xcccccc);
-    scene.fog = three.FogExp2(0xcccccc, 0.002);
+    var ASPECTRATIO = width / height;
 
-    camera = three.PerspectiveCamera(45, width / height, 1, 2000);
+    var WIDTH = (width / AMOUNT) * dpr;
+    var HEIGHT = (height / AMOUNT) * dpr;
+
+    scene = THREE.Scene();
+    scene.background = THREE.Color(0xcccccc);
+    scene.fog = THREE.FogExp2(0xcccccc, 0.002);
+
+    camera = THREE.PerspectiveCamera(45, width / height, 1, 2000);
     camera.position.set(0, 0, 200);
     camera.lookAt(scene.position);
 
     // controls
 
-    controls = three_jsm.ArcballControls(camera, _globalKey, scene, 1);
+    controls = THREE_JSM.ArcballControls(camera, _globalKey, scene, 1);
     controls.addEventListener('change', (event) {
       render();
     });
 
     // world
 
-    var geometry = three.BoxGeometry(30, 30, 30);
-    var material = three.MeshPhongMaterial({"color": 0xffff00, "flatShading": true});
+    var geometry = THREE.BoxGeometry(30, 30, 30);
+    var material =
+        THREE.MeshPhongMaterial({"color": 0xffff00, "flatShading": true});
 
-    var mesh = three.Mesh(geometry, material);
+    var mesh = THREE.Mesh(geometry, material);
 
     scene.add(mesh);
 
     // lights
 
-    var dirLight1 = three.DirectionalLight(0xffffff);
+    var dirLight1 = THREE.DirectionalLight(0xffffff);
     dirLight1.position.set(1, 1, 1);
     scene.add(dirLight1);
 
-    var dirLight2 = three.DirectionalLight(0x002288);
+    var dirLight2 = THREE.DirectionalLight(0x002288);
     dirLight2.position.set(-1, -1, -1);
     scene.add(dirLight2);
 
-    var ambientLight = three.AmbientLight(0x222222);
+    var ambientLight = THREE.AmbientLight(0x222222);
     scene.add(ambientLight);
 
     animate();

@@ -1,9 +1,4 @@
-import 'package:three_dart/three3d/core/index.dart';
-import 'package:three_dart/three3d/math/box3.dart';
-import 'package:three_dart/three3d/math/matrix4.dart';
-import 'package:three_dart/three3d/math/plane.dart';
-import 'package:three_dart/three3d/math/sphere.dart';
-import 'package:three_dart/three3d/math/vector3.dart';
+part of three_math;
 
 var _sphere = Sphere(null, null);
 var _vectorFrustum = Vector3.init();
@@ -61,12 +56,24 @@ class Frustum {
     var me8 = me[8], me9 = me[9], me10 = me[10], me11 = me[11];
     var me12 = me[12], me13 = me[13], me14 = me[14], me15 = me[15];
 
-    planes[0].setComponents(me3 - me0, me7 - me4, me11 - me8, me15 - me12).normalize();
-    planes[1].setComponents(me3 + me0, me7 + me4, me11 + me8, me15 + me12).normalize();
-    planes[2].setComponents(me3 + me1, me7 + me5, me11 + me9, me15 + me13).normalize();
-    planes[3].setComponents(me3 - me1, me7 - me5, me11 - me9, me15 - me13).normalize();
-    planes[4].setComponents(me3 - me2, me7 - me6, me11 - me10, me15 - me14).normalize();
-    planes[5].setComponents(me3 + me2, me7 + me6, me11 + me10, me15 + me14).normalize();
+    planes[0]
+        .setComponents(me3 - me0, me7 - me4, me11 - me8, me15 - me12)
+        .normalize();
+    planes[1]
+        .setComponents(me3 + me0, me7 + me4, me11 + me8, me15 + me12)
+        .normalize();
+    planes[2]
+        .setComponents(me3 + me1, me7 + me5, me11 + me9, me15 + me13)
+        .normalize();
+    planes[3]
+        .setComponents(me3 - me1, me7 - me5, me11 - me9, me15 - me13)
+        .normalize();
+    planes[4]
+        .setComponents(me3 - me2, me7 - me6, me11 - me10, me15 - me14)
+        .normalize();
+    planes[5]
+        .setComponents(me3 + me2, me7 + me6, me11 + me10, me15 + me14)
+        .normalize();
 
     return this;
   }

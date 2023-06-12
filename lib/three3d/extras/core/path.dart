@@ -1,16 +1,16 @@
-import 'package:three_dart/three3d/extras/index.dart';
-import 'package:three_dart/three3d/math/index.dart';
+part of three_extra;
 
 class Path extends CurvePath {
+  @override
+  String type = 'Path';
+
   Path(points) : super() {
-    type = 'Path';
     if (points != null) {
       setFromPoints(points);
     }
   }
 
   Path.fromJSON(json) : super.fromJSON(json) {
-    type = 'Path';
     currentPoint.fromArray(json["currentPoint"]);
   }
 
@@ -25,7 +25,8 @@ class Path extends CurvePath {
   }
 
   moveTo(num x, num y) {
-    currentPoint.set(x.toDouble(), y.toDouble()); // TODO consider referencing vectors instead of copying?
+    currentPoint
+        .set(x.toDouble(), y.toDouble()); // TODO consider referencing vectors instead of copying?
 
     return this;
   }
@@ -40,8 +41,8 @@ class Path extends CurvePath {
   }
 
   quadraticCurveTo(num aCPx, num aCPy, num aX, num aY) {
-    var curve = QuadraticBezierCurve(
-        currentPoint.clone(), Vector2(aCPx.toDouble(), aCPy.toDouble()), Vector2(aX.toDouble(), aY.toDouble()));
+    var curve = QuadraticBezierCurve(currentPoint.clone(),
+        Vector2(aCPx.toDouble(), aCPy.toDouble()), Vector2(aX.toDouble(), aY.toDouble()));
 
     curves.add(curve);
 
@@ -51,8 +52,11 @@ class Path extends CurvePath {
   }
 
   bezierCurveTo(num aCP1x, num aCP1y, num aCP2x, num aCP2y, num aX, num aY) {
-    var curve = CubicBezierCurve(currentPoint.clone(), Vector2(aCP1x.toDouble(), aCP1y.toDouble()),
-        Vector2(aCP2x.toDouble(), aCP2y.toDouble()), Vector2(aX.toDouble(), aY.toDouble()));
+    var curve = CubicBezierCurve(
+        currentPoint.clone(),
+        Vector2(aCP1x.toDouble(), aCP1y.toDouble()),
+        Vector2(aCP2x.toDouble(), aCP2y.toDouble()),
+        Vector2(aX.toDouble(), aY.toDouble()));
 
     curves.add(curve);
 
@@ -83,22 +87,27 @@ class Path extends CurvePath {
   }
 
   absarc(aX, aY, aRadius, aStartAngle, aEndAngle, aClockwise) {
-    absellipse(aX, aY, aRadius, aRadius, aStartAngle, aEndAngle, aClockwise, null);
+    absellipse(
+        aX, aY, aRadius, aRadius, aStartAngle, aEndAngle, aClockwise, null);
 
     return this;
   }
 
-  ellipse(aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation) {
+  ellipse(
+      aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation) {
     var x0 = currentPoint.x;
     var y0 = currentPoint.y;
 
-    absellipse(aX + x0, aY + y0, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation);
+    absellipse(aX + x0, aY + y0, xRadius, yRadius, aStartAngle, aEndAngle,
+        aClockwise, aRotation);
 
     return this;
   }
 
-  absellipse(aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation) {
-    var curve = EllipseCurve(aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation);
+  absellipse(
+      aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation) {
+    var curve = EllipseCurve(aX, aY, xRadius, yRadius, aStartAngle,
+        aEndAngle, aClockwise, aRotation);
 
     if (curves.isNotEmpty) {
       // if a previous curve is present, attempt to join
@@ -133,5 +142,14 @@ class Path extends CurvePath {
     data["currentPoint"] = currentPoint.toArray();
 
     return data;
+  }
+
+  @override
+  fromJSON(json) {
+    super.fromJSON(json);
+
+    currentPoint.fromArray(json.currentPoint);
+
+    return this;
   }
 }

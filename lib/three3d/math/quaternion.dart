@@ -1,8 +1,4 @@
-import 'package:three_dart/three3d/core/index.dart';
-import 'package:three_dart/three3d/math/euler.dart';
-import 'package:three_dart/three3d/math/math.dart';
-import 'package:three_dart/three3d/math/math_utils.dart';
-import 'package:three_dart/three3d/math/vector3.dart';
+part of three_math;
 
 class Quaternion {
   String type = "Quaternion";
@@ -32,13 +28,15 @@ class Quaternion {
     return [_x, _y, _z, _w];
   }
 
-  static Quaternion staticSlerp(Quaternion qa, Quaternion qb, Quaternion qm, num t) {
+  static Quaternion static_slerp(
+      Quaternion qa, Quaternion qb, Quaternion qm, num t) {
     print(
-        'three.Quaternion: Static .slerp() has been deprecated. Use is now qm.slerpQuaternions( qa, qb, t ) instead.');
+        'THREE.Quaternion: Static .slerp() has been deprecated. Use is now qm.slerpQuaternions( qa, qb, t ) instead.');
     return qm.slerpQuaternions(qa, qb, t);
   }
 
-  static void slerpFlat(dst, num dstOffset, src0, num srcOffset0, src1, num srcOffset1, num t) {
+  static void slerpFlat(
+      dst, num dstOffset, src0, num srcOffset0, src1, num srcOffset1, num t) {
     // fuzz-free, array-based Quaternion SLERP operation
 
     double x0 = src0[srcOffset0 + 0].toDouble(),
@@ -73,7 +71,7 @@ class Quaternion {
       var dir = (cos >= 0 ? 1 : -1), sqrSin = 1 - cos * cos;
 
       // Skip the Slerp for tiny steps to avoid numeric problems:
-      if (sqrSin > Math.epsilon) {
+      if (sqrSin > Math.EPSILON) {
         var sin = Math.sqrt(sqrSin), len = Math.atan2(sin, cos * dir);
 
         s = Math.sin(s * len) / sin;
@@ -104,7 +102,8 @@ class Quaternion {
     dst[dstOffset + 3] = w0;
   }
 
-  static multiplyQuaternionsFlat(dst, num dstOffset, src0, num srcOffset0, src1, num srcOffset1) {
+  static multiplyQuaternionsFlat(
+      dst, num dstOffset, src0, num srcOffset0, src1, num srcOffset1) {
     var x0 = src0[srcOffset0];
     var y0 = src0[srcOffset0 + 1];
     var z0 = src0[srcOffset0 + 2];
@@ -239,7 +238,9 @@ class Quaternion {
         break;
 
       default:
-        print('three.Quaternion: .setFromEuler() encountered an unknown order: $order');
+        print(
+            'THREE.Quaternion: .setFromEuler() encountered an unknown order: ' +
+                order);
     }
 
     if (update) {
@@ -322,7 +323,7 @@ class Quaternion {
 
     var r = vFrom.dot(vTo) + 1;
 
-    if (r < Math.epsilon) {
+    if (r < Math.EPSILON) {
       r = 0;
 
       if (Math.abs(vFrom.x) > Math.abs(vFrom.z)) {
@@ -420,7 +421,8 @@ class Quaternion {
 
   Quaternion multiply(Quaternion q, {Quaternion? p}) {
     if (p != null) {
-      print('three.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.');
+      print(
+          'THREE.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.');
       return multiplyQuaternions(q, p);
     }
 
@@ -479,7 +481,7 @@ class Quaternion {
 
     var sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
 
-    if (sqrSinHalfTheta <= Math.epsilon) {
+    if (sqrSinHalfTheta <= Math.EPSILON) {
       var s = 1 - t;
       _w = s * w + t * _w;
       _x = s * x + t * _x;
@@ -494,7 +496,8 @@ class Quaternion {
 
     var sinHalfTheta = Math.sqrt(sqrSinHalfTheta);
     var halfTheta = Math.atan2(sinHalfTheta, cosHalfTheta);
-    var ratioA = Math.sin((1 - t) * halfTheta) / sinHalfTheta, ratioB = Math.sin(t * halfTheta) / sinHalfTheta;
+    var ratioA = Math.sin((1 - t) * halfTheta) / sinHalfTheta,
+        ratioB = Math.sin(t * halfTheta) / sinHalfTheta;
 
     _w = (w * ratioA + _w * ratioB);
     _x = (x * ratioA + _x * ratioB);
@@ -519,9 +522,9 @@ class Quaternion {
     var sqrt1u1 = Math.sqrt(1 - u1);
     var sqrtu1 = Math.sqrt(u1);
 
-    var u2 = 2 * Math.pi * Math.random();
+    var u2 = 2 * Math.PI * Math.random();
 
-    var u3 = 2 * Math.pi * Math.random();
+    var u3 = 2 * Math.PI * Math.random();
 
     return set(
       sqrt1u1 * Math.cos(u2),
@@ -532,7 +535,10 @@ class Quaternion {
   }
 
   bool equals(Quaternion quaternion) {
-    return (quaternion._x == _x) && (quaternion._y == _y) && (quaternion._z == _z) && (quaternion._w == _w);
+    return (quaternion._x == _x) &&
+        (quaternion._y == _y) &&
+        (quaternion._z == _z) &&
+        (quaternion._w == _w);
   }
 
   Quaternion fromArray(List<num> array, [int offset = 0]) {

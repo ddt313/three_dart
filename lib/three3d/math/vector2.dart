@@ -1,5 +1,4 @@
-import 'package:three_dart/three3d/math/math.dart';
-import 'package:three_dart/three3d/math/matrix3.dart';
+part of three_math;
 
 class Vector2 {
   String type = "Vector2";
@@ -89,7 +88,8 @@ class Vector2 {
 
   Vector2 add(Vector2 v, {Vector2? w}) {
     if (w != null) {
-      print('three.Vector2: .add() now only accepts one argument. Use .addVectors( a, b ) instead.');
+      print(
+          'THREE.Vector2: .add() now only accepts one argument. Use .addVectors( a, b ) instead.');
       return addVectors(v, w);
     }
 
@@ -122,7 +122,8 @@ class Vector2 {
 
   Vector2 sub(Vector2 v, {Vector2? w}) {
     if (w != null) {
-      print('three.Vector2: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.');
+      print(
+          'THREE.Vector2: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.');
       return subVectors(v, w);
     }
 
@@ -215,7 +216,8 @@ class Vector2 {
   Vector2 clampLength(double min, double max) {
     var length = this.length();
 
-    return divideScalar(length).multiplyScalar(Math.max(min, Math.min(max, length)));
+    return divideScalar(length)
+        .multiplyScalar(Math.max(min, Math.min(max, length)));
   }
 
   Vector2 floor() {
@@ -280,7 +282,7 @@ class Vector2 {
   double angle() {
     // computes the angle in radians with respect to the positive x-axis
 
-    var angle = Math.atan2(-y, -x) + Math.pi;
+    var angle = Math.atan2(-y, -x) + Math.PI;
 
     return angle;
   }
@@ -373,4 +375,5 @@ class Vector2 {
   Map<String, double> toJson() {
     return {'x': x, 'y': y};
   }
+
 }

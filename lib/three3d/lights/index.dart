@@ -1,15 +1,20 @@
-library lights;
+library three_lights;
 
-export 'ambient_light.dart';
-export 'directional_light.dart';
-export 'directional_light_shadow.dart';
-export 'hemisphere_light.dart';
-export 'hemisphere_light_probe.dart';
-export 'light.dart';
-export 'light_probe.dart';
-export 'light_shadow.dart';
-export 'point_light.dart';
-export 'point_light_shadow.dart';
-export 'rect_area_light.dart';
-export 'spot_light.dart';
-export 'spot_light_shadow.dart';
+import 'package:three_dart/three3d/cameras/index.dart';
+import 'package:three_dart/three3d/core/index.dart';
+import 'package:three_dart/three3d/math/index.dart';
+import 'package:three_dart/three3d/renderers/index.dart';
+
+part './AmbientLight.dart';
+part './DirectionalLight.dart';
+part './DirectionalLightShadow.dart';
+part './HemisphereLight.dart';
+part './HemisphereLightProbe.dart';
+part './Light.dart';
+part './LightProbe.dart';
+part './LightShadow.dart';
+part './PointLight.dart';
+part './PointLightShadow.dart';
+part './RectAreaLight.dart';
+part './SpotLight.dart';
+part './SpotLightShadow.dart';

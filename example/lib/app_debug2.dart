@@ -1,18 +1,17 @@
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-class AppDebug2 extends StatefulWidget {
-  final String fileName;
+class app_debug2 extends StatefulWidget {
+  String fileName;
 
-  const AppDebug2({Key? key, required this.fileName}) : super(key: key);
+  app_debug2({Key? key, required this.fileName}) : super(key: key);
 
   @override
-  State<AppDebug2> createState() => AppDebug2State();
+  createState() => webgl_debugState();
 }
 
-class AppDebug2State extends State<AppDebug2> {
+class webgl_debugState extends State<app_debug2> {
   CanvasElement? element;
   dynamic gl;
   String divId = DateTime.now().microsecondsSinceEpoch.toString();
@@ -32,7 +31,8 @@ class AppDebug2State extends State<AppDebug2> {
       print(" set element ");
       print(" set gl ");
 
-      gl = element!.getContext("webgl2", {"alpha": true, "antialias": true});
+      gl = element!
+          .getContext("webgl2", {"alpha": true, "antialias": true});
       return element!;
     });
   }
@@ -44,7 +44,9 @@ class AppDebug2State extends State<AppDebug2> {
         appBar: AppBar(
           title: Text(widget.fileName),
         ),
-        body: HtmlElementView(viewType: divId),
+        body: Container(
+          child: HtmlElementView(viewType: divId),
+        ),
         floatingActionButton: FloatingActionButton(
           child: const Text("render"),
           onPressed: () {
@@ -58,9 +60,9 @@ class AppDebug2State extends State<AppDebug2> {
   render() {
     print(" render gl: $gl ");
 
-    var ext = gl.getExtension("EXT_texture_filter_anisotropic");
+    var _ext = gl.getExtension("EXT_texture_filter_anisotropic");
 
-    print(" _ext: $ext ");
-    print(" _ext: ${ext.TEXTURE_MAX_ANISOTROPY_EXT} ");
+    print(" _ext: $_ext ");
+    print(" _ext: ${_ext.TEXTURE_MAX_ANISOTROPY_EXT} ");
   }
 }

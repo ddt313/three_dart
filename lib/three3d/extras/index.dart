@@ -1,24 +1,33 @@
-library extras;
+library three_extra;
 
-export 'core/curve.dart';
-export 'core/curve_path.dart';
-export 'core/typr_font.dart';
-export 'core/interpolations.dart';
-export 'core/path.dart';
-export 'core/shape.dart';
-export 'core/shape_path.dart';
-export 'core/svg_path.dart';
-export 'core/ttf_font.dart';
+import 'dart:io';
+import 'dart:typed_data';
 
-export 'curves/cubic_bezier_curve.dart';
-export 'curves/ellipse_curve.dart';
-export 'curves/line_curve.dart';
-export 'curves/quadratic_bezier_curve.dart';
-export 'curves/spline_curve.dart';
-export 'curves/catmull_rom_curve3.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_gl/flutter_gl.dart';
+import 'package:three_dart/three_dart.dart';
 
-export 'earcut.dart';
-export 'shape_utils.dart';
-export 'pmrem_generator.dart';
-export 'image_utils.dart';
-export 'data_utils.dart';
+import '../math/index.dart';
+
+part './core/Curve.dart';
+part './core/CurvePath.dart';
+part 'core/TYPRFont.dart';
+part './core/Interpolations.dart';
+part './core/Path.dart';
+part './core/Shape.dart';
+part './core/ShapePath.dart';
+part './core/SvgPath.dart';
+part './core/TTFFont.dart';
+
+part './curves/CubicBezierCurve.dart';
+part './curves/EllipseCurve.dart';
+part './curves/LineCurve.dart';
+part './curves/QuadraticBezierCurve.dart';
+part './curves/SplineCurve.dart';
+part './curves/CatmullRomCurve3.dart';
+
+part './Earcut.dart';
+part './ShapeUtils.dart';
+part './PMREMGenerator.dart';
+part './ImageUtils.dart';
+part './DataUtils.dart';

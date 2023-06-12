@@ -4,20 +4,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gl/flutter_gl.dart';
-import 'package:three_dart/three_dart.dart' as three;
+import 'package:three_dart/three_dart.dart' as THREE;
 
-class WebGlGeometryColors extends StatefulWidget {
-  final String fileName;
-
-  const WebGlGeometryColors({Key? key, required this.fileName}) : super(key: key);
+class webgl_geometry_colors extends StatefulWidget {
+  String fileName;
+  webgl_geometry_colors({Key? key, required this.fileName}) : super(key: key);
 
   @override
-  State<WebGlGeometryColors> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<WebGlGeometryColors> {
+class _MyAppState extends State<webgl_geometry_colors> {
   late FlutterGlPlugin three3dRender;
-  three.WebGLRenderer? renderer;
+  THREE.WebGLRenderer? renderer;
 
   int? fboId;
   late double width;
@@ -25,33 +24,33 @@ class _MyAppState extends State<WebGlGeometryColors> {
 
   Size? screenSize;
 
-  late three.Scene scene;
-  late three.Camera camera;
-  late three.Mesh mesh;
+  late THREE.Scene scene;
+  late THREE.Camera camera;
+  late THREE.Mesh mesh;
 
-  late three.PointLight pointLight;
+  late THREE.PointLight pointLight;
 
   var objects = [], materials = [];
 
   double dpr = 1.0;
 
-  var amount = 4;
+  var AMOUNT = 4;
 
   bool verbose = true;
   bool disposed = false;
 
   bool loaded = false;
 
-  late three.Object3D object;
+  late THREE.Object3D object;
 
-  late three.Texture texture;
+  late THREE.Texture texture;
 
-  late three.WebGLMultisampleRenderTarget renderTarget;
+  late THREE.WebGLMultisampleRenderTarget renderTarget;
 
-  three.AnimationMixer? mixer;
-  three.Clock clock = three.Clock();
+  THREE.AnimationMixer? mixer;
+  THREE.Clock clock = THREE.Clock();
 
-  dynamic sourceTexture;
+  dynamic? sourceTexture;
 
   @override
   void initState() {
@@ -65,7 +64,7 @@ class _MyAppState extends State<WebGlGeometryColors> {
 
     three3dRender = FlutterGlPlugin();
 
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "antialias": true,
       "alpha": false,
       "width": width.toInt(),
@@ -73,11 +72,11 @@ class _MyAppState extends State<WebGlGeometryColors> {
       "dpr": dpr
     };
 
-    await three3dRender.initialize(options: options);
+    await three3dRender.initialize(options: _options);
 
     setState(() {});
 
-    // Wait for web
+    // TODO web wait dom ok!!!
     Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
@@ -122,22 +121,27 @@ class _MyAppState extends State<WebGlGeometryColors> {
   Widget _build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-                width: width,
-                height: height,
-                color: Colors.black,
-                child: Builder(builder: (BuildContext context) {
-                  if (kIsWeb) {
-                    return three3dRender.isInitialized
-                        ? HtmlElementView(viewType: three3dRender.textureId!.toString())
-                        : Container();
-                  } else {
-                    return three3dRender.isInitialized ? Texture(textureId: three3dRender.textureId!) : Container();
-                  }
-                })),
-          ],
+        Container(
+          child: Stack(
+            children: [
+              Container(
+                  width: width,
+                  height: height,
+                  color: Colors.black,
+                  child: Builder(builder: (BuildContext context) {
+                    if (kIsWeb) {
+                      return three3dRender.isInitialized
+                          ? HtmlElementView(
+                              viewType: three3dRender.textureId!.toString())
+                          : Container();
+                    } else {
+                      return three3dRender.isInitialized
+                          ? Texture(textureId: three3dRender.textureId!)
+                          : Container();
+                    }
+                  })),
+            ],
+          ),
         ),
       ],
     );
@@ -149,22 +153,22 @@ class _MyAppState extends State<WebGlGeometryColors> {
   }
 
   render() {
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int _t = DateTime.now().millisecondsSinceEpoch;
 
-    final gl = three3dRender.gl;
+    final _gl = three3dRender.gl;
 
     renderer!.render(scene, camera);
 
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int _t1 = DateTime.now().millisecondsSinceEpoch;
 
     if (verbose) {
-      print("render cost: ${t1 - t} ");
+      print("render cost: ${_t1 - _t} ");
       print(renderer!.info.memory);
       print(renderer!.info.render);
     }
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
-    gl.flush();
+    _gl.flush();
 
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
@@ -174,21 +178,22 @@ class _MyAppState extends State<WebGlGeometryColors> {
   }
 
   initRenderer() {
-    Map<String, dynamic> options = {
+    Map<String, dynamic> _options = {
       "width": width,
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
       "canvas": three3dRender.element
     };
-    renderer = three.WebGLRenderer(options);
+    renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = true;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions({"format": three.RGBAFormat});
-      renderTarget = three.WebGLMultisampleRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
+      renderTarget = THREE.WebGLMultisampleRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget.samples = 4;
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -201,13 +206,13 @@ class _MyAppState extends State<WebGlGeometryColors> {
   }
 
   initPage() async {
-    camera = three.PerspectiveCamera(20, width / height, 1, 10000);
+    camera = THREE.PerspectiveCamera(20, width / height, 1, 10000);
     camera.position.z = 1800;
 
-    scene = three.Scene();
-    scene.background = three.Color.fromHex(0xffffff);
+    scene = THREE.Scene();
+    scene.background = THREE.Color.fromHex(0xffffff);
 
-    var light = three.DirectionalLight(0xffffff);
+    var light = THREE.DirectionalLight(0xffffff);
     light.position.set(0, 0, 1);
     scene.add(light);
 
@@ -225,41 +230,42 @@ class _MyAppState extends State<WebGlGeometryColors> {
     // context.fillStyle = gradient;
     // context.fillRect( 0, 0, canvas.width, canvas.height );
 
-    // var shadowTexture = new three.CanvasTexture( canvas );
+    // var shadowTexture = new THREE.CanvasTexture( canvas );
 
-    var shadowMaterial = three.MeshBasicMaterial({});
-    var shadowGeo = three.PlaneGeometry(300, 300, 1, 1);
+    var shadowMaterial = THREE.MeshBasicMaterial({});
+    var shadowGeo = THREE.PlaneGeometry(300, 300, 1, 1);
 
-    three.Mesh shadowMesh;
+    THREE.Mesh shadowMesh;
 
-    shadowMesh = three.Mesh(shadowGeo, shadowMaterial);
+    shadowMesh = THREE.Mesh(shadowGeo, shadowMaterial);
     shadowMesh.position.y = -250;
-    shadowMesh.rotation.x = -three.Math.pi / 2;
+    shadowMesh.rotation.x = -THREE.Math.PI / 2;
     scene.add(shadowMesh);
 
-    shadowMesh = three.Mesh(shadowGeo, shadowMaterial);
+    shadowMesh = THREE.Mesh(shadowGeo, shadowMaterial);
     shadowMesh.position.y = -250;
     shadowMesh.position.x = -400;
-    shadowMesh.rotation.x = -three.Math.pi / 2;
+    shadowMesh.rotation.x = -THREE.Math.PI / 2;
     scene.add(shadowMesh);
 
-    shadowMesh = three.Mesh(shadowGeo, shadowMaterial);
+    shadowMesh = THREE.Mesh(shadowGeo, shadowMaterial);
     shadowMesh.position.y = -250;
     shadowMesh.position.x = 400;
-    shadowMesh.rotation.x = -three.Math.pi / 2;
+    shadowMesh.rotation.x = -THREE.Math.PI / 2;
     scene.add(shadowMesh);
 
     var radius = 200;
 
-    var geometry1 = three.IcosahedronGeometry(radius, 1);
+    var geometry1 = THREE.IcosahedronGeometry(radius, 1);
 
     var count = geometry1.attributes["position"].count;
-    geometry1.setAttribute('color', three.Float32BufferAttribute(Float32Array(count * 3), 3));
+    geometry1.setAttribute('color',
+        THREE.Float32BufferAttribute( Float32Array(count * 3), 3));
 
     var geometry2 = geometry1.clone();
     var geometry3 = geometry1.clone();
 
-    var color = three.Color(1, 1, 1);
+    var color = THREE.Color(1, 1, 1);
     var positions1 = geometry1.attributes["position"];
     var positions2 = geometry2.attributes["position"];
     var positions3 = geometry3.attributes["position"];
@@ -278,30 +284,35 @@ class _MyAppState extends State<WebGlGeometryColors> {
       colors3.setXYZ(i, color.r, color.g, color.b);
     }
 
-    var material =
-        three.MeshPhongMaterial({"color": 0xffffff, "flatShading": true, "vertexColors": true, "shininess": 0});
+    var material = THREE.MeshPhongMaterial({
+      "color": 0xffffff,
+      "flatShading": true,
+      "vertexColors": true,
+      "shininess": 0
+    });
 
-    var wireframeMaterial = three.MeshBasicMaterial({"color": 0x000000, "wireframe": true, "transparent": true});
+    var wireframeMaterial = THREE.MeshBasicMaterial(
+        {"color": 0x000000, "wireframe": true, "transparent": true});
 
-    var mesh = three.Mesh(geometry1, material);
-    var wireframe = three.Mesh(geometry1, wireframeMaterial);
+    var mesh = THREE.Mesh(geometry1, material);
+    var wireframe = THREE.Mesh(geometry1, wireframeMaterial);
     mesh.add(wireframe);
     mesh.position.x = -400;
     mesh.rotation.x = -1.87;
     scene.add(mesh);
 
-    mesh = three.Mesh(geometry2, material);
-    wireframe = three.Mesh(geometry2, wireframeMaterial);
+    mesh = THREE.Mesh(geometry2, material);
+    wireframe = THREE.Mesh(geometry2, wireframeMaterial);
     mesh.add(wireframe);
     mesh.position.x = 400;
     scene.add(mesh);
 
-    mesh = three.Mesh(geometry3, material);
-    wireframe = three.Mesh(geometry3, wireframeMaterial);
+    mesh = THREE.Mesh(geometry3, material);
+    wireframe = THREE.Mesh(geometry3, wireframeMaterial);
     mesh.add(wireframe);
     scene.add(mesh);
 
-    // scene.overrideMaterial = new three.MeshBasicMaterial();
+    // scene.overrideMaterial = new THREE.MeshBasicMaterial();
 
     loaded = true;
 
@@ -320,21 +331,21 @@ class _MyAppState extends State<WebGlGeometryColors> {
       pixels[i] = 255;
       pixels[i + 1] = 255;
       pixels[i + 2] = 255;
-      pixels[i + 3] = three.Math.floor(x ^ y);
+      pixels[i + 3] = THREE.Math.floor(x ^ y);
     }
 
-    return three.ImageElement(data: pixels, width: 256, height: 256);
+    return THREE.ImageElement(data: pixels, width: 256, height: 256);
   }
 
   addMesh(geometry, material) {
-    var mesh = three.Mesh(geometry, material);
+    var mesh = THREE.Mesh(geometry, material);
 
     mesh.position.x = (objects.length % 4) * 200 - 400;
-    mesh.position.z = three.Math.floor(objects.length / 4) * 200 - 200;
+    mesh.position.z = THREE.Math.floor(objects.length / 4) * 200 - 200;
 
-    mesh.rotation.x = three.Math.random() * 200 - 100;
-    mesh.rotation.y = three.Math.random() * 200 - 100;
-    mesh.rotation.z = three.Math.random() * 200 - 100;
+    mesh.rotation.x = THREE.Math.random() * 200 - 100;
+    mesh.rotation.y = THREE.Math.random() * 200 - 100;
+    mesh.rotation.z = THREE.Math.random() * 200 - 100;
 
     objects.add(mesh);
 
@@ -353,6 +364,8 @@ class _MyAppState extends State<WebGlGeometryColors> {
     }
 
     print(" animate render ");
+
+    var delta = clock.getDelta();
 
     render();
 

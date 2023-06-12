@@ -1,6 +1,4 @@
-import 'package:three_dart/three3d/extras/core/shape.dart';
-import 'package:three_dart/three3d/extras/curves/line_curve.dart';
-import 'package:three_dart/three3d/math/index.dart';
+part of three_extra;
 
 /// Extensible curve object.
 ///
@@ -11,23 +9,23 @@ import 'package:three_dart/three3d/math/index.dart';
 /// .getLength()
 /// .updateArcLengths()
 ///
-/// This following curves inherit from three.Curve:
+/// This following curves inherit from THREE.Curve:
 ///
 /// -- 2D curves --
-/// three.ArcCurve
-/// three.CubicBezierCurve
-/// three.EllipseCurve
-/// three.LineCurve
-/// three.QuadraticBezierCurve
-/// three.SplineCurve
+/// THREE.ArcCurve
+/// THREE.CubicBezierCurve
+/// THREE.EllipseCurve
+/// THREE.LineCurve
+/// THREE.QuadraticBezierCurve
+/// THREE.SplineCurve
 ///
 /// -- 3D curves --
-/// three.CatmullRomCurve3
-/// three.CubicBezierCurve3
-/// three.LineCurve3
-/// three.QuadraticBezierCurve3
+/// THREE.CatmullRomCurve3
+/// THREE.CubicBezierCurve3
+/// THREE.LineCurve3
+/// THREE.QuadraticBezierCurve3
 ///
-/// A series of curves can be represented as a three.CurvePath.
+/// A series of curves can be represented as a THREE.CurvePath.
 ///
 ///*/
 
@@ -70,16 +68,16 @@ class Curve {
   }
 
   static castJSON(Map<String, dynamic> json) {
-    String type = json["type"];
+    String _type = json["type"];
 
-    if (type == "Shape") {
+    if (_type == "Shape") {
       return Shape.fromJSON(json);
-    } else if (type == "Curve") {
+    } else if (_type == "Curve") {
       return Curve.fromJSON(json);
-    } else if (type == "LineCurve") {
+    } else if (_type == "LineCurve") {
       return LineCurve.fromJSON(json);
     } else {
-      throw " type: $type Curve.castJSON is not support yet... ";
+      throw " type: $_type Curve.castJSON is not support yet... ";
     }
   }
 
@@ -87,7 +85,7 @@ class Curve {
   //	- t [0 .. 1]
 
   getPoint(num t, optionalTarget) {
-    print('three.Curve: .getPoint() not implemented.');
+    print('THREE.Curve: .getPoint() not implemented.');
     return null;
   }
 
@@ -135,7 +133,9 @@ class Curve {
   getLengths(divisions) {
     divisions ??= arcLengthDivisions;
 
-    if (cacheArcLengths != null && (cacheArcLengths!.length == divisions + 1) && !needsUpdate) {
+    if (cacheArcLengths != null &&
+        (cacheArcLengths!.length == divisions + 1) &&
+        !needsUpdate) {
       return cacheArcLengths;
     }
 
@@ -199,6 +199,7 @@ class Curve {
         break;
 
         // DONE
+
       }
     }
 
@@ -244,7 +245,10 @@ class Curve {
     var pt1 = getPoint(t1, null);
     var pt2 = getPoint(t2, null);
 
-    var tangent = optionalTarget ?? ((pt1 is Vector2) ? Vector2(null, null) : Vector3.init());
+    var tangent = optionalTarget ??
+        ((pt1.runtimeType == Vector2)
+            ? Vector2(null, null)
+            : Vector3.init());
 
     tangent.copy(pt2).sub(pt1).normalize();
 
@@ -282,7 +286,7 @@ class Curve {
 
     normals.add(Vector3.init());
     binormals.add(Vector3.init());
-    var min = Math.maxValue;
+    var min = Math.MAX_VALUE;
     final tx = Math.abs(tangents[0].x).toDouble();
     final ty = Math.abs(tangents[0].y).toDouble();
     final tz = Math.abs(tangents[0].z).toDouble();
@@ -315,10 +319,11 @@ class Curve {
 
       vec.crossVectors(tangents[i - 1], tangents[i]);
 
-      if (vec.length() > Math.epsilon) {
+      if (vec.length() > Math.EPSILON) {
         vec.normalize();
 
-        var theta = Math.acos(MathUtils.clamp(tangents[i - 1].dot(tangents[i]), -1, 1)); // clamp for floating pt errors
+        var theta = Math.acos(MathUtils.clamp(tangents[i - 1].dot(tangents[i]),
+            -1, 1)); // clamp for floating pt errors
 
         normals[i].applyMatrix4(mat.makeRotationAxis(vec, theta));
       }
@@ -329,10 +334,12 @@ class Curve {
     // if the curve is closed, postprocess the vectors so the first and last normal vectors are the same
 
     if (closed == true) {
-      var theta = Math.acos(MathUtils.clamp(normals[0].dot(normals[segments]), -1, 1));
+      var theta =
+          Math.acos(MathUtils.clamp(normals[0].dot(normals[segments]), -1, 1));
       theta /= segments;
 
-      if (tangents[0].dot(vec.crossVectors(normals[0], normals[segments])) > 0) {
+      if (tangents[0].dot(vec.crossVectors(normals[0], normals[segments])) >
+          0) {
         theta = -theta;
       }
 
@@ -343,8 +350,6 @@ class Curve {
       }
     }
 
-    mat.dispose();
-
     return {"tangents": tangents, "normals": normals, "binormals": binormals};
   }
 
@@ -354,7 +359,6 @@ class Curve {
 
   copy(source) {
     arcLengthDivisions = source.arcLengthDivisions;
-    type = source.type;
 
     return this;
   }
@@ -370,8 +374,9 @@ class Curve {
     return data;
   }
 
-  Curve fromJSON(json) {
+  fromJSON(json) {
     arcLengthDivisions = json.arcLengthDivisions;
+
     return this;
   }
 }
