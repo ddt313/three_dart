@@ -20,8 +20,6 @@ import 'package:example/webgl_helpers.dart';
 import 'package:example/webgl_instancing_performance.dart';
 import 'package:example/webgl_loader_fbx.dart';
 import 'package:example/webgl_loader_gltf.dart';
-import 'package:example/webgl_loader_gltf_2.dart';
-import 'package:example/webgl_loader_gltf_3.dart';
 import 'package:example/webgl_loader_gltf_test.dart';
 import 'package:example/webgl_loader_obj.dart';
 import 'package:example/webgl_loader_obj_mtl.dart';
@@ -80,10 +78,6 @@ class _MyAppState extends State<ExamplePage> {
       page = webgl_shadowmap_viewer(fileName: fileName);
     } else if (fileName == "webgl_loader_gltf") {
       page = webgl_loader_gltf(fileName: fileName);
-    }else if (fileName == "webgl_loader_gltf_2") {
-      page = webgl_loader_gltf_2(fileName: fileName);
-    } else if (fileName == "webgl_loader_gltf_3") {
-      page = webgl_loader_gltf_3(fileName: fileName);
     } else if (fileName == "webgl_loader_gltf_test") {
       page = webgl_loader_gltf_test(fileName: fileName);
     } else if (fileName == "webgl_loader_obj_mtl") {

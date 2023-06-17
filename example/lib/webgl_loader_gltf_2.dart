@@ -225,7 +225,7 @@ class _MyAppState extends State<webgl_loader_gltf_2> {
     var loader = THREE_JSM.GLTFLoader(null).setPath('assets/models/gltf/');
 
     // var result = await loader.loadAsync( 'Parrot.gltf', null);
-    var result = await loader.loadAsync('Soldier.gltf');
+    var result = await loader.loadAsync('Soldier.gltf', null);
 
     print(" gltf load sucess result: $result  ");
 

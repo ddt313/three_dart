@@ -259,8 +259,6 @@ class Material with EventDispatcher {
   void setValue(String key, dynamic newValue) {
     if (key == "alphaTest") {
       alphaTest = newValue;
-    } else if (key == "bumpScale") {
-      bumpScale = newValue;
     } else if (key == "alphaMap") {
       alphaMap = newValue;
     } else if (key == "aoMap") {

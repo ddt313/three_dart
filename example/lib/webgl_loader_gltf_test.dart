@@ -238,7 +238,7 @@ class _MyAppState extends State<webgl_loader_gltf_test> {
     // var loader = THREE_JSM.GLTFLoader( null ).setPath( 'assets/models/gltf/DamagedHelmet/glTF/' );
     var loader = THREE_JSM.GLTFLoader(null).setPath('assets/models/gltf/test/');
 
-    var result = await loader.loadAsync('animate7.gltf');
+    var result = await loader.loadAsync('animate7.gltf', null);
 
     object = result["scene"];
 
