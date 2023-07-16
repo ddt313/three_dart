@@ -217,16 +217,17 @@ class AnimationMixer with EventDispatcher {
 
       actionsByClip[clipUuid] = actionsForClip;
     } else {
-      var knownActions = actionsForClip.knownActions;
-
-      action._byClipCacheIndex = knownActions.length;
-      knownActions.add(action);
+      var knownActions = actionsForClip?.knownActions;
+      if(knownActions != null){
+        action._byClipCacheIndex = knownActions.length;
+        knownActions.add(action);
+      }
     }
 
     action._cacheIndex = actions.length;
     actions.add(action);
 
-    actionsForClip["actionByRoot"][rootUuid] = action;
+    actionsForClip["actionByRoot"]?[rootUuid] = action;
   }
 
   _removeInactiveAction(AnimationAction action) {
@@ -441,7 +442,7 @@ class AnimationMixer with EventDispatcher {
     }
 
     if (actionsForClip != null) {
-      var existingAction = actionsForClip.actionByRoot[rootUuid];
+      var existingAction = actionsForClip?.actionByRoot[rootUuid];
 
       if (existingAction != null && existingAction.blendMode == blendMode) {
         return existingAction;

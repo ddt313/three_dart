@@ -162,6 +162,9 @@ class WebGLRenderTarget extends RenderTarget {
   @override
   void dispose() {
     dispatchEvent(Event({"type": "dispose"}));
+    if(texture != null){
+      texture?.dispose();
+    }
   }
 }
 

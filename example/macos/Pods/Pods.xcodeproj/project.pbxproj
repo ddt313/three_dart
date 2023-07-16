@@ -20,15 +20,15 @@
 
 /* Begin PBXBuildFile section */
 		1807B1A6BD6651409810460F39E5515E /* flutter_gl_macos-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F855B9F5A3D4833FF114E88DE05CBFC /* flutter_gl_macos-dummy.m */; };
-		39C79D4908CBEEA1C7CD3F8A193DE696 /* EglEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53174A409B605D5FCF6907C9CA4F578E /* EglEnv.swift */; };
-		45252785C0578D19CDF2A54BDE79D916 /* CustomRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B85E511DC7D62EA7CE08DC8BC7C12 /* CustomRender.swift */; };
+		39C79D4908CBEEA1C7CD3F8A193DE696 /* EglEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B15402F5F9722ED5E2B59785716298 /* EglEnv.swift */; };
+		45252785C0578D19CDF2A54BDE79D916 /* CustomRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747C7794DA677C629D2CFE4D33A90B02 /* CustomRender.swift */; };
 		541217B3BEDFD8B3F94341682BCBC4A6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
 		62FD24B777ACD7F70AD7B8409DE2E7CF /* three3d_egl_osx-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B846ED3C03D8B9E6AB8B71CEEB58BA5 /* three3d_egl_osx-dummy.m */; };
-		6A0D326B6B5435EAD2D692A965069A25 /* OpenGLProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BEEB70077E961B10E5F69BB89130F0 /* OpenGLProgram.swift */; };
-		6D66127ABEA7D749FC77D379F402FF7C /* RenderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B38B68D4F86BFF30CC3B4E4395B9F8D /* RenderWorker.swift */; };
+		6A0D326B6B5435EAD2D692A965069A25 /* OpenGLProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4919C6A3AF9FF9BFB8AF7E8F7BA6264 /* OpenGLProgram.swift */; };
+		6D66127ABEA7D749FC77D379F402FF7C /* RenderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E373C14B95FCDA8983E267D0B94034 /* RenderWorker.swift */; };
 		7B1B9499B3D2B0BAB7C743DDDB823F19 /* flutter_gl_macos-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A9B73AE91C1BC6CA8CB471E61F5A6DC7 /* flutter_gl_macos-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		98ED0966C38C51A93C6B5BA6FD119A5D /* Pods-Runner-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 96BF45FBE2BC9AD7B2D7E56D01B5EE46 /* Pods-Runner-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A01F8A3806D760A03D18C95FEDF6E325 /* FlutterGlMacosPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F205B7EB2B1F85D6BDECC97B20BE7E /* FlutterGlMacosPlugin.swift */; };
+		A01F8A3806D760A03D18C95FEDF6E325 /* FlutterGlMacosPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE838F25B9520B5F1466FC317CB5C83 /* FlutterGlMacosPlugin.swift */; };
 		A029B3F38186F07CD873C4D6FAB2D299 /* three3d_egl_osx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70CC8E798672F393CB655BB720A805 /* three3d_egl_osx.swift */; };
 		C320581AA93CA6F2E3257D8CB8D9EB39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
 		CAE28B8BC4EE1DFAD4280884EC7B4027 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
@@ -76,25 +76,24 @@
 
 /* Begin PBXFileReference section */
 		03293C8B4B9D0AE4DCB5C50B1DAFA849 /* FlutterMacOS.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = FlutterMacOS.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		09F205B7EB2B1F85D6BDECC97B20BE7E /* FlutterGlMacosPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FlutterGlMacosPlugin.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/FlutterGlMacosPlugin.swift"; sourceTree = "<group>"; };
 		0F855B9F5A3D4833FF114E88DE05CBFC /* flutter_gl_macos-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "flutter_gl_macos-dummy.m"; sourceTree = "<group>"; };
 		114FEFCAD37A1EAB159FF5A59019E517 /* three3d_egl_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = three3d_egl_osx.release.xcconfig; sourceTree = "<group>"; };
 		23BCBE3BD0C30E8C742831F9F4E42566 /* flutter_gl_macos-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "flutter_gl_macos-prefix.pch"; sourceTree = "<group>"; };
 		28F331E0AC2FA90E1ECBA6EE4A6DF524 /* three3d_egl_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = three3d_egl_osx.debug.xcconfig; sourceTree = "<group>"; };
 		317C26B9A7CEDD34ADE8F37FAAB7AC20 /* Pods-Runner-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Runner-frameworks.sh"; sourceTree = "<group>"; };
-		4B38B68D4F86BFF30CC3B4E4395B9F8D /* RenderWorker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RenderWorker.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/RenderWorker.swift"; sourceTree = "<group>"; };
 		51825CD8F0558EFA53D9510F0E5BFA16 /* Pods-Runner-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Runner-Info.plist"; sourceTree = "<group>"; };
-		53174A409B605D5FCF6907C9CA4F578E /* EglEnv.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EglEnv.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/EglEnv.swift"; sourceTree = "<group>"; };
+		59E373C14B95FCDA8983E267D0B94034 /* RenderWorker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RenderWorker.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/RenderWorker.swift"; sourceTree = "<group>"; };
 		5B846ED3C03D8B9E6AB8B71CEEB58BA5 /* three3d_egl_osx-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "three3d_egl_osx-dummy.m"; sourceTree = "<group>"; };
+		5FE838F25B9520B5F1466FC317CB5C83 /* FlutterGlMacosPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FlutterGlMacosPlugin.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/FlutterGlMacosPlugin.swift"; sourceTree = "<group>"; };
 		6168FEEDE660B5FB85D69864EF1E4D3A /* three3d_egl_osx */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = three3d_egl_osx; path = three3d_egl_osx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		669E8F25E1897672BDB80B7EB784DA24 /* Pods-Runner */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Runner"; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70BD6525FA7790CF4F697204EDDB17F9 /* FlutterMacOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FlutterMacOS.debug.xcconfig; sourceTree = "<group>"; };
+		747C7794DA677C629D2CFE4D33A90B02 /* CustomRender.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomRender.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/CustomRender.swift"; sourceTree = "<group>"; };
+		74B15402F5F9722ED5E2B59785716298 /* EglEnv.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EglEnv.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/EglEnv.swift"; sourceTree = "<group>"; };
 		756F5ECD6E2177F02583AD1B28D9686A /* three3d_egl_osx.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = three3d_egl_osx.modulemap; sourceTree = "<group>"; };
 		7B3C932BD54DBB963102A89E0F9E3948 /* Pods-Runner-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Runner-dummy.m"; sourceTree = "<group>"; };
 		80CCD72322CF65634E279B36027456F7 /* flutter_gl_macos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = flutter_gl_macos.podspec; path = "../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/flutter_gl_macos.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8234575B55DD25B03183E4234746C08B /* FlutterMacOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FlutterMacOS.release.xcconfig; sourceTree = "<group>"; };
-		88BEEB70077E961B10E5F69BB89130F0 /* OpenGLProgram.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGLProgram.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/OpenGLProgram.swift"; sourceTree = "<group>"; };
-		894B85E511DC7D62EA7CE08DC8BC7C12 /* CustomRender.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomRender.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/CustomRender.swift"; sourceTree = "<group>"; };
 		8EB1700C7C54CFC620608C39E31483E3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/LICENSE"; sourceTree = "<group>"; };
 		96BF45FBE2BC9AD7B2D7E56D01B5EE46 /* Pods-Runner-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Runner-umbrella.h"; sourceTree = "<group>"; };
 		989AA71984B9405A064C8621EEE41B93 /* flutter_gl_macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = flutter_gl_macos.release.xcconfig; sourceTree = "<group>"; };
@@ -107,6 +106,7 @@
 		C6EA98402A94995D022D330B64B5203D /* Pods-Runner-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Runner-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CDAECCF4B5E08124ED410F09FD5A5DF9 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		D2FA70CA298C392CB8332ADEEDD1CE85 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		D4919C6A3AF9FF9BFB8AF7E8F7BA6264 /* OpenGLProgram.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGLProgram.swift; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_gl_macos-0.0.5/macos/Classes/OpenGLProgram.swift"; sourceTree = "<group>"; };
 		D5DF133D2DF8813F6ABDCCED6142D3F2 /* three3d_egl_osx-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "three3d_egl_osx-umbrella.h"; sourceTree = "<group>"; };
 		D9F2B4CB813B4BDC4D164C6E0868930A /* Pods-Runner-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Runner-acknowledgements.plist"; sourceTree = "<group>"; };
 		DC5B05894DF72EFE93A2E83AC6F60D03 /* flutter_gl_macos-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "flutter_gl_macos-Info.plist"; sourceTree = "<group>"; };
@@ -164,19 +164,10 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		059ADB703C16D0A10DF0AB19FB0FD8B5 /* Flutter */ = {
+		0A1E3AB33F655F727E13CB83912F2089 /* macos */ = {
 			isa = PBXGroup;
 			children = (
-				99A4479A9EF2A4FA770EDEF9ADB13680 /* ephemeral */,
-			);
-			name = Flutter;
-			path = Flutter;
-			sourceTree = "<group>";
-		};
-		06541B117213296CCA25DDBEA0D8DD93 /* macos */ = {
-			isa = PBXGroup;
-			children = (
-				059ADB703C16D0A10DF0AB19FB0FD8B5 /* Flutter */,
+				92B166FD38CDC6E42CACDA8389207E98 /* Flutter */,
 			);
 			name = macos;
 			path = macos;
@@ -201,13 +192,13 @@
 			path = "../../Pods/Target Support Files/FlutterMacOS";
 			sourceTree = "<group>";
 		};
-		1BC64237441994A4446D72B9CCB86648 /* example */ = {
+		14AC9506D9FBF066B4E6DBE2240FCCE6 /* ephemeral */ = {
 			isa = PBXGroup;
 			children = (
-				06541B117213296CCA25DDBEA0D8DD93 /* macos */,
+				9732D9D7ED4BB2230815006C97895C96 /* .symlinks */,
 			);
-			name = example;
-			path = example;
+			name = ephemeral;
+			path = ephemeral;
 			sourceTree = "<group>";
 		};
 		2369ECEFB25F8565CFDD12167DF13018 /* .. */ = {
@@ -219,13 +210,13 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		24723C84B7EE4BF1A0DAC0720A8241AD /* three_dart */ = {
+		26F6985F2B2330D8FB8E6D4ABAFC1BF5 /* Documents */ = {
 			isa = PBXGroup;
 			children = (
-				1BC64237441994A4446D72B9CCB86648 /* example */,
+				633B0AA7144281C7773EC0907E72A27D /* GitHub */,
 			);
-			name = three_dart;
-			path = three_dart;
+			name = Documents;
+			path = Documents;
 			sourceTree = "<group>";
 		};
 		4A8658F56278B7DD036E41A24EF66D83 /* Pods */ = {
@@ -245,13 +236,40 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		5A8FE7CCCF3414B13F1E7C33205E246E /* plugins */ = {
+		5A1DE7F1CDCB88BBADFC4401EBD908A1 /* flutter_gl_macos */ = {
 			isa = PBXGroup;
 			children = (
-				9DD57F66C9D72211AF299FCC7804C12C /* flutter_gl_macos */,
+				91365C6078E46A3737134065063DFD64 /* macos */,
+			);
+			name = flutter_gl_macos;
+			path = flutter_gl_macos;
+			sourceTree = "<group>";
+		};
+		5C2F1CC01CEF8C3FCE8619353C8E26DD /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				5A1DE7F1CDCB88BBADFC4401EBD908A1 /* flutter_gl_macos */,
 			);
 			name = plugins;
 			path = plugins;
+			sourceTree = "<group>";
+		};
+		5E87A2A0387AD04F2A888DE2D4ACF1B4 /* three_dart */ = {
+			isa = PBXGroup;
+			children = (
+				D33286E4DB2182590A4886FB9F900A2C /* example */,
+			);
+			name = three_dart;
+			path = three_dart;
+			sourceTree = "<group>";
+		};
+		633B0AA7144281C7773EC0907E72A27D /* GitHub */ = {
+			isa = PBXGroup;
+			children = (
+				5E87A2A0387AD04F2A888DE2D4ACF1B4 /* three_dart */,
+			);
+			name = GitHub;
+			path = GitHub;
 			sourceTree = "<group>";
 		};
 		791C6E4B424AF06279F8918FA67B8ED6 /* Targets Support Files */ = {
@@ -291,41 +309,28 @@
 			path = ../Flutter/ephemeral/.symlinks/plugins/flutter_gl_macos/macos;
 			sourceTree = "<group>";
 		};
-		84607A5BA0DFA5D4C335E62C6BB01616 /* Classes */ = {
+		91365C6078E46A3737134065063DFD64 /* macos */ = {
 			isa = PBXGroup;
 			children = (
-				894B85E511DC7D62EA7CE08DC8BC7C12 /* CustomRender.swift */,
-				53174A409B605D5FCF6907C9CA4F578E /* EglEnv.swift */,
-				09F205B7EB2B1F85D6BDECC97B20BE7E /* FlutterGlMacosPlugin.swift */,
-				88BEEB70077E961B10E5F69BB89130F0 /* OpenGLProgram.swift */,
-				4B38B68D4F86BFF30CC3B4E4395B9F8D /* RenderWorker.swift */,
+				E72A889C096AA96A7390B264F7C83897 /* Classes */,
 			);
-			name = Classes;
-			path = Classes;
+			name = macos;
+			path = macos;
 			sourceTree = "<group>";
 		};
-		99A4479A9EF2A4FA770EDEF9ADB13680 /* ephemeral */ = {
+		92B166FD38CDC6E42CACDA8389207E98 /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
-				A47CC790689766D584E65F1922D1E71C /* .symlinks */,
+				14AC9506D9FBF066B4E6DBE2240FCCE6 /* ephemeral */,
 			);
-			name = ephemeral;
-			path = ephemeral;
+			name = Flutter;
+			path = Flutter;
 			sourceTree = "<group>";
 		};
-		9DD57F66C9D72211AF299FCC7804C12C /* flutter_gl_macos */ = {
+		9732D9D7ED4BB2230815006C97895C96 /* .symlinks */ = {
 			isa = PBXGroup;
 			children = (
-				ECDFBD964D8CFCAECBCAE9F4D82D9D29 /* macos */,
-			);
-			name = flutter_gl_macos;
-			path = flutter_gl_macos;
-			sourceTree = "<group>";
-		};
-		A47CC790689766D584E65F1922D1E71C /* .symlinks */ = {
-			isa = PBXGroup;
-			children = (
-				5A8FE7CCCF3414B13F1E7C33205E246E /* plugins */,
+				5C2F1CC01CEF8C3FCE8619353C8E26DD /* plugins */,
 			);
 			name = .symlinks;
 			path = .symlinks;
@@ -403,19 +408,10 @@
 		CF8D22CE90D83DC95C810D42362AC8F4 /* .. */ = {
 			isa = PBXGroup;
 			children = (
-				E8FA41E9F9EAB5D119D65F62ABB482BE /* Documents */,
+				26F6985F2B2330D8FB8E6D4ABAFC1BF5 /* Documents */,
 			);
 			name = ..;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		D1528A0A6777F99FC0465B477BA95817 /* Apps */ = {
-			isa = PBXGroup;
-			children = (
-				24723C84B7EE4BF1A0DAC0720A8241AD /* three_dart */,
-			);
-			name = Apps;
-			path = Apps;
 			sourceTree = "<group>";
 		};
 		D27A5DB02F86D3AC10D8D87C5972FE6B /* Products */ = {
@@ -436,6 +432,15 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
+		D33286E4DB2182590A4886FB9F900A2C /* example */ = {
+			isa = PBXGroup;
+			children = (
+				0A1E3AB33F655F727E13CB83912F2089 /* macos */,
+			);
+			name = example;
+			path = example;
+			sourceTree = "<group>";
+		};
 		E0A1E60606E0BF6E2E10F1F01350DFE8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,22 +457,17 @@
 			name = "OS X";
 			sourceTree = "<group>";
 		};
-		E8FA41E9F9EAB5D119D65F62ABB482BE /* Documents */ = {
+		E72A889C096AA96A7390B264F7C83897 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D1528A0A6777F99FC0465B477BA95817 /* Apps */,
+				747C7794DA677C629D2CFE4D33A90B02 /* CustomRender.swift */,
+				74B15402F5F9722ED5E2B59785716298 /* EglEnv.swift */,
+				5FE838F25B9520B5F1466FC317CB5C83 /* FlutterGlMacosPlugin.swift */,
+				D4919C6A3AF9FF9BFB8AF7E8F7BA6264 /* OpenGLProgram.swift */,
+				59E373C14B95FCDA8983E267D0B94034 /* RenderWorker.swift */,
 			);
-			name = Documents;
-			path = Documents;
-			sourceTree = "<group>";
-		};
-		ECDFBD964D8CFCAECBCAE9F4D82D9D29 /* macos */ = {
-			isa = PBXGroup;
-			children = (
-				84607A5BA0DFA5D4C335E62C6BB01616 /* Classes */,
-			);
-			name = macos;
-			path = macos;
+			name = Classes;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		F3488936ACC84F4A0A92F919AC74416D /* FlutterMacOS */ = {
@@ -713,7 +713,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MODULEMAP_FILE = "Target Support Files/three3d_egl_osx/three3d_egl_osx.modulemap";
 				PRODUCT_MODULE_NAME = three3d_egl_osx;
 				PRODUCT_NAME = three3d_egl_osx;
@@ -743,7 +743,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/johnsparkman/Documents/flutter/bin/cache/artifacts/engine/darwin-x64\"",
+					"\"/Users/johnsparkman/development/flutter/bin/cache/artifacts/engine/darwin-x64\"",
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_gl_macos/flutter_gl_macos-prefix.pch";
@@ -803,7 +803,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/johnsparkman/Documents/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"\"/Users/johnsparkman/development/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
@@ -845,7 +845,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/johnsparkman/Documents/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"\"/Users/johnsparkman/development/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_gl_macos/flutter_gl_macos-prefix.pch";
@@ -887,7 +887,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/johnsparkman/Documents/flutter/bin/cache/artifacts/engine/darwin-x64\"",
+					"\"/Users/johnsparkman/development/flutter/bin/cache/artifacts/engine/darwin-x64\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
@@ -929,7 +929,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/johnsparkman/Documents/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"\"/Users/johnsparkman/development/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_gl_macos/flutter_gl_macos-prefix.pch";
@@ -975,7 +975,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MODULEMAP_FILE = "Target Support Files/three3d_egl_osx/three3d_egl_osx.modulemap";
 				PRODUCT_MODULE_NAME = three3d_egl_osx;
 				PRODUCT_NAME = three3d_egl_osx;
@@ -1011,7 +1011,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MODULEMAP_FILE = "Target Support Files/three3d_egl_osx/three3d_egl_osx.modulemap";
 				PRODUCT_MODULE_NAME = three3d_egl_osx;
 				PRODUCT_NAME = three3d_egl_osx;
@@ -1109,7 +1109,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/johnsparkman/Documents/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"\"/Users/johnsparkman/development/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";

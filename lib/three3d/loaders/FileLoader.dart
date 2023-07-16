@@ -20,7 +20,7 @@ class FileLoader extends Loader {
   load(url, onLoad, [onProgress, onError]) async {
     url ??= '';
 
- url = path + url;
+    url = path + url;
 
     url = manager.resolveURL(url);
 
@@ -31,7 +31,7 @@ class FileLoader extends Loader {
     if (cached != null) {
       scope.manager.itemStart(url);
 
- onLoad(cached);
+      onLoad(cached);
       scope.manager.itemEnd(url);
 
       return cached;

@@ -232,6 +232,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  oimo_physics:
+    dependency: "direct main"
+    description:
+      name: oimo_physics
+      sha256: "1559a1904e9b40df2d49089706c3973f28ed0525399627ce4ca854a1c2bbeb3d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   opentype_dart:
     dependency: transitive
     description:
@@ -328,20 +336,16 @@ packages:
   three_dart:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: ab77870abe7a14acd8a86ddeeaee3943bd9bddb4
-      url: "https://github.com/Knightro63/three_dart.git"
-    source: git
+      path: ".."
+      relative: true
+    source: path
     version: "0.0.14"
   three_dart_jsm:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "3f65834519e80f693d89627114bcbe11c1ae8381"
-      url: "https://github.com/Knightro63/three_dart_jsm.git"
-    source: git
+      path: "../../three_dart_jsm"
+      relative: true
+    source: path
     version: "0.0.9"
   typed_data:
     dependency: transitive

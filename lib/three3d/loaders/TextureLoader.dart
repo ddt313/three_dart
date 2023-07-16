@@ -18,13 +18,7 @@ class TextureLoader extends Loader {
   @override
   load(url, Function onLoad, [Function? onProgress, Function? onError]) {
     Texture texture;
-
-    // if(kIsWeb) {
-    texture =
-        Texture(null, null, null, null, null, null, null, null, null, null);
-    // } else {
-    //   texture = DataTexture(null, null, null,null, null, null,null, null, null, null, null, null);
-    // }
+    texture = Texture();
 
     var loader = ImageLoader(manager);
     loader.setCrossOrigin(crossOrigin);
