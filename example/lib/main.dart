@@ -1,4 +1,4 @@
-// import 'package:example/multi_views.dart';
+// import 'package:example/others/multi_views.dart';
 import 'package:flutter/material.dart';
 import 'app/ExampleApp.dart';
 
