@@ -39,10 +39,12 @@ class _MyAppState extends State<webgl_loader_gltf> {
   late THREE.Object3D object;
 
   late THREE.Texture texture;
+  late THREE.TextureLoader textureLoader;
+  final GlobalKey<THREE_JSM.DomLikeListenableState> _globalKey = GlobalKey<THREE_JSM.DomLikeListenableState>();
+  late THREE_JSM.OrbitControls controls;
+  THREE.WebGLRenderTarget? renderTarget;
 
-  late THREE.WebGLRenderTarget renderTarget;
-
-  dynamic? sourceTexture;
+  dynamic sourceTexture;
 
   @override
   void initState() {
@@ -61,7 +63,8 @@ class _MyAppState extends State<webgl_loader_gltf> {
       "alpha": false,
       "width": width.toInt(),
       "height": height.toInt(),
-      "dpr": dpr
+      "dpr": dpr,
+      'precision': 'highp'
     };
 
     await three3dRender.initialize(options: _options);
@@ -98,7 +101,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
       body: Builder(
         builder: (BuildContext context) {
           initSize(context);
-          return SingleChildScrollView(child: _build(context));
+          return _build(context);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -111,31 +114,30 @@ class _MyAppState extends State<webgl_loader_gltf> {
   }
 
   Widget _build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          child: Stack(
-            children: [
-              Container(
-                  width: width,
-                  height: height,
-                  color: Colors.black,
-                  child: Builder(builder: (BuildContext context) {
-                    if (kIsWeb) {
-                      return three3dRender.isInitialized
-                          ? HtmlElementView(
-                              viewType: three3dRender.textureId!.toString())
-                          : Container();
-                    } else {
-                      return three3dRender.isInitialized
-                          ? Texture(textureId: three3dRender.textureId!)
-                          : Container();
-                    }
-                  })),
-            ],
-          ),
-        ),
-      ],
+    return Container(
+      color: Colors.black,
+      child: THREE_JSM.DomLikeListenable(
+        key: _globalKey,
+        builder: (BuildContext context) {
+          return Container(
+            width: width,
+            height: height,
+            color: Theme.of(context).canvasColor,
+            child: Builder(builder: (BuildContext context) {
+              if (kIsWeb) {
+                return three3dRender.isInitialized
+                    ? HtmlElementView(
+                        viewType:
+                            three3dRender.textureId!.toString())
+                    : Container();
+              } else {
+                return three3dRender.isInitialized
+                    ? Texture(textureId: three3dRender.textureId!)
+                    : Container();
+              }
+            })
+          );
+        }),
     );
   }
 
@@ -156,7 +158,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
     // 重要 更新纹理之前一定要调用 确保gl程序执行完毕
     _gl.flush();
-
+    controls.update();
     if (verbose) print(" render: sourceTexture: $sourceTexture ");
 
     if (!kIsWeb) {
@@ -172,44 +174,51 @@ class _MyAppState extends State<webgl_loader_gltf> {
       "antialias": true,
       "canvas": three3dRender.element
     };
+
+    if(!kIsWeb){
+      _options['logarithmicDepthBuffer'] = true;
+    }
+
     renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
+    renderer!.shadowMap.enabled = true;
 
     // renderer!.toneMapping = THREE.ACESFilmicToneMapping;
     // renderer!.toneMappingExposure = 1;
     // renderer!.outputEncoding = THREE.sRGBEncoding;
 
     if (!kIsWeb) {
-      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
-      renderTarget = THREE.WebGLRenderTarget(
-          (width * dpr).toInt(), (height * dpr).toInt(), pars);
-      renderTarget.samples = 4;
+      var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat,"samples": 4});
+      renderTarget = THREE.WebGLRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      renderTarget!.samples = 4;
       renderer!.setRenderTarget(renderTarget);
-      sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
+      sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget!);
+    }
+    else {
+      renderTarget = null;
     }
   }
 
-  initScene() {
+  void initScene() async{
+    await initPage();
     initRenderer();
-    initPage();
+    animate();
   }
 
   initPage() async {
-    camera = THREE.PerspectiveCamera(45, width / height, 0.25, 20);
-    camera.position.set( - 0, 0, 2.7 );
-
-    // scene
-
     scene = THREE.Scene();
 
-
+    camera = THREE.PerspectiveCamera(45, width / height, 0.25, 20);
+    camera.position.set( - 0, 0, 2.7 );
     camera.lookAt(scene.position);
 
-    var _loader = THREE_JSM.RGBELoader(null);
+    THREE_JSM.OrbitControls _controls = THREE_JSM.OrbitControls(camera, _globalKey);
+    controls = _controls;
+
+    THREE_JSM.RGBELoader _loader = THREE_JSM.RGBELoader(null);
     _loader.setPath('assets/textures/equirectangular/');
     var _hdrTexture = await _loader.loadAsync('royal_esplanade_1k.hdr');
-
     _hdrTexture.mapping = THREE.EquirectangularReflectionMapping;
 
     scene.background = _hdrTexture;
@@ -217,7 +226,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
     scene.add( THREE.AmbientLight( 0xffffff ) );
 
-    var loader = THREE_JSM.GLTFLoader(null)
+    THREE_JSM.GLTFLoader loader = THREE_JSM.GLTFLoader(null)
         .setPath('assets/models/gltf/DamagedHelmet/glTF/');
 
     var result = await loader.loadAsync('DamagedHelmet.gltf');
@@ -247,10 +256,8 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
 
     scene.add(object);
-
+    textureLoader = THREE.TextureLoader(null);
     // scene.overrideMaterial = new THREE.MeshBasicMaterial();
-
-    animate();
   }
 
   animate() {
@@ -260,17 +267,19 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
     render();
 
-    // Future.delayed(Duration(milliseconds: 40), () {
-    //   animate();
-    // });
+    Future.delayed(Duration(milliseconds: 40), () {
+      animate();
+    });
   }
-
   @override
   void dispose() {
+    
     print(" dispose ............. ");
     disposed = true;
+    THREE.loading = {};
+    controls.clearListeners();
     three3dRender.dispose();
-
+    print(" dispose finish ");
     super.dispose();
   }
 }

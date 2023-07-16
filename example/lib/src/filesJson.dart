@@ -37,5 +37,11 @@ var filesJson = [
   "misc_controls_arcball",
   "misc_controls_map",
   "webgl_loader_fbx",
-  "multi_views"
+  "multi_views",
+  'basic_physics',
+  'collision_physics',
+  'compound_physics',
+  'compound2_physics',
+  'moving_physics',
+  'games_fps'
 ];

@@ -1,4 +1,4 @@
-import 'filesJson.dart';
+import 'src/filesJson.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,16 +37,18 @@ class _MyAppState extends State<HomePage> {
   }
 
   String getName(String file) {
-    var name = file.split('_');
-    name.removeAt(0);
+    List<String> name = file.split('_');
+    if(name.length > 2){
+      name.removeAt(0);
+    }
     return name.join(' / ');
   }
 
   Widget _buildItem(BuildContext context, int index) {
-    var fileName = filesJson[index];
+    String fileName = filesJson[index];
 
-    var assetFile = "assets/screenshots/$fileName.jpg";
-    var name = getName(fileName);
+    String assetFile = "assets/screenshots/$fileName.jpg";
+    String name = getName(fileName);
 
     return TextButton(
         onPressed: () {
@@ -57,7 +59,7 @@ class _MyAppState extends State<HomePage> {
           children: [
             Container(
               constraints: const BoxConstraints(minHeight: 50),
-              child: Image.asset(assetFile),
+              child: Image.asset(assetFile,height: 240,),
             ),
             Container(
               child: Text(name),

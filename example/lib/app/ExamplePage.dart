@@ -1,45 +1,64 @@
-import 'package:example/misc_animation_keys.dart';
-import 'package:example/multi_views.dart';
-import 'package:example/webgl_animation_cloth.dart';
-import 'package:example/webgl_animation_keyframes.dart';
-import 'package:example/webgl_animation_multiple.dart';
-import 'package:example/webgl_animation_skinning_additive_blending.dart';
-import 'package:example/webgl_animation_skinning_blending.dart';
-import 'package:example/webgl_animation_skinning_morph.dart';
-import 'package:example/webgl_camera.dart';
-import 'package:example/webgl_camera_array.dart';
-import 'package:example/webgl_clipping.dart';
-import 'package:example/webgl_clipping_advanced.dart';
-import 'package:example/webgl_clipping_intersection.dart';
-import 'package:example/webgl_clipping_stencil.dart';
-import 'package:example/webgl_geometries.dart';
-import 'package:example/webgl_geometry_colors.dart';
-import 'package:example/webgl_geometry_shapes.dart';
-import 'package:example/webgl_geometry_text.dart';
-import 'package:example/webgl_helpers.dart';
-import 'package:example/webgl_instancing_performance.dart';
-import 'package:example/webgl_loader_fbx.dart';
-import 'package:example/webgl_loader_gltf.dart';
-import 'package:example/webgl_loader_gltf_test.dart';
-import 'package:example/webgl_loader_obj.dart';
-import 'package:example/webgl_loader_obj_mtl.dart';
-import 'package:example/webgl_loader_texture_basis.dart';
-import 'package:example/webgl_materials.dart';
-import 'package:example/webgl_materials_browser.dart';
-import 'package:example/webgl_morphtargets.dart';
-import 'package:example/webgl_morphtargets_horse.dart';
-import 'package:example/webgl_morphtargets_sphere.dart';
-import 'package:example/webgl_shadow_contact.dart';
-import 'package:example/webgl_shadowmap_viewer.dart';
-import 'package:example/webgl_skinning_simple.dart';
 import 'package:flutter/material.dart';
 
-import 'misc_controls_arcball.dart';
-import 'misc_controls_map.dart';
-import 'misc_controls_orbit.dart';
-import 'misc_controls_trackball.dart';
-import 'webgl_loader_svg.dart';
+import 'package:example/animations/misc_animation_keys.dart';
+import 'package:example/animations/webgl_animation_cloth.dart';
+import 'package:example/animations/webgl_animation_keyframes.dart';
+import 'package:example/animations/webgl_animation_multiple.dart';
+import 'package:example/animations/webgl_animation_skinning_additive_blending.dart';
+import 'package:example/animations/webgl_animation_skinning_blending.dart';
+import 'package:example/animations/webgl_animation_skinning_morph.dart';
 
+import 'package:example/camera/webgl_camera.dart';
+import 'package:example/camera/webgl_camera_array.dart';
+
+import 'package:example/clipping/webgl_clipping.dart';
+import 'package:example/clipping/webgl_clipping_advanced.dart';
+import 'package:example/clipping/webgl_clipping_intersection.dart';
+import 'package:example/clipping/webgl_clipping_stencil.dart';
+
+import 'package:example/geometry/webgl_geometries.dart';
+import 'package:example/geometry/webgl_geometry_colors.dart';
+import 'package:example/geometry/webgl_geometry_shapes.dart';
+import 'package:example/geometry/webgl_geometry_text.dart';
+
+import 'package:example/others/multi_views.dart';
+import 'package:example/others/webgl_helpers.dart';
+import 'package:example/others/webgl_instancing_performance.dart';
+import 'package:example/others/webgl_skinning_simple.dart';
+
+import 'package:example/loaders/webgl_loader_fbx.dart';
+import 'package:example/loaders/webgl_loader_gltf.dart';
+import 'package:example/loaders/webgl_loader_gltf_test.dart';
+import 'package:example/loaders/webgl_loader_obj.dart';
+import 'package:example/loaders/webgl_loader_obj_mtl.dart';
+import 'package:example/loaders/webgl_loader_texture_basis.dart';
+import 'package:example/loaders/webgl_loader_svg.dart';
+
+import 'package:example/material/webgl_materials.dart';
+import 'package:example/material/webgl_materials_browser.dart';
+
+import 'package:example/morphtargets/webgl_morphtargets.dart';
+import 'package:example/morphtargets/webgl_morphtargets_horse.dart';
+import 'package:example/morphtargets/webgl_morphtargets_sphere.dart';
+
+import 'package:example/shadow/webgl_shadow_contact.dart';
+import 'package:example/shadow/webgl_shadowmap_viewer.dart';
+
+import 'package:example/controls/misc_controls_arcball.dart';
+import 'package:example/controls/misc_controls_map.dart';
+import 'package:example/controls/misc_controls_orbit.dart';
+import 'package:example/controls/misc_controls_trackball.dart';
+
+
+import 'package:example/physics/basic_physics.dart';
+import 'package:example/physics/collision_physics.dart';
+import 'package:example/physics/compound_physics.dart';
+import 'package:example/physics/compound2_physics.dart';
+import 'package:example/physics/moving_physics.dart';
+
+import 'package:example/games/games_fps.dart';
+
+@immutable
 class ExamplePage extends StatefulWidget {
   String? id;
   ExamplePage({Key? key, this.id}) : super(key: key);
@@ -138,6 +157,18 @@ class _MyAppState extends State<ExamplePage> {
       page = webgl_loader_fbx(fileName: fileName);
     } else if (fileName == "multi_views") {
       page = multi_views(fileName: fileName);
+    } else if (fileName == "basic_physics") {
+      page = BasicPhysics(fileName: "basic_physics",);
+    } else if (fileName == "collision_physics") {
+      page = CollisionPhysics(fileName: "collisin_physics",);
+    } else if (fileName == "compound_physics") {
+      page = CompoundPhysics(fileName: "compound_physics",);
+    } else if (fileName == "compound2_physics") {
+      page = Compound2Physics(fileName: "compound2_physics",);
+    } else if (fileName == "moving_physics") {
+      page = MovingPhysics(fileName: "moving_physics",);
+    } else if (fileName == "games_fps") {
+      page = FPSGame(fileName: fileName);
     } else {
       throw ("ExamplePage fileName $fileName is not support yet ");
     }

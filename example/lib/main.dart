@@ -1,6 +1,6 @@
 // import 'package:example/multi_views.dart';
 import 'package:flutter/material.dart';
-import 'ExampleApp.dart';
+import 'app/ExampleApp.dart';
 
 void main() {
   runApp( const ExampleApp() );
