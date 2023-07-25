@@ -1,7 +1,7 @@
 part of three_objects;
 
-var _lsstart = Vector3.init();
-var _lsend = Vector3.init();
+var _lsstart = Vector3();
+var _lsend = Vector3();
 
 class LineSegments extends Line {
   LineSegments(BufferGeometry? geometry, material) : super(geometry, material) {

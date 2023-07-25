@@ -14,13 +14,13 @@ class UniformsCache {
 
     switch (light.type) {
       case 'DirectionalLight':
-        uniforms = {"direction": Vector3.init(), "color": Color(0, 0, 0)};
+        uniforms = {"direction": Vector3(), "color": Color(0, 0, 0)};
         break;
 
       case 'SpotLight':
         uniforms = {
-          "position": Vector3.init(),
-          "direction": Vector3.init(),
+          "position": Vector3(),
+          "direction": Vector3(),
           "color": Color(0, 0, 0),
           "distance": 0,
           "coneCos": 0,
@@ -31,7 +31,7 @@ class UniformsCache {
 
       case 'PointLight':
         uniforms = {
-          "position": Vector3.init(),
+          "position": Vector3(),
           "color": Color(1, 1, 1),
           "distance": 0,
           "decay": 0
@@ -40,7 +40,7 @@ class UniformsCache {
 
       case 'HemisphereLight':
         uniforms = {
-          "direction": Vector3.init(),
+          "direction": Vector3(),
           "skyColor": Color(0, 0, 0),
           "groundColor": Color(0, 0, 0)
         };
@@ -49,9 +49,9 @@ class UniformsCache {
       case 'RectAreaLight':
         uniforms = {
           "color": Color(0, 0, 0),
-          "position": Vector3.init(),
-          "halfWidth": Vector3.init(),
-          "halfHeight": Vector3.init()
+          "position": Vector3(),
+          "halfWidth": Vector3(),
+          "halfHeight": Vector3()
         };
         break;
     }
@@ -165,10 +165,10 @@ class WebGLLights {
     });
 
     for (int i = 0; i < 9; i++) {
-      state.probe.add(Vector3.init());
+      state.probe.add(Vector3());
     }
 
-    vector3 = Vector3.init();
+    vector3 = Vector3();
     matrix4 = Matrix4();
     matrix42 = Matrix4();
   }

@@ -1,15 +1,15 @@
 part of three_math;
 
-final _startP = /*@__PURE__*/ Vector3.init();
-final _startEnd = /*@__PURE__*/ Vector3.init();
+final _startP = /*@__PURE__*/ Vector3();
+final _startEnd = /*@__PURE__*/ Vector3();
 
 class Line3 {
   late Vector3 start;
   late Vector3 end;
 
   Line3([Vector3? start, Vector3? end]) {
-    this.start = (start != null) ? start : Vector3.init();
-    this.end = (end != null) ? end : Vector3.init();
+    this.start = (start != null) ? start : Vector3();
+    this.end = (end != null) ? end : Vector3();
   }
 
   Line3 set(Vector3 start, Vector3 end) {

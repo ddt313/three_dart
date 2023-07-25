@@ -6,7 +6,7 @@ var Visible = 0;
 var Deleted = 1;
 
 class ConvexHull {
-  Vector3 v1 = Vector3.init();
+  Vector3 v1 = Vector3();
 
   num tolerance = -1;
   List<Face2> faces = []; // the generated faces of the convex hull
@@ -74,7 +74,7 @@ class ConvexHull {
 
           if (attribute != null) {
             for (var i = 0, l = attribute.count; i < l; i++) {
-              point = Vector3.init();
+              point = Vector3();
 
               point
                   .fromBufferAttribute(attribute, i)
@@ -327,8 +327,8 @@ class ConvexHull {
   // Computes the extremes of a simplex which will be the initial hull
 
   Map<String, List<VertexNode>> computeExtremes() {
-    var min = Vector3.init();
-    var max = Vector3.init();
+    var min = Vector3();
+    var max = Vector3();
 
     List<VertexNode> minVertices = [];
     List<VertexNode> maxVertices = [];
@@ -391,7 +391,7 @@ class ConvexHull {
     //if (line3 == null) {
     var line3 = Line3(null, null);
     var plane = Plane(null, null);
-    var closestPoint = Vector3.init();
+    var closestPoint = Vector3();
     //}
 
     var vertex, vertices = this.vertices;
@@ -736,8 +736,8 @@ class ConvexHull {
 }
 
 class Face2 {
-  Vector3 normal = Vector3.init();
-  Vector3 midpoint = Vector3.init();
+  Vector3 normal = Vector3();
+  Vector3 midpoint = Vector3();
   num area = 0;
 
   num constant = 0; // signed distance from face to the origin

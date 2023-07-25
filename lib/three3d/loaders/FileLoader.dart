@@ -7,7 +7,7 @@ class FileLoader extends Loader {
 
   @override
   loadAsync(url) async {
-    var completer = Completer();
+    Completer completer = Completer();
 
     load(url, (buffer) {
       completer.complete(buffer);
@@ -17,14 +17,14 @@ class FileLoader extends Loader {
   }
 
   @override
-  load(url, onLoad, [onProgress, onError]) async {
+  load(url, Function onLoad, [Function? onProgress, Function? onError]) async {
     url ??= '';
 
     url = path + url;
 
     url = manager.resolveURL(url);
 
-    var scope = this;
+    FileLoader scope = this;
 
     var cached = Cache.get(url);
 
@@ -47,18 +47,18 @@ class FileLoader extends Loader {
     }
 
     // Check for data: URI
-    var dataUriRegex = RegExp(r"^data:(.*?)(;base64)?,(.*)$");
-    var dataUriRegexResult = dataUriRegex.firstMatch(url);
+    RegExp dataUriRegex = RegExp(r"^data:(.*?)(;base64)?,(.*)$");
+    RegExpMatch? dataUriRegexResult = dataUriRegex.firstMatch(url);
     var request;
 
     // Safari can not handle Data URIs through XMLHttpRequest so process manually
     if (dataUriRegex.hasMatch(url)) {
-      var dataUriRegexResult = dataUriRegex.firstMatch(url)!;
+      RegExpMatch? dataUriRegexResult = dataUriRegex.firstMatch(url)!;
 
-      var mimeType = dataUriRegexResult.group(1);
-      var isBase64 = dataUriRegexResult.group(2) != null;
+      String? mimeType = dataUriRegexResult.group(1);
+      bool isBase64 = dataUriRegexResult.group(2) != null;
 
-      var data = dataUriRegexResult.group(3)!;
+      String? data = dataUriRegexResult.group(3)!;
       // data = decodeURIComponent( data );
 
       Uint8List? base64Data;
@@ -68,7 +68,7 @@ class FileLoader extends Loader {
       // try {
 
       var response;
-      var responseType = (this.responseType).toLowerCase();
+      String responseType = (this.responseType).toLowerCase();
 
       switch (responseType) {
         case 'arraybuffer':

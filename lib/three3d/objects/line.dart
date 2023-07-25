@@ -1,7 +1,7 @@
 part of three_objects;
 
-var _start = Vector3.init();
-var _end = Vector3.init();
+var _start = Vector3();
+var _end = Vector3();
 var _inverseMatrix = Matrix4();
 var _ray = Ray(null, null);
 var _sphere = Sphere(null, null);
@@ -96,10 +96,10 @@ class Line extends Object3D {
     var localThreshold = threshold / ((scale.x + scale.y + scale.z) / 3);
     var localThresholdSq = localThreshold * localThreshold;
 
-    var vStart = Vector3.init();
-    var vEnd = Vector3.init();
-    var interSegment = Vector3.init();
-    var interRay = Vector3.init();
+    var vStart = Vector3();
+    var vEnd = Vector3();
+    var interSegment = Vector3();
+    var interRay = Vector3();
     var step = type == "LineSegments" ? 2 : 1;
 
     var index = geometry.index;

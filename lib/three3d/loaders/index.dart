@@ -24,6 +24,7 @@ import 'package:three_dart/three3d/math/index.dart' hide Matrix4;
 // for MaterialLoader Matrix4. why conflicts with flutter Matrix4 ???
 import 'package:three_dart/three3d/math/index.dart' as mathmath;
 
+import 'package:universal_html/html.dart' as uhtml;
 
 import 'package:three_dart/three3d/objects/index.dart';
 import 'package:three_dart/three3d/scenes/index.dart';

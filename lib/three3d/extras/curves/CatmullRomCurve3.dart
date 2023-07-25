@@ -64,7 +64,7 @@ class CubicPoly {
 
 //
 
-var tmp = Vector3.init();
+var tmp = Vector3();
 var px = CubicPoly(), py = CubicPoly(), pz = CubicPoly();
 
 class CatmullRomCurve3 extends Curve {
@@ -87,7 +87,7 @@ class CatmullRomCurve3 extends Curve {
 
   @override
   getPoint(t, [optionalTarget]) {
-    var point = optionalTarget ?? Vector3.init();
+    var point = optionalTarget ?? Vector3();
 
     var points = this.points;
     var l = points.length;

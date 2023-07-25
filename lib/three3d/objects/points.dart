@@ -3,7 +3,7 @@ part of three_objects;
 var _pointsinverseMatrix = Matrix4();
 var _pointsray = Ray(null, null);
 var _pointssphere = Sphere(null, null);
-var _position = Vector3.init();
+var _position = Vector3();
 
 class Points extends Object3D {
   Points(BufferGeometry geometry, material) {
@@ -131,7 +131,7 @@ void testPoint(
   var rayPointDistanceSq = _pointsray.distanceSqToPoint(point);
 
   if (rayPointDistanceSq < localThresholdSq) {
-    var intersectPoint = Vector3.init();
+    var intersectPoint = Vector3();
 
     _pointsray.closestPointToPoint(point, intersectPoint);
     intersectPoint.applyMatrix4(matrixWorld);

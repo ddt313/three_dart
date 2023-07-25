@@ -1,7 +1,7 @@
 part of three_math;
 
 var _sphere = Sphere(null, null);
-var _vectorFrustum = Vector3.init();
+var _vectorFrustum = Vector3();
 
 class Frustum {
   late List<Plane> planes;

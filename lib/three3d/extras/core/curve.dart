@@ -248,7 +248,7 @@ class Curve {
     var tangent = optionalTarget ??
         ((pt1.runtimeType == Vector2)
             ? Vector2(null, null)
-            : Vector3.init());
+            : Vector3());
 
     tangent.copy(pt2).sub(pt1).normalize();
 
@@ -263,13 +263,13 @@ class Curve {
   computeFrenetFrames(segments, closed) {
     // see http://www.cs.indiana.edu/pub/techreports/TR425.pdf
 
-    var normal = Vector3.init();
+    var normal = Vector3();
 
     var tangents = [];
     var normals = [];
     var binormals = [];
 
-    var vec = Vector3.init();
+    var vec = Vector3();
     var mat = Matrix4();
 
     // compute the tangent vectors for each segment on the curve
@@ -277,15 +277,15 @@ class Curve {
     for (var i = 0; i <= segments; i++) {
       var u = i / segments;
 
-      tangents.add(getTangentAt(u, Vector3.init()));
+      tangents.add(getTangentAt(u, Vector3()));
       tangents[i].normalize();
     }
 
     // select an initial normal vector perpendicular to the first tangent vector,
     // and in the direction of the minimum tangent xyz component
 
-    normals.add(Vector3.init());
-    binormals.add(Vector3.init());
+    normals.add(Vector3());
+    binormals.add(Vector3());
     var min = Math.MAX_VALUE;
     final tx = Math.abs(tangents[0].x).toDouble();
     final ty = Math.abs(tangents[0].y).toDouble();

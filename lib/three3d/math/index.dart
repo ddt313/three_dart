@@ -27,6 +27,7 @@ part 'Sphere.dart';
 part 'Spherical.dart';
 part 'SphericalHarmonics3.dart';
 part 'Triangle.dart';
+part 'vector.dart';
 part 'Vector2.dart';
 part 'Vector3.dart';
 part 'Vector4.dart';

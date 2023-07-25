@@ -1,6 +1,6 @@
 part of three_helpers;
 
-var _SpotLightHelpervector = /*@__PURE__*/ Vector3.init();
+var _SpotLightHelpervector = /*@__PURE__*/ Vector3();
 
 class SpotLightHelper extends Object3D {
   late Light light;

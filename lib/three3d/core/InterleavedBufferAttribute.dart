@@ -1,6 +1,6 @@
 part of three_core;
 
-var _vector = Vector3.init();
+var _vector = Vector3();
 
 class InterleavedBufferAttribute extends BufferAttribute {
   int offset;

@@ -33,15 +33,15 @@ class TorusKnotGeometry extends BufferGeometry {
 
     // helper variables
 
-    var vertex = Vector3.init();
-    var normal = Vector3.init();
+    var vertex = Vector3();
+    var normal = Vector3();
 
-    var P1 = Vector3.init();
-    var P2 = Vector3.init();
+    var P1 = Vector3();
+    var P2 = Vector3();
 
-    var B = Vector3.init();
-    var T = Vector3.init();
-    var N = Vector3.init();
+    var B = Vector3();
+    var T = Vector3();
+    var N = Vector3();
 
     calculatePositionOnCurve(u, p, q, radius, position) {
       var cu = Math.cos(u);

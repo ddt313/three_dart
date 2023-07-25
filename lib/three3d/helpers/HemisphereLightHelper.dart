@@ -1,6 +1,6 @@
 part of three_helpers;
 
-var _vectorHemisphereLightHelper = /*@__PURE__*/ Vector3.init();
+var _vectorHemisphereLightHelper = /*@__PURE__*/ Vector3();
 var _color1 = /*@__PURE__*/ Color(0, 0, 0);
 var _color2 = /*@__PURE__*/ Color(0, 0, 0);
 

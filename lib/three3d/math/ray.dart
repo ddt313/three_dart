@@ -1,20 +1,20 @@
 part of three_math;
 
 class Ray {
-  final _vector = /*@__PURE__*/ Vector3.init();
-  final _segCenter = /*@__PURE__*/ Vector3.init();
-  final _segDir = /*@__PURE__*/ Vector3.init();
-  final _diff = /*@__PURE__*/ Vector3.init();
+  final _vector = /*@__PURE__*/ Vector3();
+  final _segCenter = /*@__PURE__*/ Vector3();
+  final _segDir = /*@__PURE__*/ Vector3();
+  final _diff = /*@__PURE__*/ Vector3();
 
-  final _edge1 = /*@__PURE__*/ Vector3.init();
-  final _edge2 = /*@__PURE__*/ Vector3.init();
-  final _normal = /*@__PURE__*/ Vector3.init();
+  final _edge1 = /*@__PURE__*/ Vector3();
+  final _edge2 = /*@__PURE__*/ Vector3();
+  final _normal = /*@__PURE__*/ Vector3();
 
   late Vector3 origin;
   late Vector3 direction;
 
   Ray([Vector3? origin, Vector3? direction]) {
-    this.origin = (origin != null) ? origin : Vector3.init();
+    this.origin = (origin != null) ? origin : Vector3();
     this.direction = (direction != null) ? direction : Vector3(0, 0, -1);
   }
 

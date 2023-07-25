@@ -1,17 +1,17 @@
 part of three_math;
 
 class Triangle {
-  static final _v0 = /*@__PURE__*/ Vector3.init();
-  static final _v1 = /*@__PURE__*/ Vector3.init();
-  static final _v2 = /*@__PURE__*/ Vector3.init();
-  static final _v3 = /*@__PURE__*/ Vector3.init();
+  static final _v0 = /*@__PURE__*/ Vector3();
+  static final _v1 = /*@__PURE__*/ Vector3();
+  static final _v2 = /*@__PURE__*/ Vector3();
+  static final _v3 = /*@__PURE__*/ Vector3();
 
-  static final _vab = /*@__PURE__*/ Vector3.init();
-  static final _vac = /*@__PURE__*/ Vector3.init();
-  static final _vbc = /*@__PURE__*/ Vector3.init();
-  static final _vap = /*@__PURE__*/ Vector3.init();
-  static final _vbp = /*@__PURE__*/ Vector3.init();
-  static final _vcp = /*@__PURE__*/ Vector3.init();
+  static final _vab = /*@__PURE__*/ Vector3();
+  static final _vac = /*@__PURE__*/ Vector3();
+  static final _vbc = /*@__PURE__*/ Vector3();
+  static final _vap = /*@__PURE__*/ Vector3();
+  static final _vbp = /*@__PURE__*/ Vector3();
+  static final _vcp = /*@__PURE__*/ Vector3();
 
   String type = "Triangle";
 
@@ -20,15 +20,15 @@ class Triangle {
   late Vector3 c;
 
   Triangle([Vector3? a, Vector3? b, Vector3? c]) {
-    this.a = (a != null) ? a : Vector3.init();
-    this.b = (b != null) ? b : Vector3.init();
-    this.c = (c != null) ? c : Vector3.init();
+    this.a = (a != null) ? a : Vector3();
+    this.b = (b != null) ? b : Vector3();
+    this.c = (c != null) ? c : Vector3();
   }
 
   Triangle.init({Vector3? a, Vector3? b, Vector3? c}) {
-    this.a = (a != null) ? a : Vector3.init();
-    this.b = (b != null) ? b : Vector3.init();
-    this.c = (c != null) ? c : Vector3.init();
+    this.a = (a != null) ? a : Vector3();
+    this.b = (b != null) ? b : Vector3();
+    this.c = (c != null) ? c : Vector3();
   }
 
   Vector3 operator [](Object? key) {

@@ -1,9 +1,9 @@
 part of three_geometries;
 
 class EdgesGeometry extends BufferGeometry {
-  final _v0 = Vector3.init();
-  final _v1 = Vector3.init();
-  final _normal = Vector3.init();
+  final _v0 = Vector3();
+  final _v1 = Vector3();
+  final _normal = Vector3();
   final _triangle = Triangle.init();
 
   @override

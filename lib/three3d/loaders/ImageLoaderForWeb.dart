@@ -3,8 +3,8 @@ import 'package:three_dart/extra/Blob.dart';
 import 'dart:html' as html;
 
 class ImageLoaderLoader {
-  // flipY 在web环境下 忽略
-  static Future<html.ImageElement> loadImage(url, flipY,
+  // flipY
+  static Future<html.ImageElement> loadImage(url, bool flipY,
       {Function? imageDecoder}) {
     var completer = Completer<html.ImageElement>();
     var imageDom = html.ImageElement();

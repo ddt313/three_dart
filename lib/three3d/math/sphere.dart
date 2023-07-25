@@ -5,12 +5,12 @@ class Sphere {
   late double radius;
 
   final _box = Box3(null, null);
-  final _v1 = /*@__PURE__*/ Vector3.init();
-  final _toFarthestPoint = /*@__PURE__*/ Vector3.init();
-  final _toPoint = /*@__PURE__*/ Vector3.init();
+  final _v1 = /*@__PURE__*/ Vector3();
+  final _toFarthestPoint = /*@__PURE__*/ Vector3();
+  final _toPoint = /*@__PURE__*/ Vector3();
 
   Sphere([Vector3? center, double? radius]) {
-    this.center = center ?? Vector3.init();
+    this.center = center ?? Vector3();
     this.radius = radius ?? -1;
   }
 

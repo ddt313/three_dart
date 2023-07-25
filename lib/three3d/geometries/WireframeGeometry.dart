@@ -12,8 +12,8 @@ class WireframeGeometry extends BufferGeometry {
 
     // helper variables
 
-    var start = Vector3.init();
-    var end = Vector3.init();
+    var start = Vector3();
+    var end = Vector3();
 
     if (geometry.index != null) {
       // indexed BufferGeometry

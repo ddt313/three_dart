@@ -2,17 +2,17 @@ part of three_objects;
 
 BufferGeometry? _geometry;
 
-final Vector3 _intersectPoint = Vector3.init();
-final Vector3 _worldScale = Vector3.init();
-final Vector3 _mvPosition = Vector3.init();
+final Vector3 _intersectPoint = Vector3();
+final Vector3 _worldScale = Vector3();
+final Vector3 _mvPosition = Vector3();
 
 final Vector2 _alignedPosition = Vector2(null, null);
 final Vector2 _rotatedPosition = Vector2(null, null);
 final Matrix4 _viewWorldMatrix = Matrix4();
 
-final Vector3 _spritevA = Vector3.init();
-final Vector3 _spritevB = Vector3.init();
-final Vector3 _spritevC = Vector3.init();
+final Vector3 _spritevA = Vector3();
+final Vector3 _spritevB = Vector3();
+final Vector3 _spritevC = Vector3();
 
 final Vector2 _spriteuvA = Vector2(null, null);
 final Vector2 _spriteuvB = Vector2(null, null);

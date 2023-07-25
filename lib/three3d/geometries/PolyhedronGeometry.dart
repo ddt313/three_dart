@@ -27,7 +27,7 @@ class PolyhedronGeometry extends BufferGeometry {
 
         var rows = cols - i;
 
-        v[i] = List<Vector3>.filled(rows + 1, Vector3.init());
+        v[i] = List<Vector3>.filled(rows + 1, Vector3());
 
         for (var j = 0; j <= rows; j++) {
           if (j == 0 && i == cols) {
@@ -66,9 +66,9 @@ class PolyhedronGeometry extends BufferGeometry {
     }
 
     void subdivide(detail) {
-      var a = Vector3.init();
-      var b = Vector3.init();
-      var c = Vector3.init();
+      var a = Vector3();
+      var b = Vector3();
+      var c = Vector3();
 
       // iterate over all faces and apply a subdivison with the given detail value
 
@@ -86,7 +86,7 @@ class PolyhedronGeometry extends BufferGeometry {
     }
 
     void applyRadius(radius) {
-      var vertex = Vector3.init();
+      var vertex = Vector3();
 
       // iterate over the entire buffer and apply the radius to each vertex
 
@@ -127,11 +127,11 @@ class PolyhedronGeometry extends BufferGeometry {
     }
 
     correctUVs() {
-      var a = Vector3.init();
-      var b = Vector3.init();
-      var c = Vector3.init();
+      var a = Vector3();
+      var b = Vector3();
+      var c = Vector3();
 
-      var centroid = Vector3.init();
+      var centroid = Vector3();
 
       var uvA = Vector2(null, null);
       var uvB = Vector2(null, null);
@@ -180,7 +180,7 @@ class PolyhedronGeometry extends BufferGeometry {
     }
 
     generateUVs() {
-      var vertex = Vector3.init();
+      var vertex = Vector3();
 
       for (var i = 0; i < vertexBuffer.length; i += 3) {
         vertex.x = vertexBuffer[i + 0];

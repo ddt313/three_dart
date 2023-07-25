@@ -40,7 +40,7 @@ class _State extends State<webgl_animation_skinning_morph> {
 
   var AMOUNT = 4;
 
-  bool verbose = true;
+  bool verbose = false;
   bool disposed = false;
 
   late THREE.Object3D object;
@@ -49,7 +49,7 @@ class _State extends State<webgl_animation_skinning_morph> {
 
   late THREE.WebGLMultisampleRenderTarget renderTarget;
 
-  dynamic? sourceTexture;
+  dynamic sourceTexture;
 
   bool loaded = false;
 
@@ -82,16 +82,16 @@ class _State extends State<webgl_animation_skinning_morph> {
     setState(() {});
 
     // TODO web wait dom ok!!!
-    Future.delayed(const Duration(milliseconds: 100), () async {
+    //Future.delayed(const Duration(milliseconds: 100), () async {
       await three3dRender.prepareContext();
 
       initScene();
-    });
+    //});
   }
 
-  initSize(BuildContext context) {
+  Future<bool> initSize(BuildContext context) async{
     if (screenSize != null) {
-      return;
+      return false;
     }
 
     final mqd = MediaQuery.of(context);
@@ -100,19 +100,24 @@ class _State extends State<webgl_animation_skinning_morph> {
     dpr = mqd.devicePixelRatio;
 
     initPlatformState();
+    return true;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.fileName),
       ),
-      body: Builder(
-        builder: (BuildContext context) {
-          initSize(context);
-          return SingleChildScrollView(child: _build(context));
-        },
+      body: FutureBuilder<bool>(
+        future: initSize(context),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
+          else{
+            return SingleChildScrollView(child: _build(context));
+          }
+        }
       ),
       floatingActionButton: FloatingActionButton(
         child: const Text("render"),
@@ -232,7 +237,7 @@ class _State extends State<webgl_animation_skinning_morph> {
     // ground
 
     var mesh = THREE.Mesh(THREE.PlaneGeometry(2000, 2000),
-        THREE.MeshPhongMaterial({"color": 0x999999, "depthWrite": false}));
+        THREE.MeshPhongMaterial({"color": 0x999999, "depthWrite": true}));
     mesh.rotation.x = -THREE.Math.PI / 2;
     scene.add(mesh);
 
@@ -241,11 +246,11 @@ class _State extends State<webgl_animation_skinning_morph> {
     grid.material.transparent = true;
     scene.add(grid);
 
-    var loader = THREE_JSM.GLTFLoader(null);
-    var gltf = await loader
-        .loadAsync('assets/models/gltf/RobotExpressive/RobotExpressive2.gltf');
+    var loader = THREE_JSM.GLTFLoader().setPath('assets/models/gltf/RobotExpressive/');
+    var result = await loader
+        .loadAsync('RobotExpressive.gltf');
 
-    model = gltf["scene"];
+    model = result["scene"];
     scene.add(model);
 
     model.traverse((object) {
@@ -264,18 +269,18 @@ class _State extends State<webgl_animation_skinning_morph> {
 
     //
 
-    var animations = gltf["animations"];
+    var animations = result["animations"];
 
     mixer = THREE.AnimationMixer(model);
 
     var idleAction = mixer.clipAction(animations[0]);
-    var walkAction = mixer.clipAction(animations[3]);
+    var walkAction = mixer.clipAction(animations[2]);
     var runAction = mixer.clipAction(animations[1]);
 
     // var actions = [ idleAction, walkAction, runAction ];
-    walkAction!.play();
+    idleAction!.play();
     // activateAllActions();
-
+    
     loaded = true;
 
     animate();

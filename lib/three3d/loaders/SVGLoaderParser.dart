@@ -1,7 +1,23 @@
 part of three_loaders;
 
+class SVGData{
+  SVGData({
+    this.paths = const [],
+    this.xml
+  });
+
+  final uhtml.Element? xml;
+  final List<ShapePath> paths;
+}
+
 class SVGLoaderParser {
-  //
+  SVGLoaderParser(String text,
+      {this.defaultDPI = 90, this.defaultUnit = "px"}) {
+    xml = parseXmlDocument(text); // application/xml
+  }
+
+  SVGLoaderParser.parser();
+
   List<ShapePath> paths = [];
   Map stylesheets = {};
 
@@ -12,14 +28,14 @@ class SVGLoaderParser {
   var tempTransform2 = Matrix3();
   var tempTransform3 = Matrix3();
   var tempV2 = Vector2(null, null);
-  var tempV3 = Vector3.init();
+  var tempV3 = Vector3();
 
   var currentTransform = Matrix3();
 
   String defaultUnit = "px";
   num defaultDPI = 90;
 
-  var xml;
+  late uhtml.XmlDocument xml;
 
   // Units
 
@@ -63,18 +79,8 @@ class SVGLoaderParser {
     "px": {'px': 1}
   };
 
-  SVGLoaderParser(String text,
-      {num defaultDPI = 90, String defaultUnit = "px"}) {
-    xml = parseXmlDocument(text); // application/xml
-
-    this.defaultDPI = defaultDPI;
-    this.defaultUnit = defaultUnit;
-  }
-
-  SVGLoaderParser.parser();
-
   // Function parse =========== start
-  Map<String, dynamic> parse(text) {
+  SVGData parse(text) {
     parseNode(xml.documentElement, {
       "fill": '#000',
       "fillOpacity": 1,
@@ -85,10 +91,7 @@ class SVGLoaderParser {
       "strokeMiterLimit": 4
     });
 
-    var data = {"paths": paths, "xml": xml.documentElement};
-
-    // console.log( paths );
-    return data;
+    return SVGData(paths: paths, xml: xml.documentElement);
   }
 
   parseFloatWithUnits(string) {

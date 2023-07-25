@@ -31,7 +31,7 @@ class LatheGeometry extends BufferGeometry {
     // helper variables
 
     var inverseSegments = 1.0 / segments;
-    var vertex = Vector3.init();
+    var vertex = Vector3();
     var uv = Vector2(null, null);
     var normal = Vector3();
     var curNormal = Vector3();

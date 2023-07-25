@@ -31,8 +31,8 @@ class SphereGeometry extends BufferGeometry {
     var index = 0;
     var grid = [];
 
-    var vertex = Vector3.init();
-    var normal = Vector3.init();
+    var vertex = Vector3();
+    var normal = Vector3();
 
     // buffers
 

@@ -2,11 +2,11 @@ part of three_loaders;
 
 class TextureLoader extends Loader {
 
-  TextureLoader(manager) : super(manager);
+  TextureLoader([manager]) : super(manager);
 
   @override
   Future<Texture> loadAsync(url, [Function? onProgress]) async {
-    var completer = Completer<Texture>();
+    Completer<Texture> completer = Completer<Texture>();
 
     load(url, (texture) {
       completer.complete(texture);
@@ -17,14 +17,13 @@ class TextureLoader extends Loader {
 
   @override
   load(url, Function onLoad, [Function? onProgress, Function? onError]) {
-    Texture texture;
-    texture = Texture();
+    final Texture texture = Texture();
 
-    var loader = ImageLoader(manager);
+    final ImageLoader loader = ImageLoader(manager);
     loader.setCrossOrigin(crossOrigin);
     loader.setPath(path);
 
-    var completer = Completer<Texture>();
+    final Completer<Texture> completer = Completer<Texture>();
     loader.flipY = flipY;
     loader.load(url, (image) {
       ImageElement imageElement;
@@ -60,5 +59,31 @@ class TextureLoader extends Loader {
     }, onProgress, onError);
 
     return completer.future;
+  }
+
+  @override
+  TextureLoader setPath(String path){
+    super.setPath(path);
+    return this;
+  }
+  @override
+  TextureLoader setCrossOrigin(String crossOrigin) {
+    super.setCrossOrigin(crossOrigin);
+    return this;
+  }
+  @override
+  TextureLoader setWithCredentials(bool value) {
+    super.setWithCredentials(value);
+    return this;
+  }
+  @override
+  TextureLoader setResourcePath(String? resourcePath) {
+    super.setResourcePath(resourcePath);
+    return this;
+  }
+  @override
+  TextureLoader setRequestHeader(Map<String, dynamic> requestHeader) {
+    super.setRequestHeader(requestHeader);
+    return this;
   }
 }

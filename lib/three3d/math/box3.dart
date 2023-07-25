@@ -1,36 +1,36 @@
 part of three_math;
 
 var _points = [
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init(),
-  /*@__PURE__*/ Vector3.init()
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3(),
+  /*@__PURE__*/ Vector3()
 ];
 
-var _vectorBox3 = Vector3.init();
+var _vectorBox3 = Vector3();
 
 var _box3box = Box3(null, null);
 
 // triangle centered vertices
 
-var _v0 = Vector3.init();
-var _box3v1 = Vector3.init();
-var _v2 = Vector3.init();
+var _v0 = Vector3();
+var _box3v1 = Vector3();
+var _v2 = Vector3();
 
 // triangle edge vectors
 
-var _f0 = Vector3.init();
-var _f1 = Vector3.init();
-var _f2 = Vector3.init();
+var _f0 = Vector3();
+var _f1 = Vector3();
+var _f2 = Vector3();
 
-var _center = Vector3.init();
-var _extents = Vector3.init();
-var _triangleNormal = Vector3.init();
-var _testAxis = Vector3.init();
+var _center = Vector3();
+var _extents = Vector3();
+var _triangleNormal = Vector3();
+var _testAxis = Vector3();
 
 class Box3 {
   String type = "Box3";

@@ -15,7 +15,7 @@ class SphericalHarmonics3 {
 
   SphericalHarmonics3() {
     for (var i = 0; i < 9; i++) {
-      coefficients.add(Vector3.init());
+      coefficients.add(Vector3());
     }
   }
 

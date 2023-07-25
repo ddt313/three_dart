@@ -33,7 +33,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
   var AMOUNT = 4;
 
-  bool verbose = true;
+  bool verbose = false;
   bool disposed = false;
 
   late THREE.Object3D object;
@@ -216,7 +216,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
     THREE_JSM.OrbitControls _controls = THREE_JSM.OrbitControls(camera, _globalKey);
     controls = _controls;
 
-    THREE_JSM.RGBELoader _loader = THREE_JSM.RGBELoader(null);
+    THREE_JSM.RGBELoader _loader = THREE_JSM.RGBELoader();
     _loader.setPath('assets/textures/equirectangular/');
     var _hdrTexture = await _loader.loadAsync('royal_esplanade_1k.hdr');
     _hdrTexture.mapping = THREE.EquirectangularReflectionMapping;
@@ -226,7 +226,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
     scene.add( THREE.AmbientLight( 0xffffff ) );
 
-    THREE_JSM.GLTFLoader loader = THREE_JSM.GLTFLoader(null)
+    THREE_JSM.GLTFLoader loader = THREE_JSM.GLTFLoader()
         .setPath('assets/models/gltf/DamagedHelmet/glTF/');
 
     var result = await loader.loadAsync('DamagedHelmet.gltf');

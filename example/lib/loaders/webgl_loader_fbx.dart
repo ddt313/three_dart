@@ -36,7 +36,7 @@ class _MyAppState extends State<webgl_loader_fbx> {
 
   var AMOUNT = 4;
 
-  bool verbose = true;
+  bool verbose = false;
   bool disposed = false;
 
   THREE.Clock clock = THREE.Clock();

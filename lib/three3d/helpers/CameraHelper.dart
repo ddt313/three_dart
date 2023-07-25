@@ -1,6 +1,6 @@
 part of three_helpers;
 
-var _vector = /*@__PURE__*/ Vector3.init();
+var _vector = /*@__PURE__*/ Vector3();
 var _camera = /*@__PURE__*/ Camera();
 
 ///	- shows frustum, line of sight and up of the camera

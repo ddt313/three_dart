@@ -1,12 +1,12 @@
 part of three_math;
 
-var _matrix4v1 = Vector3.init();
+var _matrix4v1 = Vector3();
 var _matrix4m1 = Matrix4();
 var _matrix4zero = Vector3(0, 0, 0);
 var _matrix4one = Vector3(1, 1, 1);
-var _matrix4x = Vector3.init();
-var _matrix4y = Vector3.init();
-var _matrix4z = Vector3.init();
+var _matrix4x = Vector3();
+var _matrix4y = Vector3();
+var _matrix4z = Vector3();
 
 class Matrix4 {
   String type = "Matrix4";

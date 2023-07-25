@@ -4,10 +4,10 @@ int _bufferGeometryId = 1; // BufferGeometry uses odd numbers as Id
 
 var _bufferGeometrym1 = Matrix4();
 var _bufferGeometryobj = Object3D();
-var _bufferGeometryoffset = Vector3.init();
+var _bufferGeometryoffset = Vector3();
 var _bufferGeometrybox = Box3(null, null);
 var _bufferGeometryboxMorphTargets = Box3(null, null);
-var _bufferGeometryvector = Vector3.init();
+var _bufferGeometryvector = Vector3();
 
 class BufferGeometry with EventDispatcher {
   int id = _bufferGeometryId += 2;
@@ -328,7 +328,7 @@ class BufferGeometry with EventDispatcher {
     var morphAttributesPosition = morphAttributes["position"];
 
     if (position != null && position is GLBufferAttribute) {
-      boundingSphere!.set(Vector3.init(), 99999999999);
+      boundingSphere!.set(Vector3(), 99999999999);
 
       return;
     }
@@ -583,9 +583,9 @@ class BufferGeometry with EventDispatcher {
         }
       }
 
-      var pA = Vector3.init(), pB = Vector3.init(), pC = Vector3.init();
-      var nA = Vector3.init(), nB = Vector3.init(), nC = Vector3.init();
-      var cb = Vector3.init(), ab = Vector3.init();
+      var pA = Vector3(), pB = Vector3(), pC = Vector3();
+      var nA = Vector3(), nB = Vector3(), nC = Vector3();
+      var cb = Vector3(), ab = Vector3();
 
       // indexed elements
 

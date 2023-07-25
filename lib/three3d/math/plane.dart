@@ -1,7 +1,7 @@
 part of three_math;
 
-var _vector1 = /*@__PURE__*/ Vector3.init();
-var _vector2 = /*@__PURE__*/ Vector3.init();
+var _vector1 = /*@__PURE__*/ Vector3();
+var _vector2 = /*@__PURE__*/ Vector3();
 var _normalMatrix = /*@__PURE__*/ Matrix3();
 
 class Plane {

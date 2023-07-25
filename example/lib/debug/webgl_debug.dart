@@ -223,11 +223,11 @@ class webgl_debugState extends State<webgl_debug> {
 
     camera.lookAt(scene.position);
 
-    var loader = THREE_JSM.GLTFLoader(null).setPath('assets/models/gltf/test/');
+    var loader = THREE_JSM.GLTFLoader().setPath('assets/models/gltf/test/');
 
-    // var result = await loader.loadAsync( 'tokyo.gltf', null );
-    var result = await loader.loadAsync('animate7.gltf', null);
-    // var result = await loader.loadAsync( 'untitled22.gltf', null );
+    // var result = await loader.loadAsync( 'tokyo.gltf' );
+    var result = await loader.loadAsync('animate7.gltf');
+    // var result = await loader.loadAsync( 'untitled22.gltf' );
 
     print(result);
 

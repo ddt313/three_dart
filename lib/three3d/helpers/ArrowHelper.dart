@@ -1,6 +1,6 @@
 part of three_helpers;
 
-var _axis = /*@__PURE__*/ Vector3.init();
+var _axis = /*@__PURE__*/ Vector3();
 var _lineGeometry, _coneGeometry;
 
 class ArrowHelper extends Object3D {

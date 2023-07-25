@@ -56,8 +56,8 @@ class CylinderGeometry extends BufferGeometry {
     // generate geometry
 
     generateTorso() {
-      var normal = Vector3.init();
-      var vertex = Vector3.init();
+      var normal = Vector3();
+      var vertex = Vector3();
 
       var groupCount = 0;
 
@@ -147,7 +147,7 @@ class CylinderGeometry extends BufferGeometry {
       var centerIndexStart = index;
 
       var uv = Vector2(null, null);
-      var vertex = Vector3.init();
+      var vertex = Vector3();
 
       var groupCount = 0;
 

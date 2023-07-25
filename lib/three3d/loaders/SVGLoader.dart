@@ -7,10 +7,10 @@ class SVGLoader extends Loader {
   // Accepted units: 'mm', 'cm', 'in', 'pt', 'pc', 'px'
   String defaultUnit = 'px';
 
-  SVGLoader(manager) : super(manager);
+  SVGLoader([manager]) : super(manager);
 
   @override
-  loadAsync(url, [onProgress]) async {
+  Future loadAsync(url, [onProgress]) async {
     var completer = Completer();
 
     load(url, (result) {
@@ -53,8 +53,8 @@ class SVGLoader extends Loader {
   // Function parse =========== start
   @override
   parse(text, [String? path, Function? onLoad, Function? onError]) {
-    var _parse = SVGLoaderParser(text,
-        defaultUnit: defaultUnit, defaultDPI: defaultDPI);
+    var _parse =
+        SVGLoaderParser(text, defaultUnit: defaultUnit, defaultDPI: defaultDPI);
     return _parse.parse(text);
   }
   // Function parse ================ end
@@ -83,7 +83,8 @@ class SVGLoader extends Loader {
     };
   }
 
-  static pointsToStroke(points, style, [arcDivisions, minDistance]) {
+  static pointsToStroke(points, style,
+      [arcDivisions, minDistance]) {
     // Generates a stroke with some witdh around the given path.
     // The path can be open or closed (last point equals to first point)
     // Param points: Array of Vector2D (the path). Minimum 2 points.
@@ -103,20 +104,18 @@ class SVGLoader extends Loader {
     }
 
     var geometry = BufferGeometry();
-    geometry.setAttribute(
-        'position',
+    geometry.setAttribute('position',
         Float32BufferAttribute(Float32Array.from(vertices), 3, false));
     geometry.setAttribute(
-        'normal',
-        Float32BufferAttribute(Float32Array.from(normals), 3, false));
+        'normal', Float32BufferAttribute(Float32Array.from(normals), 3, false));
     geometry.setAttribute(
         'uv', Float32BufferAttribute(Float32Array.from(uvs), 2, false));
 
     return geometry;
   }
 
-  static pointsToStrokeWithBuffers(points, style, arcDivisions, minDistance,
-      vertices, normals, uvs, vertexOffset) {
+  static pointsToStrokeWithBuffers(points, style, arcDivisions,
+      minDistance, vertices, normals, uvs, vertexOffset) {
     var svgLPTS = SVGLoaderPointsToStroke(points, style, arcDivisions,
         minDistance, vertices, normals, uvs, vertexOffset);
     return svgLPTS.convert();
@@ -277,8 +276,7 @@ class SVGLoader extends Loader {
                       i["t"] >= intersection["t"] - Math.EPSILON) <
                   0) {
             intersectionsRaw.add(intersection);
-            intersections
-                .add(Vector2(intersection["x"], intersection["y"]));
+            intersections.add(Vector2(intersection["x"], intersection["y"]));
           }
         }
       }
@@ -459,8 +457,7 @@ class SVGLoader extends Loader {
         "points": points,
         "isCW": ShapeUtils.isClockWise(points),
         "identifier": identifier++,
-        "boundingBox":
-            Box2(Vector2(minX, minY), Vector2(maxX, maxY))
+        "boundingBox": Box2(Vector2(minX, minY), Vector2(maxX, maxY))
       };
     }).toList();
 

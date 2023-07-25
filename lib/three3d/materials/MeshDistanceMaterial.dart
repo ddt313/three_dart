@@ -8,7 +8,7 @@ class MeshDistanceMaterial extends Material {
   MeshDistanceMaterial(Map<String, dynamic>? parameters) : super() {
     type = 'MeshDistanceMaterial';
 
-    referencePosition = Vector3.init();
+    referencePosition = Vector3();
     nearDistance = 1;
     farDistance = 1000;
 

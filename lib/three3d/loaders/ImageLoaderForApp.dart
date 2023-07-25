@@ -8,20 +8,20 @@ import 'package:image/image.dart';
 import 'package:three_dart/extra/Blob.dart';
 
 class ImageLoaderLoader {
-  static Future<Image?> loadImage(url, flipY, {Function? imageDecoder}) async {
-    Image? image;
+  static Future<Image?> loadImage(url, bool flipY, {Function? imageDecoder}) async {
+    final Image? image;
     if (imageDecoder == null) {
-      Uint8List? bytes;
+      final Uint8List? bytes;
       if (url is Blob) {
         bytes = url.data;
       } else if (url.startsWith("http")) {
-        var response = await http.get(Uri.parse(url));
+        final http.Response response = await http.get(Uri.parse(url));
         bytes = response.bodyBytes;
       } else if (url.startsWith("assets")) {
-        final fileData = await rootBundle.load(url);
+        final ByteData fileData = await rootBundle.load(url);
         bytes = Uint8List.view(fileData.buffer);
       } else {
-        var file = File(url);
+        final File file = File(url);
         bytes = await file.readAsBytes();
       }
 
@@ -35,10 +35,15 @@ class ImageLoaderLoader {
 }
 
 class DecodeParam {
-  Uint8List bytes;
+  DecodeParam(
+    this.bytes, 
+    this.flipY, 
+    this.sendPort
+  );
+
+  Uint8List? bytes;
   bool flipY;
   SendPort? sendPort;
-  DecodeParam(this.bytes, this.flipY, this.sendPort);
 }
 
 void decodeIsolate(DecodeParam param) {
@@ -56,7 +61,7 @@ void decodeIsolate(DecodeParam param) {
 }
 
 Image imageProcess2(DecodeParam param) {
-  var image = decodeImage(param.bytes)!;
+  Image image = decodeImage(param.bytes!)!;
 
   if (param.flipY) {
     image = flipVertical(image);

@@ -25,8 +25,8 @@ class LightShadow {
   List<Vector4> _viewports = [Vector4(0, 0, 1, 1)];
 
   final Matrix4 _projScreenMatrix = Matrix4();
-  final Vector3 _lightPositionWorld = Vector3.init();
-  final Vector3 _lookTarget = Vector3.init();
+  final Vector3 _lightPositionWorld = Vector3();
+  final Vector3 _lookTarget = Vector3();
 
   late num focus;
 

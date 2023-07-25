@@ -91,9 +91,9 @@ class ExtrudeGeometry extends BufferGeometry {
 
         // console.log(splineTube, 'splineTube', splineTube.normals.length, 'steps', steps, 'extrudePts', extrudePts.length);
 
-        binormal = Vector3.init();
-        normal = Vector3.init();
-        position2 = Vector3.init();
+        binormal = Vector3();
+        normal = Vector3();
+        position2 = Vector3();
       }
 
       // Safeguards if bevels are not enabled

@@ -226,9 +226,9 @@ class _MyAppState extends State<webgl_loader_gltf_test> {
     scene.background = _hdrTexture;
     scene.environment = _hdrTexture;
 
-    var textureLoader = THREE.TextureLoader(null);
+    var textureLoader = THREE.TextureLoader();
     texture = await textureLoader.loadAsync(
-        'assets/textures/uv_grid_directx.jpg', null);
+        'assets/textures/uv_grid_directx.jpg');
 
     texture.magFilter = THREE.LinearFilter;
     texture.minFilter = THREE.LinearMipmapLinearFilter;
@@ -236,9 +236,9 @@ class _MyAppState extends State<webgl_loader_gltf_test> {
     texture.needsUpdate = true;
 
     // var loader = THREE_JSM.GLTFLoader( null ).setPath( 'assets/models/gltf/DamagedHelmet/glTF/' );
-    var loader = THREE_JSM.GLTFLoader(null).setPath('assets/models/gltf/test/');
+    var loader = THREE_JSM.GLTFLoader().setPath('assets/models/gltf/test/');
 
-    var result = await loader.loadAsync('animate7.gltf', null);
+    var result = await loader.loadAsync('animate7.gltf');
 
     object = result["scene"];
 

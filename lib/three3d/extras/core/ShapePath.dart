@@ -9,19 +9,19 @@ class ShapePath {
 
   ShapePath();
 
-  moveTo(double x, double y) {
+  moveTo(num x, num y) {
     currentPath = Path(null);
     subPaths.add(currentPath);
     currentPath.moveTo(x, y);
     return this;
   }
 
-  lineTo(double x, double y) {
+  lineTo(num x, num y) {
     currentPath.lineTo(x, y);
     return this;
   }
 
-  quadraticCurveTo(double aCPx, double aCPy, double aX, double aY) {
+  quadraticCurveTo(num aCPx, num aCPy, num aX, num aY) {
     currentPath.quadraticCurveTo(aCPx, aCPy, aX, aY);
     return this;
   }

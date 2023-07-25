@@ -9,8 +9,6 @@ abstract class Loader {
   late Map<String, dynamic> requestHeader;
   String responseType = "text";
   late String mimeType;
-
-  // 加载纹理时  是否需要垂直翻转
   bool flipY = false;
 
   Loader([manager]) {
@@ -27,33 +25,33 @@ abstract class Loader {
     throw (" load need implement ............. ");
   }
 
-  loadAsync(url) async {
+  Future loadAsync(url) async {
     throw (" loadAsync need implement ............. ");
   }
 
-  parse(json, [String? path, Function? onLoad, Function? onError]) {}
+  parse(json, [String path = '', Function? onLoad, Function? onError]) {}
 
-  setCrossOrigin(crossOrigin) {
+  Loader setCrossOrigin(String crossOrigin) {
     this.crossOrigin = crossOrigin;
     return this;
   }
 
-  setWithCredentials(value) {
+  Loader setWithCredentials(bool value) {
     withCredentials = value;
     return this;
   }
 
-  setPath(path) {
+  Loader setPath(String path) {
     this.path = path;
     return this;
   }
 
-  setResourcePath(resourcePath) {
+  Loader setResourcePath(String? resourcePath) {
     this.resourcePath = resourcePath;
     return this;
   }
 
-  setRequestHeader(requestHeader) {
+  Loader setRequestHeader(Map<String, dynamic> requestHeader) {
     this.requestHeader = requestHeader;
     return this;
   }

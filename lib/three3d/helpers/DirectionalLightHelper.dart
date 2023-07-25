@@ -1,8 +1,8 @@
 part of three_helpers;
 
-var _v1 = /*@__PURE__*/ Vector3.init();
-var _v2 = /*@__PURE__*/ Vector3.init();
-var _v3 = /*@__PURE__*/ Vector3.init();
+var _v1 = /*@__PURE__*/ Vector3();
+var _v2 = /*@__PURE__*/ Vector3();
+var _v3 = /*@__PURE__*/ Vector3();
 
 class DirectionalLightHelper extends Object3D {
   late DirectionalLight light;

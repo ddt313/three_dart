@@ -4,24 +4,24 @@ var _meshinverseMatrix = Matrix4();
 var _meshray = Ray(null, null);
 var _meshsphere = Sphere(null, null);
 
-var _vA = Vector3.init();
-var _vB = Vector3.init();
-var _vC = Vector3.init();
+var _vA = Vector3();
+var _vB = Vector3();
+var _vC = Vector3();
 
-var _tempA = Vector3.init();
-var _tempB = Vector3.init();
-var _tempC = Vector3.init();
+var _tempA = Vector3();
+var _tempB = Vector3();
+var _tempC = Vector3();
 
-var _morphA = Vector3.init();
-var _morphB = Vector3.init();
-var _morphC = Vector3.init();
+var _morphA = Vector3();
+var _morphB = Vector3();
+var _morphC = Vector3();
 
 var _uvA = Vector2(null, null);
 var _uvB = Vector2(null, null);
 var _uvC = Vector2(null, null);
 
-var _intersectionPoint = Vector3.init();
-var _intersectionPointWorld = Vector3.init();
+var _intersectionPoint = Vector3();
+var _intersectionPointWorld = Vector3();
 
 class Mesh extends Object3D {
   Mesh(BufferGeometry? geometry, material) : super() {
@@ -386,7 +386,7 @@ Intersection? checkBufferGeometryIntersection(
     }
 
     var face = Face.fromJSON(
-        {"a": a, "b": b, "c": c, "normal": Vector3.init(), "materialIndex": 0});
+        {"a": a, "b": b, "c": c, "normal": Vector3(), "materialIndex": 0});
 
     Triangle.static_getNormal(_vA, _vB, _vC, face.normal);
 

@@ -17,28 +17,29 @@ class ImageLoader extends Loader {
   }
 
   @override
-  load(url, onLoad, [onProgress, onError]) async {
+  load(url, Function onLoad, [Function? onProgress, Function? onError]) async {
+    String? cacheName;
     if (path != "" && url is String) {
       url = path + url;
+      cacheName = url;
+    }
+    else if(url is Blob){
+      cacheName = url.toString().substring(0,15);
     }
 
     url = manager.resolveURL(url);
-
-    var cached = Cache.get(url);
+    cacheName = cacheName ?? url;
+    var cached = Cache.get(cacheName!);
 
     if (cached != null) {
-      manager.itemStart(url);
-
-      Future.delayed(Duration(milliseconds: 0), () {
-        onLoad(cached);
-
-        manager.itemEnd(url);
-      });
-
+      manager.itemStart(cacheName);
+      onLoad(cached);
+      manager.itemEnd(cacheName);
       return cached;
     }
 
     final _resp = await ImageLoaderLoader.loadImage(url, flipY);
+    Cache.add(cacheName,_resp);
     onLoad(_resp);
 
     return _resp;

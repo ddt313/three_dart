@@ -24,7 +24,7 @@ class CircleGeometry extends BufferGeometry {
 
     // helper variables
 
-    var vertex = Vector3.init();
+    var vertex = Vector3();
     var uv = Vector2(null, null);
 
     // center point

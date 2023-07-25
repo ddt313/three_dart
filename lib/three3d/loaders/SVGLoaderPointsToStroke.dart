@@ -1,23 +1,23 @@
 part of three_loaders;
 
 class SVGLoaderPointsToStroke {
-  var tempV2_1 = Vector2(null, null);
-  var tempV2_2 = Vector2(null, null);
-  var tempV2_3 = Vector2(null, null);
-  var tempV2_4 = Vector2(null, null);
-  var tempV2_5 = Vector2(null, null);
-  var tempV2_6 = Vector2(null, null);
-  var tempV2_7 = Vector2(null, null);
-  var lastPointL = Vector2(null, null);
-  var lastPointR = Vector2(null, null);
-  var point0L = Vector2(null, null);
-  var point0R = Vector2(null, null);
-  var currentPointL = Vector2(null, null);
-  var currentPointR = Vector2(null, null);
-  var nextPointL = Vector2(null, null);
-  var nextPointR = Vector2(null, null);
-  var innerPoint = Vector2(null, null);
-  var outerPoint = Vector2(null, null);
+  Vector2 tempV2_1 = Vector2();
+  Vector2 tempV2_2 = Vector2();
+  Vector2 tempV2_3 = Vector2();
+  Vector2 tempV2_4 = Vector2();
+  Vector2 tempV2_5 = Vector2();
+  Vector2 tempV2_6 = Vector2();
+  Vector2 tempV2_7 = Vector2();
+  Vector2 lastPointL = Vector2();
+  Vector2 lastPointR = Vector2();
+  Vector2 point0L = Vector2();
+  Vector2 point0R = Vector2();
+  Vector2 currentPointL = Vector2();
+  Vector2 currentPointR = Vector2();
+  Vector2 nextPointL = Vector2();
+  Vector2 nextPointR = Vector2();
+  Vector2 innerPoint = Vector2();
+  Vector2 outerPoint = Vector2();
 
   num arcDivisions = 12;
   num minDistance = 0.001;
@@ -31,7 +31,7 @@ class SVGLoaderPointsToStroke {
   List<double> uvs = List<double>.of([], growable: true);
 
   int numVertices = 0;
-  var currentPoint;
+  late Vector2 currentPoint;
 
   // This function can be called to update existing arrays or buffers.
   // Accepts same parameters as pointsToStroke, plus the buffers and optional offset.
@@ -44,8 +44,16 @@ class SVGLoaderPointsToStroke {
 
   num u0 = 0.0;
 
-  SVGLoaderPointsToStroke(points, style, arcDivisions, minDistance, vertices,
-      normals, uvs, vertexOffset) {
+  SVGLoaderPointsToStroke(
+    points, 
+    style, 
+    arcDivisions, 
+    minDistance, 
+    vertices,
+    normals, 
+    uvs, 
+    vertexOffset
+  ) {
     arcDivisions = arcDivisions ?? 12;
     minDistance = minDistance ?? 0.001;
     vertexOffset = vertexOffset ?? 0;
@@ -387,12 +395,12 @@ class SVGLoaderPointsToStroke {
     // -- End of algorithm
   }
 
-  removeDuplicatedPoints(points) {
+  List removeDuplicatedPoints(List points) {
     // Creates a new array if necessary with duplicated points removed.
     // This does not remove duplicated initial and ending points of a closed path.
 
-    var dupPoints = false;
-    for (var i = 1, n = points.length - 1; i < n; i++) {
+    bool dupPoints = false;
+    for (int i = 1, n = points.length - 1; i < n; i++) {
       if (points[i].distanceTo(points[i + 1]) < minDistance) {
         dupPoints = true;
         break;
@@ -401,10 +409,10 @@ class SVGLoaderPointsToStroke {
 
     if (!dupPoints) return points;
 
-    var newPoints = [];
+    List newPoints = [];
     newPoints.add(points[0]);
 
-    for (var i = 1, n = points.length - 1; i < n; i++) {
+    for (int i = 1, n = points.length - 1; i < n; i++) {
       if (points[i].distanceTo(points[i + 1]) >= minDistance) {
         newPoints.add(points[i]);
       }

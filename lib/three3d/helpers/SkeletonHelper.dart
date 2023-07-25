@@ -1,6 +1,6 @@
 part of three_helpers;
 
-var _shvector = /*@__PURE__*/ Vector3.init();
+var _shvector = /*@__PURE__*/ Vector3();
 var _boneMatrix = /*@__PURE__*/ Matrix4();
 var _matrixWorldInv = /*@__PURE__*/ Matrix4();
 

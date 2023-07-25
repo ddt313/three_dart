@@ -40,7 +40,7 @@ class webgl_animation_keyframesState extends State<webgl_animation_keyframes> {
 
   var AMOUNT = 4;
 
-  bool verbose = true;
+  bool verbose = false;
   bool disposed = false;
 
   late THREE.Object3D object;
@@ -49,7 +49,7 @@ class webgl_animation_keyframesState extends State<webgl_animation_keyframes> {
 
   late THREE.WebGLMultisampleRenderTarget renderTarget;
 
-  dynamic? sourceTexture;
+  dynamic sourceTexture;
 
   bool loaded = false;
 
@@ -62,6 +62,7 @@ class webgl_animation_keyframesState extends State<webgl_animation_keyframes> {
 
   @override
   void initState() {
+    print('CACHE: ${THREE.Cache.files.keys}');
     super.initState();
   }
 
@@ -320,6 +321,7 @@ class webgl_animation_keyframesState extends State<webgl_animation_keyframes> {
     print(" dispose ............. ");
     disposed = true;
     three3dRender.dispose();
+    THREE.loading.clear();
 
     super.dispose();
   }

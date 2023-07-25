@@ -2,7 +2,7 @@ part of three_core;
 
 abstract class BufferAttribute<TData extends NativeArray>
     extends BaseBufferAttribute<TData> {
-  final _vector = Vector3.init();
+  final _vector = Vector3();
   final _vector2 = Vector2(null, null);
 
   bool isBufferAttribute = true;

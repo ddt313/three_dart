@@ -57,7 +57,7 @@ class BoxGeometry extends BufferGeometry {
       var vertexCounter = 0;
       var groupCount = 0;
 
-      var vector = Vector3.init();
+      var vector = Vector3();
 
       // generate vertices, normals and uvs
 

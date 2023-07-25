@@ -172,6 +172,12 @@ class _MyAppState extends State<webgl_loader_obj_mtl> {
       "antialias": true,
       "canvas": three3dRender.element
     };
+
+    if(!kIsWeb){
+      _options['logarithmicDepthBuffer'] = true;
+    }
+
+
     renderer = THREE.WebGLRenderer(_options);
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);

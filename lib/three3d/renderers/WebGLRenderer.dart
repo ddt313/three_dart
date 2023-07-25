@@ -417,7 +417,6 @@ class WebGLRenderer {
     textures.dispose();
     geometries.dispose();
     materials.renderer.dispose();
-    loading = {};
 
     if (_transmissionRenderTarget != null) {
       _transmissionRenderTarget!.dispose();

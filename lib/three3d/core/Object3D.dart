@@ -2,13 +2,13 @@ part of three_core;
 
 int _object3DId = 0;
 
-Vector3 _v1 = Vector3.init();
+Vector3 _v1 = Vector3();
 Quaternion _q1 = Quaternion();
 Matrix4 _m1 = Matrix4();
-Vector3 _target = Vector3.init();
+Vector3 _target = Vector3();
 
-Vector3 _position = Vector3.init();
-Vector3 _scale = Vector3.init();
+Vector3 _position = Vector3();
+Vector3 _scale = Vector3();
 Quaternion _quaternion = Quaternion();
 
 Vector3 _xAxis = Vector3(1, 0, 0);
@@ -461,7 +461,7 @@ class Object3D with EventDispatcher {
   Vector3 getWorldPosition(Vector3? target) {
     if (target == null) {
       print('THREE.Object3D: .getWorldPosition() target is now required');
-      target = Vector3.init();
+      target = Vector3();
     }
 
     updateWorldMatrix(true, false);

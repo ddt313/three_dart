@@ -187,7 +187,7 @@ Map<String, dynamic> ShaderLib = {
       UniformsLib["common"],
       UniformsLib["displacementmap"],
       {
-        "referencePosition": {"value": Vector3.init()},
+        "referencePosition": {"value": Vector3()},
         "nearDistance": {"value": 1},
         "farDistance": {"value": 1000}
       }
