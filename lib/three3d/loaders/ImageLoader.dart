@@ -24,11 +24,11 @@ class ImageLoader extends Loader {
       cacheName = url;
     }
     else if(url is Blob){
-      cacheName = url.toString().substring(0,15);
+      cacheName = String.fromCharCodes(url.data).toString().substring(0,50);
     }
 
     url = manager.resolveURL(url);
-    cacheName = cacheName ?? url;
+    cacheName ??= url;
     var cached = Cache.get(cacheName!);
 
     if (cached != null) {
