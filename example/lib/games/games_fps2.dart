@@ -159,7 +159,7 @@ class _TestGamePageState extends State<TestGame> {
 
     scene.add(directionalLight);
 
-    GLTFLoader().setPath('assets/models/glb/').load('collision-world.glb', (gltf){
+    GLTFLoader().setPath('assets/models/gltf/').load('collision-world.glb', (gltf){
       Object3D object = gltf["scene"];
       scene.add(object);
       worldOctree.fromGraphNode(object);
