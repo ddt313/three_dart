@@ -56,7 +56,7 @@ import 'package:example/physics/compound_physics.dart';
 import 'package:example/physics/compound2_physics.dart';
 import 'package:example/physics/moving_physics.dart';
 
-import 'package:example/games/games_fps.dart';
+import 'package:example/games/games_fps2.dart';
 
 @immutable
 class ExamplePage extends StatefulWidget {
@@ -168,7 +168,7 @@ class _MyAppState extends State<ExamplePage> {
     } else if (fileName == "moving_physics") {
       page = MovingPhysics(fileName: "moving_physics",);
     } else if (fileName == "games_fps") {
-      page = FPSGame(fileName: fileName);
+      page = TestGame(fileName: fileName);
     } else {
       throw ("ExamplePage fileName $fileName is not support yet ");
     }

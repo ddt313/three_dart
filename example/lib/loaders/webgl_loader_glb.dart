@@ -186,6 +186,7 @@ class _MyAppState extends State<webgl_loader_glb> {
     renderer!.setPixelRatio(dpr);
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = false;
+    renderer!.autoClear = true;
 
     if (!kIsWeb) {
       var pars = THREE.WebGLRenderTargetOptions({"format": THREE.RGBAFormat});
@@ -222,7 +223,7 @@ class _MyAppState extends State<webgl_loader_glb> {
 
     camera.lookAt(scene.position);
 
-    var loader = THREE_JSM.GLTFLoader(null).setPath('assets/models/gltf/');
+    THREE.Loader loader = THREE_JSM.GLTFLoader().setPath('assets/models/gltf/');
 
     var result = await loader.loadAsync( 'coffeemat.glb' );
     // var result = await loader.loadAsync( 'BoomBox.glb' );

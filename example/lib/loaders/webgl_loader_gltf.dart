@@ -143,7 +143,7 @@ class _MyAppState extends State<webgl_loader_gltf> {
 
   render() {
     int _t = DateTime.now().millisecondsSinceEpoch;
-
+    renderer!.clear(true, true, true);
     final _gl = three3dRender.gl;
 
     renderer!.render(scene, camera);
@@ -172,7 +172,10 @@ class _MyAppState extends State<webgl_loader_gltf> {
       "height": height,
       "gl": three3dRender.gl,
       "antialias": true,
-      "canvas": three3dRender.element
+      "canvas": three3dRender.element,
+      "alpha": true,
+      "clearColor": 0xffffff,
+      "clearAlpha": 0,
     };
 
     if(!kIsWeb){
@@ -184,6 +187,12 @@ class _MyAppState extends State<webgl_loader_gltf> {
     renderer!.setSize(width, height, false);
     renderer!.shadowMap.enabled = true;
 
+    renderer!.shadowMap.enabled = false;
+    renderer!.alpha = true;
+    renderer!.setClearColor(THREE.Color(0xffffff), 0);
+    renderer!.autoClearDepth = true;
+    renderer!.autoClearStencil = true;
+    renderer!.autoClear = true;
     // renderer!.toneMapping = THREE.ACESFilmicToneMapping;
     // renderer!.toneMappingExposure = 1;
     // renderer!.outputEncoding = THREE.sRGBEncoding;
