@@ -64,26 +64,36 @@ class TorusGeometry extends BufferGeometry {
 
         uvs.add(i / tubularSegments);
         uvs.add(j / radialSegments);
+
+        if(i > 0 && j > 0){
+          final a = (tubularSegments + 1) * j + i - 1;
+          final b = (tubularSegments + 1) * (j - 1) + i - 1;
+          final c = (tubularSegments + 1) * (j - 1) + i;
+          final d = (tubularSegments + 1) * j + i;
+
+          indices.addAll([a,b,d]);
+          indices.addAll([b,c,d]);
+        }
       }
     }
 
     // generate indices
 
-    for (var j = 1; j <= radialSegments; j++) {
-      for (var i = 1; i <= tubularSegments; i++) {
-        // indices
+    // for (var j = 1; j <= radialSegments; j++) {
+    //   for (var i = 1; i <= tubularSegments; i++) {
+    //     // indices
 
-        var a = (tubularSegments + 1) * j + i - 1;
-        var b = (tubularSegments + 1) * (j - 1) + i - 1;
-        var c = (tubularSegments + 1) * (j - 1) + i;
-        var d = (tubularSegments + 1) * j + i;
+    //     var a = (tubularSegments + 1) * j + i - 1;
+    //     var b = (tubularSegments + 1) * (j - 1) + i - 1;
+    //     var c = (tubularSegments + 1) * (j - 1) + i;
+    //     var d = (tubularSegments + 1) * j + i;
 
-        // faces
+    //     // faces
 
-        indices.addAll([a, b, d]);
-        indices.addAll([b, c, d]);
-      }
-    }
+    //     indices.addAll([a, b, d]);
+    //     indices.addAll([b, c, d]);
+    //   }
+    // }
 
     // build geometry
 

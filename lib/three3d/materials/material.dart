@@ -360,9 +360,10 @@ class Material with EventDispatcher {
     } else if (key == "reflectivity") {
       reflectivity = newValue;
     } else if (key == "roughness") {
-      print(" set values roughness: $newValue ");
       roughness = newValue;
-    } else if (key == "roughnessMap") {
+    }else if (key == "refractionRatio") {
+      refractionRatio = newValue;
+    }else if (key == "roughnessMap") {
       roughnessMap = newValue;
     } else if (key == "shading") {
       //   // for backward compatability if shading is set in the constructor
