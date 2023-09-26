@@ -147,7 +147,7 @@ class FileLoader extends Loader {
 
     dynamic respData;
     if (!kIsWeb && !url.startsWith("http")) {
-      if (url.startsWith("assets")) {
+      if (url.startsWith("assets") || url.startsWith("packages")) {
         if (responseType == "text") {
           respData = await rootBundle.loadString(url);
         } else {
@@ -164,8 +164,7 @@ class FileLoader extends Loader {
         }
       }
     } else {
-      // load assets file TODO
-      if (url.startsWith("assets")) {
+      if (url.startsWith("assets") || url.startsWith("packages")) {
         url = "assets/" + url;
       }
 

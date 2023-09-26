@@ -18,10 +18,10 @@ class ImageLoaderLoader {
       var blob = html.Blob([url.data.buffer], url.options["type"]);
       imageDom.src = html.Url.createObjectUrl(blob);
     } else {
-      // flutter web for assets need add assets TODO
-      if (url.startsWith("assets")) {
+      if (url.startsWith("assets") || url.startsWith("packages")) {
         imageDom.src = "assets/" + url;
-      } else {
+      } 
+      else {
         imageDom.src = url;
       }
     }

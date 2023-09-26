@@ -17,7 +17,7 @@ class ImageLoaderLoader {
       } else if (url.startsWith("http")) {
         final http.Response response = await http.get(Uri.parse(url));
         bytes = response.bodyBytes;
-      } else if (url.startsWith("assets")) {
+      } else if (url.startsWith("assets") || url.startsWith("packages")) {
         final ByteData fileData = await rootBundle.load(url);
         bytes = Uint8List.view(fileData.buffer);
       } else {
