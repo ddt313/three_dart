@@ -85,7 +85,9 @@ class Math {
   static num log(num x) {
     return math.log(x);
   }
-
+  static num log10(num x) {
+    return math.log(x)/math.ln10;
+  }
   static double tan(num x) {
     return math.tan(x);
   }

@@ -7,7 +7,7 @@ class IcosahedronGeometry extends PolyhedronGeometry {
   IcosahedronGeometry.create(vertices, indices, [radius = 1, detail = 0])
       : super(vertices, indices, radius, detail);
 
-  factory IcosahedronGeometry([radius = 1, detail = 0]) {
+  factory IcosahedronGeometry([num radius = 1, int detail = 0]) {
     var t = (1 + Math.sqrt(5)) / 2;
 
     List<num> vertices = [
