@@ -24,6 +24,11 @@ class MeshDistanceMaterial extends Material {
   }
 
   @override
+  MeshDistanceMaterial clone() {
+    return MeshDistanceMaterial(<String, dynamic>{}).copy(this);
+  }
+
+  @override
   MeshDistanceMaterial copy(Material source) {
     super.copy(source);
 

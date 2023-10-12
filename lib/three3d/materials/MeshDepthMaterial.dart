@@ -13,7 +13,6 @@ class MeshDepthMaterial extends Material {
 
     setValues(parameters);
   }
-
   @override
   MeshDepthMaterial copy(Material source) {
     super.copy(source);

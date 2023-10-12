@@ -49,6 +49,11 @@ class MeshPhongMaterial extends Material {
   }
 
   @override
+  MeshPhongMaterial clone() {
+    return MeshPhongMaterial(<String, dynamic>{}).copy(this);
+  }
+
+  @override
   MeshPhongMaterial copy(Material source) {
     super.copy(source);
 

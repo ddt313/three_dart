@@ -45,6 +45,11 @@ class MeshToonMaterial extends Material {
   }
 
   @override
+  MeshToonMaterial clone() {
+    return MeshToonMaterial(<String, dynamic>{}).copy(this);
+  }
+
+  @override
   MeshToonMaterial copy(Material source) {
     super.copy(source);
 

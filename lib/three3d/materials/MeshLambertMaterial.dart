@@ -38,6 +38,11 @@ class MeshLambertMaterial extends Material {
   }
 
   @override
+  MeshLambertMaterial clone() {
+    return MeshLambertMaterial(<String, dynamic>{}).copy(this);
+  }
+
+  @override
   MeshLambertMaterial copy( Material source ) {
     super.copy( source );
 		color.copy( source.color );

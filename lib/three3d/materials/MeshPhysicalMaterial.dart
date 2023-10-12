@@ -26,7 +26,10 @@ class MeshPhysicalMaterial extends MeshStandardMaterial {
   set reflectivity(value) {
     ior = (1 + 0.4 * value) / (1 - 0.4 * value);
   }
-
+  @override
+  MeshPhysicalMaterial clone() {
+    return MeshPhysicalMaterial(<String, dynamic>{}).copy(this);
+  }
   @override
   MeshPhysicalMaterial copy(Material source) {
     super.copy(source);

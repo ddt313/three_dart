@@ -24,7 +24,7 @@ var _intersectionPoint = Vector3();
 var _intersectionPointWorld = Vector3();
 
 class Mesh extends Object3D {
-  Mesh(BufferGeometry? geometry, material) : super() {
+  Mesh([BufferGeometry? geometry, material]) : super() {
     this.geometry = geometry ?? BufferGeometry();
     this.material = material;
     type = "Mesh";
@@ -38,7 +38,16 @@ class Mesh extends Object3D {
 
   @override
   Mesh clone([bool? recursive = true]) {
-    return Mesh(geometry!.clone(), material.clone()).copy(this, recursive);
+    if(material is List){
+      List mats = [];
+      for(int i = 0; i < material.length; i++){
+        mats.add(material[i].clone());
+      }
+      return Mesh(geometry!.clone(), mats).copy(this, recursive);
+    }
+    else{
+      return Mesh(geometry!.clone(), material.clone()).copy(this, recursive);
+    }
   }
 
   @override
