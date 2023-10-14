@@ -91,16 +91,11 @@ class WebGLExtensions {
       "EXT_texture_filter_anisotropic": "GL_EXT_texture_filter_anisotropic",
       "EXT_color_buffer_half_float": "GL_EXT_color_buffer_half_float",
       "GL_OES_texture_compression_astc": "GL_OES_texture_compression_astc",
-      "GL_KHR_texture_compression_astc_ldr":
-          "GL_KHR_texture_compression_astc_ldr",
-      "GL_KHR_texture_compression_astc_hdr":
-          "GL_KHR_texture_compression_astc_hdr",
-      "GL_KHR_texture_compression_astc_sliced_3d":
-          "GL_KHR_texture_compression_astc_sliced_3d",
-      "GL_EXT_texture_compression_astc_decode_mode":
-          "GL_EXT_texture_compression_astc_decode_mode",
-      "GL_EXT_texture_compression_astc_decode_mode_rgb9e5":
-          "GL_EXT_texture_compression_astc_decode_mode_rgb9e5"
+      "GL_KHR_texture_compression_astc_ldr":"GL_KHR_texture_compression_astc_ldr",
+      "GL_KHR_texture_compression_astc_hdr":"GL_KHR_texture_compression_astc_hdr",
+      "GL_KHR_texture_compression_astc_sliced_3d":"GL_KHR_texture_compression_astc_sliced_3d",
+      "GL_EXT_texture_compression_astc_decode_mode":"GL_EXT_texture_compression_astc_decode_mode",
+      "GL_EXT_texture_compression_astc_decode_mode_rgb9e5":"GL_EXT_texture_compression_astc_decode_mode_rgb9e5"
     };
 
     var _name = _names[name] ?? name;
