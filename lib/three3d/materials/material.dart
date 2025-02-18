@@ -155,8 +155,7 @@ class Material with EventDispatcher {
 
   Texture? normalMap;
   Texture? bumpMap;
-  Texture? get envMap =>
-      (uniforms["envMap"] == null ? null : uniforms["envMap"]["value"]);
+  Texture? get envMap => (uniforms["envMap"] == null ? null : uniforms["envMap"]["value"]);
   set envMap(value) {
     uniforms["envMap"] = {"value": value};
   }
@@ -361,17 +360,14 @@ class Material with EventDispatcher {
       reflectivity = newValue;
     } else if (key == "roughness") {
       roughness = newValue;
-    }else if (key == "refractionRatio") {
+    } else if (key == "refractionRatio") {
       refractionRatio = newValue;
-    }else if (key == "roughnessMap") {
+    } else if (key == "roughnessMap") {
       roughnessMap = newValue;
     } else if (key == "shading") {
       //   // for backward compatability if shading is set in the constructor
-      throw ('THREE.' +
-          type +
-          ': .shading has been removed. Use the boolean .flatShading instead.');
+      throw ('THREE.' + type + ': .shading has been removed. Use the boolean .flatShading instead.');
       //   this.flatShading = ( newValue == FlatShading ) ? true : false;
-
     } else if (key == "shininess") {
       shininess = newValue;
     } else if (key == "side") {
@@ -423,6 +419,16 @@ class Material with EventDispatcher {
       } else {
         specular = Color(0, 0, 0).setHex(newValue);
       }
+    } else if (key == "ior") {
+      ior = newValue;
+    } else if (key == "specularIntensity") {
+      specularIntensity = newValue;
+    } else if (key == "specularColor") {
+      if (newValue.runtimeType == Color) {
+        specularColor = newValue;
+      } else {
+        specularColor = Color(0, 0, 0).setHex(newValue);
+      }
     } else {
       throw ("Material.setValues key: $key newValue: $newValue is not support");
     }
@@ -436,11 +442,7 @@ class Material with EventDispatcher {
     }
 
     Map<String, dynamic> data = {
-      "metadata": {
-        "version": 4.5,
-        "type": 'Material',
-        "generator": 'Material.toJSON'
-      }
+      "metadata": {"version": 4.5, "type": 'Material', "generator": 'Material.toJSON'}
     };
 
     // standard Material serialization
@@ -489,8 +491,7 @@ class Material with EventDispatcher {
     }
 
     if (clearcoatRoughnessMap != null && clearcoatRoughnessMap is Texture) {
-      data["clearcoatRoughnessMap"] =
-          clearcoatRoughnessMap!.toJSON(meta)['uuid'];
+      data["clearcoatRoughnessMap"] = clearcoatRoughnessMap!.toJSON(meta)['uuid'];
     }
 
     if (clearcoatNormalMap != null && clearcoatNormalMap is Texture) {
