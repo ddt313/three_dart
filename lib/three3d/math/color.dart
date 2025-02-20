@@ -734,13 +734,12 @@ class Color {
     return getHex();
   }
 
-  Color applyMatrix3(Matrix3 m) {
-    final r = red, g = green, b = blue;
+  Color applyMatrix3(dynamic m) {
     final e = m.storage;
 
-    storage[0] = e[0] * r + e[3] * g + e[6] * b;
-    storage[1] = e[1] * r + e[4] * g + e[7] * b;
-    storage[2] = e[2] * r + e[5] * g + e[8] * b;
+    r = e[0] * r + e[3] * g + e[6] * b;
+    g = e[1] * r + e[4] * g + e[7] * b;
+    b = e[2] * r + e[5] * g + e[8] * b;
 
     return this;
   }
