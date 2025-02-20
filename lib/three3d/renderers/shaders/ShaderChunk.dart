@@ -20,6 +20,7 @@ Map<String, String> ShaderChunk = {
   "color_pars_vertex": color_pars_vertex,
   "color_vertex": color_vertex,
   "common": commonGlsl,
+  'colorspace_pars_fragment': colorspaceParsFragment,
   "cube_uv_reflection_fragment": cube_uv_reflection_fragment,
   "defaultnormal_vertex": defaultnormal_vertex,
   "displacementmap_pars_vertex": displacementmap_pars_vertex,

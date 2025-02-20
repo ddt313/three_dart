@@ -21,6 +21,7 @@ export './color_pars_vertex.glsl.dart';
 export './color_vertex.glsl.dart';
 export './common.glsl.dart';
 export './cube_uv_reflection_fragment.glsl.dart';
+export './colorspace_pars_fragment.glsl.dart';
 export './defaultnormal_vertex.glsl.dart';
 export './displacementmap_pars_vertex.glsl.dart';
 export './displacementmap_vertex.glsl.dart';
