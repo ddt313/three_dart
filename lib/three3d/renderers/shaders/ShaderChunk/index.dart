@@ -19,6 +19,7 @@ export './color_fragment.glsl.dart';
 export './color_pars_fragment.glsl.dart';
 export './color_pars_vertex.glsl.dart';
 export './color_vertex.glsl.dart';
+export './colorspace_fragment.dart';
 export './common.glsl.dart';
 export './cube_uv_reflection_fragment.glsl.dart';
 export './colorspace_pars_fragment.glsl.dart';
