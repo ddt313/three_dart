@@ -314,6 +314,8 @@ class Material with EventDispatcher {
       } else {
         emissive = Color(0, 0, 0).setHex(newValue);
       }
+    } else if (key == "emissiveIntensity") {
+      emissiveIntensity = newValue;
     } else if (key == "emissiveMap") {
       emissiveMap = newValue;
     } else if (key == "flatShading") {
